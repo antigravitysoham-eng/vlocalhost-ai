@@ -313,14 +313,15 @@
     {
       key:"windows", name:"Windows", plat:"Windows 10 / 11 · .ps1", icon:WIN.icon,
       file:"install-vlocalhost.ps1",
-      note:'PortAudio ships with the wheel — nothing extra to install. Run the script in <b>PowerShell</b> from the project folder.',
+      note:'PortAudio ships with the wheel — nothing extra to install. Run the script in <b>PowerShell</b> from the project folder. It leaves a <b>Vlocalhost.AI</b> icon on your desktop and in the Start menu.',
       cmds:[
         ["# from the unzipped project folder","c"],
         ["python -m venv .venv","p"],
         [".\\.venv\\Scripts\\Activate.ps1","p"],
         ["pip install -r requirements.txt","p"],
         ["ollama pull llama3.2","p"],
-        ["python vlocalhost.py","p"]
+        ["python vlocalhost.py --install-shortcut","p"],
+        ["# then just double-click the Vlocalhost.AI icon","c"]
       ],
       script:
 "# Vlocalhost.AI - installer (Windows / PowerShell)\n" +
@@ -330,20 +331,22 @@
 ".\\.venv\\Scripts\\Activate.ps1\n" +
 "pip install -r requirements.txt\n" +
 "ollama pull llama3.2\n" +
-"Write-Host 'Vlocalhost installed. Launch with:  python vlocalhost.py'\n" +
+"python vlocalhost.py --install-shortcut\n" +
+"Write-Host 'Vlocalhost installed. Double-click the Vlocalhost.AI icon on your desktop.'\n" +
 "python vlocalhost.py\n"
     },
     {
       key:"macos", name:"macOS", plat:"macOS 12+ · .sh", icon:MAC.icon,
       file:"install-vlocalhost.sh",
-      note:'Installs <b>PortAudio</b> via Homebrew for the mic. macOS will ask for <b>microphone permission</b> on first run — allow it.',
+      note:'Installs <b>PortAudio</b> via Homebrew for the mic. macOS will ask for <b>microphone permission</b> on first run — allow it. You get a <b>Vlocalhost.AI</b> app in <code>~/Applications</code>.',
       cmds:[
         ["brew install portaudio","p"],
         ["python3 -m venv .venv","p"],
         ["source .venv/bin/activate","p"],
         ["pip install -r requirements.txt","p"],
         ["ollama pull llama3.2","p"],
-        ["python vlocalhost.py","p"]
+        ["python vlocalhost.py --install-shortcut","p"],
+        ["# then just double-click the Vlocalhost.AI icon","c"]
       ],
       script:
 "#!/usr/bin/env bash\n" +
@@ -355,20 +358,22 @@
 "source .venv/bin/activate\n" +
 "pip install -r requirements.txt\n" +
 "ollama pull llama3.2\n" +
-"echo 'Vlocalhost installed. Launch with:  python vlocalhost.py'\n" +
+"python vlocalhost.py --install-shortcut\n" +
+"echo 'Vlocalhost installed. Open it from your applications or desktop icon.'\n" +
 "python vlocalhost.py\n"
     },
     {
       key:"linux", name:"Linux", plat:"Debian / Ubuntu · .sh", icon:LNX.icon,
       file:"install-vlocalhost.sh",
-      note:'Installs <b>libportaudio2</b> for the mic (use <code>dnf</code> on Fedora). No system tray? It falls back to terminal mode automatically.',
+      note:'Installs <b>libportaudio2</b> for the mic (use <code>dnf</code> on Fedora). No system tray? It falls back to terminal mode automatically. A <b>Vlocalhost.AI</b> launcher is added to your applications menu.',
       cmds:[
         ["sudo apt install libportaudio2","p"],
         ["python3 -m venv .venv","p"],
         ["source .venv/bin/activate","p"],
         ["pip install -r requirements.txt","p"],
         ["ollama pull llama3.2","p"],
-        ["python vlocalhost.py","p"]
+        ["python vlocalhost.py --install-shortcut","p"],
+        ["# then just double-click the Vlocalhost.AI icon","c"]
       ],
       script:
 "#!/usr/bin/env bash\n" +
@@ -380,7 +385,8 @@
 "source .venv/bin/activate\n" +
 "pip install -r requirements.txt\n" +
 "ollama pull llama3.2\n" +
-"echo 'Vlocalhost installed. Launch with:  python vlocalhost.py'\n" +
+"python vlocalhost.py --install-shortcut\n" +
+"echo 'Vlocalhost installed. Open it from your applications or desktop icon.'\n" +
 "python vlocalhost.py\n"
     }
   ];
