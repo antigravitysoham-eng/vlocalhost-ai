@@ -5,17 +5,21 @@
 
 set -u
 
-VERSION="1.0.4"
+VERSION="1.0.5"
+SUPPORT="https://antigravitysoham-eng.github.io/vlocalhost-ai/support/"
 URL="https://github.com/antigravitysoham-eng/vlocalhost-core/archive/refs/tags/v${VERSION}.tar.gz"
 ROOT="$HOME/Library/Application Support/Vlocalhost"
 APP="$ROOT/vlocalhost-core-${VERSION}"
+LOG="$ROOT/install-log.txt"
 TARBALL="$(mktemp -t vlocalhost).tar.gz"
 
 bold=$(printf '\033[1m'); dim=$(printf '\033[2m'); off=$(printf '\033[0m')
 
 say()  { printf '   %s\n' "$*"; }
 step() { printf '\n   %s%s%s\n' "$bold" "$*" "$off"; }
-die()  { printf '\n   [X] %s\n\n' "$*"; printf '   Press return to close.'; read -r _; exit 1; }
+die()  { printf '\n   [X] %s\n\n' "$*";
+         printf '   Details:  %s\n' "$LOG"
+         printf '   Get help: %s\n\n' "$SUPPORT"; printf '   Press return to close.'; read -r _; exit 1; }
 
 clear
 printf '\n   %sVlocalhost.AI%s\n' "$bold" "$off"
@@ -56,6 +60,7 @@ fi
 # ---------------------------------------------------------------- Download
 step "[3/6] Downloading Vlocalhost ${VERSION} ..."
 mkdir -p "$ROOT" || die "Could not create $ROOT"
+printf 'Vlocalhost installer %s\n' "$(date)" > "$LOG"
 rm -rf "$APP"
 curl -fsSL "$URL" -o "$TARBALL" || die "Download failed. Check your internet connection."
 tar -xzf "$TARBALL" -C "$ROOT" || die "Could not unpack the download."
@@ -66,8 +71,8 @@ rm -f "$TARBALL"
 step "[4/6] Setting up a private Python environment ..."
 "$PY" -m venv "$APP/.venv" || die "Could not create the Python environment."
 VPY="$APP/.venv/bin/python"
-"$VPY" -m pip install --upgrade pip --quiet --disable-pip-version-check
-"$VPY" -m pip install -r "$APP/requirements.txt" --quiet --disable-pip-version-check \
+"$VPY" -m pip install --upgrade pip --disable-pip-version-check >>"$LOG" 2>&1
+"$VPY" -m pip install -r "$APP/requirements.txt" --disable-pip-version-check >>"$LOG" 2>&1 \
     || die "Could not install the dependencies."
 
 # ---------------------------------------------------------------- Ollama

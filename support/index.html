@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Support &amp; feedback — Vlocalhost.AI</title>
+<meta name="description" content="Something not working? Get a diagnostic report from Vlocalhost.AI in one click and send it to us, or raise a bug. Common fixes for install and audio problems." />
+<link rel="canonical" href="https://antigravitysoham-eng.github.io/vlocalhost-ai/support/" />
+<meta name="theme-color" content="#090C12" />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Vlocalhost.AI" />
+<meta property="og:title" content="Support &amp; feedback — Vlocalhost.AI" />
+<meta property="og:description" content="Get a diagnostic report in one click and send it to us, or raise a bug." />
+<meta property="og:url" content="https://antigravitysoham-eng.github.io/vlocalhost-ai/support/" />
+<meta property="og:image" content="https://antigravitysoham-eng.github.io/vlocalhost-ai/assets/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+  :root{
+    --bg:#090C12; --bg-2:#0E1220; --bg-3:#141B2A; --ink:#EAEEF4; --muted:#7E8AA0;
+    --faint:#4B5468; --line:rgba(255,255,255,0.075); --line-2:rgba(255,255,255,0.14);
+    --amber:#FFB43D; --amber-d:#E08A17; --cyan:#38E1CE; --glass:rgba(255,255,255,0.03);
+    --shadow:0 30px 80px -30px rgba(0,0,0,0.8); color-scheme:dark;
+    --f-display:'Helvetica Neue',Helvetica,Arial,system-ui,sans-serif;
+    --f-mono:ui-monospace,'Cascadia Code','SF Mono','JetBrains Mono',Consolas,monospace;
+    --f-body:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root{ --bg:#E5E8EE; --bg-2:#FCFCFD; --bg-3:#F1F3F7; --ink:#0B0F18; --muted:#55617A;
+      --faint:#97A1B4; --line:rgba(12,22,45,0.10); --line-2:rgba(12,22,45,0.18);
+      --amber:#A85F0C; --amber-d:#7F4708; --cyan:#0B8577; --glass:rgba(12,22,45,0.02);
+      --shadow:0 30px 70px -34px rgba(20,30,60,0.35); color-scheme:light; }
+  }
+  :root[data-theme="dark"]{ --bg:#090C12; --bg-2:#0E1220; --bg-3:#141B2A; --ink:#EAEEF4; --muted:#7E8AA0; --faint:#4B5468; --line:rgba(255,255,255,0.075); --line-2:rgba(255,255,255,0.14); --amber:#FFB43D; --cyan:#38E1CE; --glass:rgba(255,255,255,0.03); color-scheme:dark; }
+  :root[data-theme="light"]{ --bg:#E5E8EE; --bg-2:#FCFCFD; --bg-3:#F1F3F7; --ink:#0B0F18; --muted:#55617A; --faint:#97A1B4; --line:rgba(12,22,45,0.10); --line-2:rgba(12,22,45,0.18); --amber:#A85F0C; --cyan:#0B8577; --glass:rgba(12,22,45,0.02); color-scheme:light; }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);
+       font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:64px 64px;mask-image:radial-gradient(circle at 50% 4%,#000 0%,transparent 62%);opacity:.7}
+  nav,main,footer{position:relative;z-index:1}
+  .wrap{width:min(880px,92vw);margin-inline:auto}
+  a{color:inherit}
+  h1,h2,h3{font-family:var(--f-display);font-weight:800;letter-spacing:-.03em;line-height:1.08;margin:0}
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+      background:color-mix(in srgb,var(--bg) 72%,transparent);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:13px 0}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--f-display);
+         font-weight:800;font-size:1.12rem;letter-spacing:-.02em;text-decoration:none}
+  .brand small{font-family:var(--f-mono);font-weight:400;letter-spacing:.2em;
+               font-size:.6rem;color:var(--muted);align-self:flex-start;margin-top:3px}
+  .brand svg{width:26px;height:26px}
+  .nlink{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);
+         letter-spacing:.04em;text-decoration:none;margin-left:16px}
+  .nlink:hover{color:var(--ink)}
+  header.hero{padding:clamp(44px,7vw,80px) 0 6px;text-align:center}
+  .eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.24em;
+           text-transform:uppercase;color:var(--amber);display:inline-flex;
+           align-items:center;gap:.6em;justify-content:center}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--amber)}
+  h1{font-size:clamp(2.2rem,5.4vw,3.5rem);margin-top:16px}
+  .lede{max-width:58ch;margin:18px auto 0;color:var(--muted);font-size:1.08rem}
+  section{padding:clamp(38px,5vw,60px) 0}
+  h2{font-size:clamp(1.4rem,2.6vw,1.9rem);margin-bottom:8px}
+  .sub{color:var(--muted);margin:0 0 22px}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:0;display:flex;
+         flex-direction:column;gap:14px}
+  .steps li{counter-increment:s;position:relative;padding:16px 18px 16px 56px;
+    background:var(--bg-2);border:1px solid var(--line-2);border-radius:14px}
+  .steps li::before{content:counter(s);position:absolute;left:16px;top:15px;
+    width:26px;height:26px;border-radius:50%;background:var(--amber);color:#0B0F18;
+    font-family:var(--f-mono);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+  .steps b{color:var(--ink)}
+  .steps p{margin:5px 0 0;color:var(--muted);font-size:.93rem}
+  code,kbd{font-family:var(--f-mono);font-size:.85em;background:var(--bg-3);
+    border:1px solid var(--line-2);border-radius:6px;padding:2px 6px;color:var(--amber)}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--bg-2);border:1px solid var(--line-2);border-radius:16px;
+        padding:22px;display:flex;flex-direction:column}
+  .card h3{font-size:1.12rem;margin-bottom:6px}
+  .card p{color:var(--muted);font-size:.92rem;margin:0 0 16px;flex:1}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-family:var(--f-mono);font-size:.82rem;letter-spacing:.03em;padding:12px 18px;
+    border-radius:11px;cursor:pointer;border:1px solid transparent;text-decoration:none;
+    transition:transform .15s,box-shadow .2s,border-color .2s}
+  .btn-primary{background:var(--amber);color:#120A00;font-weight:600;
+    box-shadow:0 0 0 1px var(--amber),0 14px 34px -14px var(--amber-d)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 30px -4px var(--amber)}
+  .btn-ghost{border-color:var(--line-2);color:var(--ink);background:var(--glass)}
+  .btn-ghost:hover{border-color:var(--amber);transform:translateY(-2px)}
+  .note{display:flex;gap:12px;align-items:flex-start;background:var(--glass);
+    border:1px solid var(--line);border-left:2px solid var(--cyan);
+    border-radius:10px;padding:14px 16px;margin-top:22px}
+  .note p{margin:0;font-size:.9rem;color:var(--muted)}
+  .note b{color:var(--ink)}
+  details{background:var(--bg-2);border:1px solid var(--line-2);border-radius:12px;
+    padding:14px 18px;margin-bottom:10px}
+  details[open]{border-color:var(--line-2)}
+  summary{cursor:pointer;font-weight:600;font-size:.98rem}
+  summary::marker{color:var(--amber)}
+  details p{color:var(--muted);font-size:.93rem;margin:10px 0 0}
+  details pre{overflow-x:auto;background:var(--bg-3);border:1px solid var(--line);
+    border-radius:8px;padding:12px;font-family:var(--f-mono);font-size:.8rem;margin:10px 0 0}
+  footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--faint);
+    font-family:var(--f-mono);font-size:.72rem;text-align:center}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap nav-in">
+  <a class="brand" href="../">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC24D"/><stop offset="1" stop-color="#E08A17"/></linearGradient></defs><rect x="2" y="2" width="60" height="60" rx="16" fill="url(#sb)"/><path d="M12 32 H18 L21 25 L25 39 L29 16 L33 48 L37 24 L40 34 L43 30 H52" fill="none" stroke="#0B0F18" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Vlocalhost <small>.AI</small>
+  </a>
+  <div>
+    <a class="nlink" href="../">← Site</a>
+    <a class="nlink" href="../install/">Install</a>
+    <a class="nlink" href="../pricing/">Pricing</a>
+  </div>
+</div></nav>
+
+<main>
+  <header class="hero wrap">
+    <p class="eyebrow">Support &amp; feedback</p>
+    <h1>Something not working?</h1>
+    <p class="lede">
+      Vlocalhost runs on your machine, so we cannot see what went wrong unless
+      you tell us. The app writes a short report you can read, check, and send.
+    </p>
+  </header>
+
+  <section class="wrap">
+    <h2>Send us a diagnostic report</h2>
+    <p class="sub">Takes about a minute. Nothing is sent until you send it.</p>
+
+    <ol class="steps">
+      <li>
+        <b>In the app, click “Report a problem”</b> on the Record tab.
+        <p>It saves a report and opens the folder containing it. If the app will
+           not open at all, run <code>python vlocalhost.py --diagnose</code> in the
+           folder you installed to — it writes the same file.</p>
+      </li>
+      <li>
+        <b>Read it.</b> It is plain text.
+        <p>Your settings, package versions, the error, and the last lines of the
+           log. No meeting audio, no transcripts, no notes, no file names. Home
+           paths and your account name are replaced before it is written.</p>
+      </li>
+      <li>
+        <b>Send it</b> using one of the buttons below, attaching
+        <code>vlocalhost-report.txt</code>.
+        <p>Drag the file straight into a GitHub issue, or attach it to an email.</p>
+      </li>
+    </ol>
+
+    <div class="cards" style="margin-top:22px">
+      <div class="card">
+        <h3>Raise a bug</h3>
+        <p>Public issue tracker. Best for reproducible problems — you can attach
+           the report file directly and follow the fix.</p>
+        <a class="btn btn-primary" id="bugBtn"
+           href="https://github.com/antigravitysoham-eng/vlocalhost-core/issues/new"
+           target="_blank" rel="noopener">Open a GitHub issue →</a>
+      </div>
+      <div class="card">
+        <h3>Email us privately</h3>
+        <p>No GitHub account, or something you would rather not post publicly.
+           Attach the report and tell us what you were doing.</p>
+        <a class="btn btn-ghost" id="mailBtn" href="#">Email support →</a>
+      </div>
+    </div>
+
+    <div class="note">
+      <span aria-hidden="true">🔒</span>
+      <p><b>We never collect anything automatically.</b> Vlocalhost has no
+        telemetry and no crash-reporting endpoint. The report is a file on your
+        disk; sending it is an action only you can take, and you can delete any
+        line you are not comfortable sharing before you do.</p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2>Common problems</h2>
+    <p class="sub">Worth trying before you write to us.</p>
+
+    <details>
+      <summary>The installer says Python was not found</summary>
+      <p>Install Python 3.9 or newer from
+        <a href="https://www.python.org/downloads/" target="_blank" rel="noopener">python.org</a>.
+        On Windows, tick <b>“Add python.exe to PATH”</b> on the first screen of the
+        installer — this is the single most common cause. Then run the installer again.</p>
+    </details>
+
+    <details>
+      <summary>Windows blocked the installer</summary>
+      <p>SmartScreen warns about anything downloaded from the internet. Click
+        <b>More info</b>, then <b>Run anyway</b>. The installer is plain text —
+        you can open it in Notepad and read every line first.</p>
+    </details>
+
+    <details>
+      <summary>macOS says the file is from an unidentified developer</summary>
+      <p>Do not double-click it. <b>Right-click</b> the file, choose <b>Open</b>,
+        then confirm. macOS only offers that option on the right-click menu.</p>
+    </details>
+
+    <details>
+      <summary>Notes are empty, or summaries never appear</summary>
+      <p>Summarizing needs <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a>
+        running locally. Check it is installed and the model is pulled:</p>
+      <pre>ollama pull llama3.2</pre>
+      <p>Recording and transcription work without it — you will still get a
+        transcript, just no written summary. The diagnostic report tells you
+        whether Ollama was reachable.</p>
+    </details>
+
+    <details>
+      <summary>Nothing is transcribed, or the microphone is silent</summary>
+      <p>List what the app can see:</p>
+      <pre>python vlocalhost.py --devices</pre>
+      <p>On macOS, allow the microphone permission prompt on first run. On Linux,
+        install PortAudio (<code>sudo apt install libportaudio2</code>, or
+        <code>sudo dnf install portaudio</code>). Silence is ignored on purpose —
+        lines only appear when someone actually speaks.</p>
+    </details>
+
+    <details>
+      <summary>The app opens and closes immediately</summary>
+      <p>Run it from a terminal so the error is visible:</p>
+      <pre>python vlocalhost.py --no-tray</pre>
+      <p>Then send us the report from <code>python vlocalhost.py --diagnose</code>.</p>
+    </details>
+
+    <details>
+      <summary>Where are my files?</summary>
+      <p>Notes are saved in your notes folder, reachable from <b>Open notes folder</b>
+        in the app. The log and diagnostic report sit in the app's config folder,
+        which <b>Report a problem</b> opens for you.</p>
+    </details>
+  </section>
+
+  <section class="wrap">
+    <h2>Feature requests</h2>
+    <p class="sub">
+      Ideas are welcome in the same tracker — tag them however you like, we read
+      everything. If it is about pricing or a team deployment, email is better.
+    </p>
+    <a class="btn btn-ghost" href="https://github.com/antigravitysoham-eng/vlocalhost-core/issues"
+       target="_blank" rel="noopener">Browse open issues →</a>
+  </section>
+</main>
+
+<footer>
+  Vlocalhost.AI · on-device voice intelligence · <span id="year"></span>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var EMAIL = "soham.mitra@zeron.one";
+
+  /* Written at runtime so the address is not sitting in the HTML for scrapers. */
+  var subject = encodeURIComponent("Vlocalhost.AI — support request");
+  var body = encodeURIComponent(
+    "What happened:\n\n\n" +
+    "What I expected:\n\n\n" +
+    "Steps to reproduce:\n1.\n2.\n3.\n\n" +
+    "(Please attach vlocalhost-report.txt — the app's 'Report a problem' " +
+    "button saves it and opens the folder.)\n");
+  document.getElementById("mailBtn").href =
+    "mailto:" + EMAIL + "?subject=" + subject + "&body=" + body;
+
+  /* Prefill the issue so a bug report arrives with the details already in it. */
+  var issueBody = encodeURIComponent(
+    "### What happened\n\n\n" +
+    "### What I expected\n\n\n" +
+    "### Steps to reproduce\n1.\n2.\n3.\n\n" +
+    "### Diagnostic report\n" +
+    "<!-- Drag vlocalhost-report.txt into this box, or paste it below. -->\n\n" +
+    "### System\n" +
+    "- OS:\n- Installed from: website installer / git clone\n");
+  document.getElementById("bugBtn").href =
+    "https://github.com/antigravitysoham-eng/vlocalhost-core/issues/new" +
+    "?title=" + encodeURIComponent("[bug] ") + "&body=" + issueBody;
+
+  document.getElementById("year").textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>

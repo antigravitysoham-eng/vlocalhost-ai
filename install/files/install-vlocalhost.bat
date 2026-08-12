@@ -3,11 +3,12 @@ setlocal EnableExtensions
 title Vlocalhost.AI installer
 color 0E
 
-set "VERSION=1.0.4"
+set "VERSION=1.0.5"
 set "ZIPURL=https://github.com/antigravitysoham-eng/vlocalhost-core/archive/refs/tags/v%VERSION%.zip"
 set "ROOT=%LOCALAPPDATA%\Vlocalhost"
 set "APP=%ROOT%\vlocalhost-core-%VERSION%"
 set "ZIP=%TEMP%\vlocalhost-%VERSION%.zip"
+set "LOG=%ROOT%\install-log.txt"
 
 echo.
 echo    Vlocalhost.AI
@@ -16,6 +17,8 @@ echo    ==========================================
 echo.
 echo    This installs everything into your own user folder.
 echo    No administrator rights are needed.
+if not exist "%ROOT%" mkdir "%ROOT%" >nul 2>&1
+echo Vlocalhost installer %VERSION% - %DATE% %TIME% > "%LOG%"
 echo.
 
 REM --------------------------------------------------------------- Python
@@ -32,6 +35,10 @@ if not defined PY (
   echo        2. On the first screen, TICK "Add python.exe to PATH"
   echo        3. Run this installer again
   echo.
+  echo.
+  echo        Details:  %LOG%
+  echo        Get help: https://antigravitysoham-eng.github.io/vlocalhost-ai/support/
+  echo.
   pause
   exit /b 1
 )
@@ -39,40 +46,59 @@ echo    [1/5] Python found.
 
 REM ------------------------------------------------------------- Download
 echo    [2/5] Downloading Vlocalhost %VERSION% ...
-if not exist "%ROOT%" mkdir "%ROOT%" >nul 2>&1
 if exist "%APP%" rmdir /s /q "%APP%" >nul 2>&1
 powershell -NoProfile -ExecutionPolicy Bypass -Command "$ProgressPreference='SilentlyContinue'; try { Invoke-WebRequest -Uri '%ZIPURL%' -OutFile '%ZIP%' -UseBasicParsing } catch { exit 1 }"
 if errorlevel 1 (
   echo    [X] Download failed. Check your internet connection and try again.
+  echo.
+  echo        Details:  %LOG%
+  echo        Get help: https://antigravitysoham-eng.github.io/vlocalhost-ai/support/
+  echo.
   pause
   exit /b 1
 )
 powershell -NoProfile -ExecutionPolicy Bypass -Command "try { Expand-Archive -Path '%ZIP%' -DestinationPath '%ROOT%' -Force } catch { exit 1 }"
 if errorlevel 1 (
   echo    [X] Could not unpack the download.
+  echo.
+  echo        Details:  %LOG%
+  echo        Get help: https://antigravitysoham-eng.github.io/vlocalhost-ai/support/
+  echo.
   pause
   exit /b 1
 )
 del "%ZIP%" >nul 2>&1
 if not exist "%APP%\vlocalhost.py" (
   echo    [X] The download did not contain what we expected.
+  echo.
+  echo        Details:  %LOG%
+  echo        Get help: https://antigravitysoham-eng.github.io/vlocalhost-ai/support/
+  echo.
   pause
   exit /b 1
 )
 
 REM ------------------------------------------------------- Environment
 echo    [3/5] Setting up a private Python environment ...
-%PY% -m venv "%APP%\.venv"
+%PY% -m venv "%APP%\.venv" >> "%LOG%" 2>&1
 if errorlevel 1 (
   echo    [X] Could not create the Python environment.
+  echo.
+  echo        Details:  %LOG%
+  echo        Get help: https://antigravitysoham-eng.github.io/vlocalhost-ai/support/
+  echo.
   pause
   exit /b 1
 )
 set "VPY=%APP%\.venv\Scripts\python.exe"
-"%VPY%" -m pip install --upgrade pip --quiet --disable-pip-version-check
-"%VPY%" -m pip install -r "%APP%\requirements.txt" --quiet --disable-pip-version-check
+"%VPY%" -m pip install --upgrade pip --disable-pip-version-check >> "%LOG%" 2>&1
+"%VPY%" -m pip install -r "%APP%\requirements.txt" --disable-pip-version-check >> "%LOG%" 2>&1
 if errorlevel 1 (
   echo    [X] Could not install the dependencies.
+  echo.
+  echo        Details:  %LOG%
+  echo        Get help: https://antigravitysoham-eng.github.io/vlocalhost-ai/support/
+  echo.
   pause
   exit /b 1
 )
