@@ -170,6 +170,50 @@
   :focus-visible { outline:2px solid var(--amber); outline-offset:3px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } html{ scroll-behavior:auto; } }
 </style>
+
+<style id="tip-css">
+  .tip-ov{position:fixed;inset:0;z-index:210;display:grid;place-items:center;padding:20px;
+    background:rgba(4,7,12,.78);backdrop-filter:blur(6px);opacity:0;transition:opacity .2s ease}
+  .tip-ov.on{opacity:1}
+  .tip-ov[hidden]{display:none}
+  .tip-modal{position:relative;width:100%;max-width:392px;max-height:92vh;overflow-y:auto;
+    background:var(--bg-2);border:1px solid var(--line-2);border-radius:18px;padding:28px 26px 22px;
+    box-shadow:var(--shadow);text-align:center;
+    transform:translateY(10px) scale(.985);transition:transform .22s cubic-bezier(.2,.7,.2,1)}
+  .tip-ov.on .tip-modal{transform:none}
+  .tip-x{position:absolute;top:12px;right:12px;width:31px;height:31px;border-radius:9px;
+    border:1px solid var(--line);background:transparent;color:var(--muted);font-size:18px;line-height:1;
+    cursor:pointer;transition:color .15s,border-color .15s}
+  .tip-x:hover{color:var(--ink);border-color:var(--line-2)}
+  .tip-eyebrow{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--cyan);margin:0 0 10px}
+  .tip-modal h2{font-family:var(--f-display);font-size:1.42rem;line-height:1.2;letter-spacing:-.02em;
+    margin:0 0 9px;color:var(--ink)}
+  .tip-sub{font-family:var(--f-body);font-size:.845rem;line-height:1.6;color:var(--muted);margin:0 0 18px}
+  .tip-picks{display:flex;gap:9px;margin-bottom:17px}
+  .tip-pick{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+    font-family:var(--f-body);font-size:.83rem;font-weight:600;color:var(--ink);
+    background:var(--glass);border:1px solid var(--line-2);border-radius:12px;padding:12px 8px;
+    cursor:pointer;text-decoration:none;transition:border-color .16s,transform .16s,background .16s}
+  .tip-pick:hover{border-color:var(--amber);transform:translateY(-1px);background:rgba(255,180,61,.07)}
+  .tip-pick .emo{font-size:1.15rem;line-height:1}
+  .tip-pick .amt{font-family:var(--f-mono);font-size:.68rem;color:var(--faint);letter-spacing:.05em}
+  .tip-qr{width:158px;height:158px;border-radius:12px;display:block;margin:0 auto 10px;
+    border:1px solid var(--line-2);background:#000}
+  .tip-scan{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.07em;color:var(--faint);margin:0 0 15px}
+  .tip-id{display:flex;align-items:center;gap:8px;justify-content:space-between;
+    background:var(--bg);border:1px solid var(--line-2);border-radius:11px;padding:9px 9px 9px 13px;margin-bottom:13px}
+  .tip-id code{font-family:var(--f-mono);font-size:.83rem;color:var(--amber);letter-spacing:.02em}
+  .tip-copy{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);background:var(--glass);border:1px solid var(--line-2);border-radius:8px;
+    padding:7px 11px;cursor:pointer;transition:color .15s,border-color .15s}
+  .tip-copy:hover{color:var(--ink);border-color:var(--amber)}
+  .tip-later{font-family:var(--f-body);font-size:.8rem;color:var(--faint);background:none;border:none;
+    cursor:pointer;padding:5px;transition:color .15s}
+  .tip-later:hover{color:var(--muted);text-decoration:underline}
+  .tip-fine{font-family:var(--f-mono);font-size:.6rem;line-height:1.6;color:var(--faint);margin:9px 0 0}
+  @media (max-width:420px){.tip-modal{padding:24px 18px 18px}.tip-qr{width:140px;height:140px}}
+</style>
 </head>
 <body>
 
@@ -418,5 +462,95 @@
 })();
 </script>
 
+
+<div class="tip-ov" id="tipOv" hidden>
+  <div class="tip-modal" role="dialog" aria-modal="true" aria-labelledby="tipTitle">
+    <button class="tip-x" id="tipX" aria-label="Close">&times;</button>
+    <p class="tip-eyebrow">Your download has started</p>
+    <h2 id="tipTitle">Liked Vlocalhost?<br />Buy me an Americano</h2>
+    <p class="tip-sub">It's free and always will be &mdash; it runs on your machine, so it costs me
+       nothing to give away. If it saves you a meeting's worth of typing, a coffee back is lovely.
+       Entirely optional.</p>
+
+    <div class="tip-picks">
+      <a class="tip-pick" id="tipCoffee" href="#" rel="noopener">
+        <span class="emo">&#9749;</span>Americano<span class="amt">&#8377;&#8377;&#8377;</span></a>
+      <a class="tip-pick" id="tipSalad" href="#" rel="noopener">
+        <span class="emo">&#129388;</span>Salad<span class="amt">&#8377;&#8377;&#8377;</span></a>
+    </div>
+
+    <img class="tip-qr" src="../assets/upi-qr.png"
+         alt="UPI QR code for mitrasoham@ybl" width="158" height="158" />
+    <p class="tip-scan">Scan with any UPI app &middot; pay what you like</p>
+
+    <div class="tip-id">
+      <code>mitrasoham@ybl</code>
+      <button class="tip-copy" id="tipCopy">Copy</button>
+    </div>
+
+    <button class="tip-later" id="tipLater">No thanks, just the download</button>
+    <p class="tip-fine">Goes to Soham Mitra &middot; nothing is charged automatically</p>
+  </div>
+</div>
+
+<script id="tip-js">
+(function () {
+  "use strict";
+  var UPI = "mitrasoham@ybl", PAYEE = "Soham%20Mitra";
+  var ov = document.getElementById("tipOv");
+  if (!ov) return;
+
+  /* no preset amount -- the payer decides in their UPI app */
+  function link(note) {
+    return "upi://pay?pa=" + UPI + "&pn=" + PAYEE + "&cu=INR&tn=" + note;
+  }
+  document.getElementById("tipCoffee").href = link("Americano%20for%20Vlocalhost");
+  document.getElementById("tipSalad").href  = link("Salad%20for%20Vlocalhost");
+
+  var lastFocus = null;
+  function open() {
+    if (!ov.hidden) return;
+    lastFocus = document.activeElement;
+    ov.hidden = false;
+    requestAnimationFrame(function () { ov.classList.add("on"); });
+    document.body.style.overflow = "hidden";
+    document.getElementById("tipLater").focus();
+  }
+  function close() {
+    ov.classList.remove("on");
+    document.body.style.overflow = "";
+    setTimeout(function () { ov.hidden = true; }, 200);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.getElementById("tipX").addEventListener("click", close);
+  document.getElementById("tipLater").addEventListener("click", close);
+  ov.addEventListener("mousedown", function (e) { if (e.target === ov) close(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !ov.hidden) close();
+  });
+
+  /* let the file actually start downloading first, then ask */
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest ? e.target.closest("button.dl") : null;
+    if (btn) setTimeout(open, 900);
+  });
+
+  document.getElementById("tipCopy").addEventListener("click", function () {
+    var btn = this;
+    function ok() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1800); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(UPI).then(ok, fallback);
+    } else { fallback(); }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = UPI; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      try { document.execCommand("copy"); ok(); } catch (x) { btn.textContent = "Copy failed"; }
+      ta.remove();
+    }
+  });
+})();
+</script>
 </body>
 </html>
