@@ -448,6 +448,8 @@
   .lead-submit[disabled]{opacity:.6;cursor:default}
   .lead-fine{font-family:var(--f-mono);font-size:.63rem;line-height:1.6;color:var(--faint);
     margin:4px 0 0;text-align:center}
+  .lead-fine-top{text-align:left;background:var(--glass);border:1px solid var(--line);
+    border-left:2px solid var(--cyan);border-radius:9px;padding:10px 12px;margin:0 0 18px}
   @media (max-width:430px){.lead-modal{padding:26px 20px 22px}}
 </style>
 </head>
@@ -1014,18 +1016,18 @@
     <h2 id="leadTitle">Get Vlocalhost free</h2>
     <p class="lead-sub">Tell us where to reach you and we'll take you straight to the installer.
        No card, no account.</p>
+    <p class="lead-fine lead-fine-top">Your meeting audio never leaves your device.<br />This form is only how we reach you.</p>
     <form id="leadForm" novalidate>
       <label>Full name<input type="text" name="name" autocomplete="name" required /></label>
-      <label>Work email<input type="email" name="email" autocomplete="email" required /></label>
+      <label>Email<input type="email" name="email" autocomplete="email" required /></label>
       <label>Phone<input type="tel" name="phone" autocomplete="tel" required /></label>
-      <label>Company<input type="text" name="company" autocomplete="organization" required /></label>
+      <label>Company (optional)<input type="text" name="company" autocomplete="organization" /></label>
       <label class="lead-check" id="leadConsentRow">
         <input type="checkbox" name="consent" required />
         <span>I agree to Vlocalhost.AI storing these details and contacting me about the product.</span>
       </label>
       <p class="lead-err" id="leadErr" role="alert" hidden></p>
       <button class="lead-submit" type="submit" id="leadGo">Continue to install &rarr;</button>
-      <p class="lead-fine">Your meeting audio never leaves your device.<br />This form is only how we reach you.</p>
     </form>
   </div>
 </div>
@@ -1111,7 +1113,6 @@
       return fail("Please enter a valid email address.", f.email);
     if (data.phone.replace(/[^0-9]/g, "").length < 7)
       return fail("Please enter a valid phone number.", f.phone);
-    if (!data.company) return fail("Please enter your company.", f.company);
     if (!data.consent) { consentRow.classList.add("bad"); return fail("Please tick the consent box to continue."); }
 
     go.disabled = true;
