@@ -236,13 +236,13 @@
 
 <main id="top">
   <header class="hero wrap">
-    <p class="eyebrow" style="justify-content:center;">Get Vlocalhost · on-device · v1.0</p>
+    <p class="eyebrow" style="justify-content:center;">Get Vlocalhost · on-device · v1.0.4</p>
     <h1>Install Vlocalhost</h1>
     <p>The offline voice engine that writes your meetings. Pick your platform, download the
        installer, and you're recording notes in a couple of minutes — nothing leaves your machine.</p>
     <div class="prereqs">
-      <span class="chip"><b>Python</b> 3.9+</span>
-      <span class="chip"><b>Ollama</b> (local summaries)</span>
+      <span class="chip"><a href="https://www.python.org/downloads/" target="_blank" rel="noopener"><b>Python</b> 3.9+</a></span>
+      <span class="chip"><a href="https://ollama.com/download" target="_blank" rel="noopener"><b>Ollama</b> (local summaries)</a></span>
       <span class="chip"><b>~500 MB</b> disk</span>
       <span class="chip"><b>0 bytes</b> uploaded</span>
     </div>
@@ -309,85 +309,66 @@
   var MAC = { icon:'<path d="M16.4 12.9c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.7.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.4 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.5 2.2 2.6 2.1 1-.04 1.5-.7 2.7-.7 1.2 0 1.6.7 2.7.7 1.1-.02 1.8-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.4-.02-.01-2.1-.8-2.1-3.2zM14.6 6.3c.6-.7 1-1.7.9-2.7-.9.04-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.6 1 .08 1.9-.5 2.5-1.2z"/>' };
   var LNX = { icon:'<path d="M12 2c-2.1 0-3.4 1.8-3.4 4.1 0 1.2.2 1.9.2 2.7 0 1-.9 1.7-1.9 3.2C5.8 13.8 5 15.2 5 16.6c0 .9.6 1.4 1.3 1.6-.1.3-.2.6-.2 1 0 1.6 2.6 2.6 5.9 2.6s5.9-1 5.9-2.6c0-.4-.1-.7-.2-1 .7-.2 1.3-.7 1.3-1.6 0-1.4-.8-2.8-1.9-4.6-1-1.5-1.9-2.2-1.9-3.2 0-.8.2-1.5.2-2.7C15.4 3.8 14.1 2 12 2z"/><circle cx="10.4" cy="6.6" r=".85" fill="var(--bg-2)"/><circle cx="13.6" cy="6.6" r=".85" fill="var(--bg-2)"/>' };
 
+  var REPO = "https://github.com/antigravitysoham-eng/vlocalhost-core";
   var PLATFORMS = [
     {
-      key:"windows", name:"Windows", plat:"Windows 10 / 11 · .ps1", icon:WIN.icon,
-      file:"install-vlocalhost.ps1",
-      note:'PortAudio ships with the wheel — nothing extra to install. Run the script in <b>PowerShell</b> from the project folder. It leaves a <b>Vlocalhost.AI</b> icon on your desktop and in the Start menu.',
+      key:"windows", name:"Windows", plat:"Windows 10 / 11", icon:WIN.icon,
+      file:"install-vlocalhost.bat",
+      url:"files/install-vlocalhost.bat",
+      how:"Double-click the downloaded file. Windows may warn that it is from the internet \u2014 choose <b>More info \u2192 Run anyway</b>.",
+      note:'Leaves a <b>Vlocalhost.AI</b> icon on your desktop and in the Start menu. Nothing needs administrator rights.',
       cmds:[
-        ["# from the unzipped project folder","c"],
+        ["1. Download install-vlocalhost.bat","c"],
+        ["2. Double-click it","c"],
+        ["3. Double-click the desktop icon","c"],
+        ["","c"],
+        ["# prefer the terminal? this does the same:","c"],
+        ["git clone " + "https://github.com/antigravitysoham-eng/vlocalhost-core.git","p"],
+        ["cd vlocalhost-core","p"],
         ["python -m venv .venv","p"],
-        [".\\.venv\\Scripts\\Activate.ps1","p"],
-        ["pip install -r requirements.txt","p"],
-        ["ollama pull llama3.2","p"],
-        ["python vlocalhost.py --install-shortcut","p"],
-        ["# then just double-click the Vlocalhost.AI icon","c"]
-      ],
-      script:
-"# Vlocalhost.AI - installer (Windows / PowerShell)\n" +
-"# Run from inside the unzipped 'Meeting Notes Agent' folder:\n" +
-"#   powershell -ExecutionPolicy Bypass -File install-vlocalhost.ps1\n\n" +
-"python -m venv .venv\n" +
-".\\.venv\\Scripts\\Activate.ps1\n" +
-"pip install -r requirements.txt\n" +
-"ollama pull llama3.2\n" +
-"python vlocalhost.py --install-shortcut\n" +
-"Write-Host 'Vlocalhost installed. Double-click the Vlocalhost.AI icon on your desktop.'\n" +
-"python vlocalhost.py\n"
+        [".venv\\Scripts\\python.exe -m pip install -r requirements.txt","p"],
+        [".venv\\Scripts\\python.exe vlocalhost.py --install-shortcut","p"]
+      ]
     },
     {
-      key:"macos", name:"macOS", plat:"macOS 12+ · .sh", icon:MAC.icon,
-      file:"install-vlocalhost.sh",
-      note:'Installs <b>PortAudio</b> via Homebrew for the mic. macOS will ask for <b>microphone permission</b> on first run — allow it. You get a <b>Vlocalhost.AI</b> app in <code>~/Applications</code>.',
+      key:"macos", name:"macOS", plat:"macOS 12+ \u00b7 Intel & Apple silicon", icon:MAC.icon,
+      file:"install-vlocalhost-macos.command",
+      url:"files/install-vlocalhost-macos.command",
+      how:"<b>Right-click</b> the downloaded file and choose <b>Open</b>, then confirm. macOS blocks a plain double-click on anything downloaded.",
+      note:'Installs <b>Vlocalhost.AI.app</b> into your home Applications folder. macOS asks for <b>microphone permission</b> on first run \u2014 allow it.',
       cmds:[
+        ["1. Download install-vlocalhost-macos.command","c"],
+        ["2. Right-click it \u2192 Open \u2192 Open","c"],
+        ["3. Launch Vlocalhost.AI from Launchpad","c"],
+        ["","c"],
+        ["# prefer the terminal? this does the same:","c"],
+        ["git clone " + "https://github.com/antigravitysoham-eng/vlocalhost-core.git","p"],
+        ["cd vlocalhost-core","p"],
         ["brew install portaudio","p"],
         ["python3 -m venv .venv","p"],
-        ["source .venv/bin/activate","p"],
-        ["pip install -r requirements.txt","p"],
-        ["ollama pull llama3.2","p"],
-        ["python vlocalhost.py --install-shortcut","p"],
-        ["# then just double-click the Vlocalhost.AI icon","c"]
-      ],
-      script:
-"#!/usr/bin/env bash\n" +
-"# Vlocalhost.AI - installer (macOS)\n" +
-"# Run from inside the unzipped 'Meeting Notes Agent' folder:  bash install-vlocalhost.sh\n" +
-"set -e\n\n" +
-"command -v brew >/dev/null && brew install portaudio || echo 'Install Homebrew, then: brew install portaudio'\n" +
-"python3 -m venv .venv\n" +
-"source .venv/bin/activate\n" +
-"pip install -r requirements.txt\n" +
-"ollama pull llama3.2\n" +
-"python vlocalhost.py --install-shortcut\n" +
-"echo 'Vlocalhost installed. Open it from your applications or desktop icon.'\n" +
-"python vlocalhost.py\n"
+        [".venv/bin/python -m pip install -r requirements.txt","p"],
+        [".venv/bin/python vlocalhost.py --install-shortcut","p"]
+      ]
     },
     {
-      key:"linux", name:"Linux", plat:"Debian / Ubuntu · .sh", icon:LNX.icon,
-      file:"install-vlocalhost.sh",
-      note:'Installs <b>libportaudio2</b> for the mic (use <code>dnf</code> on Fedora). No system tray? It falls back to terminal mode automatically. A <b>Vlocalhost.AI</b> launcher is added to your applications menu.',
+      key:"linux", name:"Linux", plat:"Debian / Ubuntu / Fedora", icon:LNX.icon,
+      file:"install-vlocalhost-linux.sh",
+      url:"files/install-vlocalhost-linux.sh",
+      how:"Open a terminal where you saved it and run <b>bash install-vlocalhost-linux.sh</b>.",
+      note:'Adds <b>Vlocalhost.AI</b> to your applications menu. Asks for your password only to install the audio library. No system tray? It falls back to terminal mode.',
       cmds:[
-        ["sudo apt install libportaudio2","p"],
+        ["1. Download install-vlocalhost-linux.sh","c"],
+        ["2. bash install-vlocalhost-linux.sh","c"],
+        ["3. Open Vlocalhost.AI from your menu","c"],
+        ["","c"],
+        ["# prefer the terminal? this does the same:","c"],
+        ["git clone " + "https://github.com/antigravitysoham-eng/vlocalhost-core.git","p"],
+        ["cd vlocalhost-core","p"],
+        ["sudo apt install libportaudio2   # dnf: portaudio","p"],
         ["python3 -m venv .venv","p"],
-        ["source .venv/bin/activate","p"],
-        ["pip install -r requirements.txt","p"],
-        ["ollama pull llama3.2","p"],
-        ["python vlocalhost.py --install-shortcut","p"],
-        ["# then just double-click the Vlocalhost.AI icon","c"]
-      ],
-      script:
-"#!/usr/bin/env bash\n" +
-"# Vlocalhost.AI - installer (Linux / Debian-Ubuntu)\n" +
-"# Run from inside the unzipped 'Meeting Notes Agent' folder:  bash install-vlocalhost.sh\n" +
-"set -e\n\n" +
-"sudo apt-get update && sudo apt-get install -y libportaudio2\n" +
-"python3 -m venv .venv\n" +
-"source .venv/bin/activate\n" +
-"pip install -r requirements.txt\n" +
-"ollama pull llama3.2\n" +
-"python vlocalhost.py --install-shortcut\n" +
-"echo 'Vlocalhost installed. Open it from your applications or desktop icon.'\n" +
-"python vlocalhost.py\n"
+        [".venv/bin/python -m pip install -r requirements.txt","p"],
+        [".venv/bin/python vlocalhost.py --install-shortcut","p"]
+      ]
     }
   ];
 
@@ -410,7 +391,7 @@
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 5 5-5M5 21h14"/></svg>' +
         "Download for " + p.name +
       "</button>" +
-      '<p class="dl-note">downloads <b>' + p.file + "</b> · then run the commands below</p>" +
+      '<p class="dl-note">' + p.how + "</p>" +
       '<div class="cmds">' +
         '<div class="cmds-bar"><span>install · ' + p.key + '</span>' +
           '<button class="copy" data-key="' + p.key + '">copy</button></div>' +
@@ -444,18 +425,14 @@
   }
 
   function download(p) {
-    try {
-      var blob = new Blob([p.script], { type: "text/plain;charset=utf-8" });
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement("a");
-      a.href = url; a.download = p.file;
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
-      say("Downloading " + p.file + " — then run the commands shown.");
-    } catch (e) {
-      // sandbox blocked the download — copy the installer instead
-      copyText(p.script, "Download blocked here — installer script copied to clipboard.");
-    }
+    // A real file on the site, not a blob built here: what we test is what
+    // people get, and they can read it before running it.
+    var a = document.createElement("a");
+    a.href = p.url;
+    a.download = p.file;
+    document.body.appendChild(a); a.click(); a.remove();
+    say("Downloading " + p.file + " \u2014 then " + (p.key === "linux"
+        ? "run it with bash." : "open it."));
   }
 
   var byKey = {}; PLATFORMS.forEach(function(p){ byKey[p.key] = p; });
