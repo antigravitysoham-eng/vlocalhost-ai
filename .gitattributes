@@ -1,0 +1,19 @@
+# Line endings are load-bearing for the installers.
+#
+# The shell installers are downloaded and run by bash on macOS and Linux.
+# A single CR at the end of a line makes bash fail with
+#   install-vlocalhost-linux.sh: line 2: $'\r': command not found
+# so these must be LF regardless of the platform they were committed from.
+*.sh        text eol=lf
+*.command   text eol=lf
+
+# Batch is the mirror image: keep it CRLF for cmd.exe.
+*.bat       text eol=crlf
+
+# Everything else: normalise in the repo, check out natively.
+*.html      text
+*.md        text
+*.xml       text
+*.txt       text
+*.png       binary
+*.svg       text
