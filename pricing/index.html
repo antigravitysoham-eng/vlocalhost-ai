@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pricing — Vlocalhost.AI</title>
+<meta name="description" content="Recording is free, forever. Vlocalhost.AI runs on your device, so capture and transcription cost you nothing. Pay only for automation, teams or enterprise deployment." />
+<link rel="canonical" href="https://antigravitysoham-eng.github.io/vlocalhost-site/pricing/" />
+<meta name="theme-color" content="#090C12" />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="apple-touch-icon" href="../assets/og-image.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Vlocalhost.AI" />
+<meta property="og:title" content="Pricing — Vlocalhost.AI" />
+<meta property="og:description" content="Recording is free, forever. Vlocalhost.AI runs on your device, so capture and transcription cost you nothing. Pay only for automation, teams or enterprise deployment." />
+<meta property="og:url" content="https://antigravitysoham-eng.github.io/vlocalhost-site/pricing/" />
+<meta property="og:image" content="https://antigravitysoham-eng.github.io/vlocalhost-site/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Pricing — Vlocalhost.AI" />
+<meta name="twitter:description" content="Recording is free, forever. Vlocalhost.AI runs on your device, so capture and transcription cost you nothing. Pay only for automation, teams or enterprise deployment." />
+<meta name="twitter:image" content="https://antigravitysoham-eng.github.io/vlocalhost-site/assets/og-image.png" />
+
+<style>
+  :root{
+    --bg:#090C12; --bg-2:#0E1220; --bg-3:#141B2A; --ink:#EAEEF4; --muted:#7E8AA0;
+    --faint:#4B5468; --line:rgba(255,255,255,0.075); --line-2:rgba(255,255,255,0.14);
+    --amber:#FFB43D; --amber-d:#E08A17; --cyan:#38E1CE; --glass:rgba(255,255,255,0.03);
+    --shadow:0 30px 80px -30px rgba(0,0,0,0.8); color-scheme:dark;
+    --f-display:'Helvetica Neue',Helvetica,Arial,system-ui,sans-serif;
+    --f-mono:ui-monospace,'Cascadia Code','SF Mono','JetBrains Mono',Consolas,monospace;
+    --f-body:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root{ --bg:#E5E8EE; --bg-2:#FCFCFD; --bg-3:#F1F3F7; --ink:#0B0F18; --muted:#55617A;
+      --faint:#97A1B4; --line:rgba(12,22,45,0.10); --line-2:rgba(12,22,45,0.18);
+      --amber:#A85F0C; --amber-d:#7F4708; --cyan:#0B8577; --glass:rgba(12,22,45,0.02);
+      --shadow:0 30px 70px -34px rgba(20,30,60,0.35); color-scheme:light; }
+  }
+  :root[data-theme="dark"]{ --bg:#090C12; --bg-2:#0E1220; --bg-3:#141B2A; --ink:#EAEEF4; --muted:#7E8AA0; --faint:#4B5468; --line:rgba(255,255,255,0.075); --line-2:rgba(255,255,255,0.14); --amber:#FFB43D; --amber-d:#E08A17; --cyan:#38E1CE; --glass:rgba(255,255,255,0.03); color-scheme:dark; }
+  :root[data-theme="light"]{ --bg:#E5E8EE; --bg-2:#FCFCFD; --bg-3:#F1F3F7; --ink:#0B0F18; --muted:#55617A; --faint:#97A1B4; --line:rgba(12,22,45,0.10); --line-2:rgba(12,22,45,0.18); --amber:#A85F0C; --amber-d:#7F4708; --cyan:#0B8577; --glass:rgba(12,22,45,0.02); color-scheme:light; }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(circle at 50% 6%,#000 0%,transparent 66%);opacity:.7;}
+  nav,main,footer{position:relative;z-index:1;}
+  .wrap{width:min(1160px,93vw);margin-inline:auto;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3{font-family:var(--f-display);font-weight:800;letter-spacing:-0.03em;line-height:1.04;margin:0;text-wrap:balance;}
+  .eyebrow{font-family:var(--f-mono);font-size:0.74rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber);display:inline-flex;align-items:center;gap:.6em;}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--amber);}
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 72%,transparent);border-bottom:1px solid var(--line);}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:13px 0;}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--f-display);font-weight:800;font-size:1.12rem;letter-spacing:-.02em;}
+  .brand small{font-family:var(--f-mono);font-weight:400;letter-spacing:.2em;font-size:.6rem;color:var(--muted);align-self:flex-start;margin-top:3px;}
+  .brand svg{width:26px;height:26px;}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .nlink{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);letter-spacing:.04em;}
+  .nlink:hover{color:var(--ink);}
+  .themebtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line-2);background:var(--glass);color:var(--ink);cursor:pointer;display:grid;place-items:center;}
+  .themebtn:hover{border-color:var(--amber);}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--f-mono);font-size:.82rem;letter-spacing:.03em;padding:12px 18px;border-radius:11px;cursor:pointer;border:1px solid transparent;transition:transform .15s,box-shadow .2s,border-color .2s;}
+  .btn-primary{background:var(--amber);color:#120A00;font-weight:600;box-shadow:0 0 0 1px var(--amber),0 14px 34px -14px var(--amber-d);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 30px -4px var(--amber);}
+  .btn-ghost{border-color:var(--line-2);color:var(--ink);background:var(--glass);}
+  .btn-ghost:hover{border-color:var(--amber);transform:translateY(-2px);}
+  /* hero */
+  .hero{padding:clamp(46px,7vw,88px) 0 8px;text-align:center;}
+  .hero h1{font-size:clamp(2.5rem,6.4vw,4.6rem);margin-top:18px;}
+  .hero p{max-width:56ch;margin:20px auto 0;color:var(--muted);font-size:clamp(1.02rem,1.6vw,1.22rem);}
+  /* toggle */
+  .toggle{display:inline-flex;align-items:center;gap:4px;margin:30px auto 0;padding:5px;border:1px solid var(--line-2);border-radius:999px;background:var(--bg-2);}
+  .toggle button{font-family:var(--f-mono);font-size:.8rem;letter-spacing:.04em;color:var(--muted);background:none;border:none;cursor:pointer;padding:9px 18px;border-radius:999px;transition:color .2s,background .2s;}
+  .toggle button.on{background:var(--amber);color:#120A00;font-weight:600;}
+  .save{font-family:var(--f-mono);font-size:.68rem;color:var(--cyan);letter-spacing:.08em;margin-left:8px;}
+  /* tiers */
+  .tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:clamp(34px,5vw,52px) 0 0;}
+  @media(max-width:1000px){.tiers{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.tiers{grid-template-columns:1fr;}}
+  .tier{border:1px solid var(--line-2);border-radius:18px;background:var(--bg-2);padding:26px 22px;display:flex;flex-direction:column;position:relative;}
+  .tier.pop{border-color:var(--amber);box-shadow:0 0 50px -22px var(--amber);}
+  .tier .pop-tag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;color:#120A00;background:var(--amber);padding:4px 12px;border-radius:999px;text-transform:uppercase;font-weight:600;}
+  .tier .tn{font-family:var(--f-display);font-weight:800;font-size:1.35rem;}
+  .tier .td{font-size:.86rem;color:var(--muted);margin:6px 0 18px;min-height:38px;}
+  .price{display:flex;align-items:baseline;gap:4px;font-family:var(--f-display);font-weight:800;letter-spacing:-.03em;}
+  .price .cur{font-size:1.4rem;color:var(--muted);}
+  .price .amt{font-size:3rem;line-height:1;}
+  .price .suf{font-size:.8rem;color:var(--muted);font-family:var(--f-mono);font-weight:400;letter-spacing:.02em;}
+  .billed{font-family:var(--f-mono);font-size:.68rem;color:var(--faint);letter-spacing:.04em;min-height:16px;margin:8px 0 18px;}
+  .tier .btn{width:100%;margin-bottom:20px;}
+  .flist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:.9rem;}
+  .flist li{display:flex;gap:9px;color:var(--muted);}
+  .flist li::before{content:"";flex-shrink:0;width:16px;height:16px;margin-top:3px;background:var(--amber);-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6L9 17l-5-5' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/contain no-repeat;mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6L9 17l-5-5' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/contain no-repeat;}
+  .flist li b{color:var(--ink);font-weight:600;}
+  .flist li.head{color:var(--faint);font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;margin-top:4px;}
+  .flist li.head::before{display:none;}
+  /* comparison */
+  section{padding:clamp(60px,8vw,104px) 0;}
+  .sec-head{text-align:center;margin-bottom:40px;}
+  .sec-head h2{font-size:clamp(1.8rem,4vw,2.8rem);margin-top:14px;}
+  .table-scroll{overflow-x:auto;border:1px solid var(--line-2);border-radius:16px;}
+  table{width:100%;border-collapse:collapse;min-width:720px;font-size:.9rem;}
+  th,td{text-align:center;padding:14px 16px;border-bottom:1px solid var(--line);}
+  th:first-child,td:first-child{text-align:left;}
+  thead th{font-family:var(--f-display);font-weight:800;font-size:1rem;position:sticky;top:0;background:var(--bg-2);}
+  thead th .p{font-family:var(--f-mono);font-size:.68rem;color:var(--muted);font-weight:400;display:block;letter-spacing:.04em;}
+  tbody tr:hover td{background:var(--glass);}
+  td.grp{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);background:var(--glass);}
+  .yes{color:var(--amber);font-weight:700;} .no{color:var(--faint);}
+  .cell-txt{font-family:var(--f-mono);font-size:.78rem;color:var(--ink);}
+  /* faq */
+  .faq{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:720px){.faq{grid-template-columns:1fr;}}
+  .qa{border:1px solid var(--line);border-radius:14px;background:var(--bg-2);padding:22px 24px;}
+  .qa h3{font-size:1.05rem;margin-bottom:8px;}
+  .qa p{margin:0;color:var(--muted);font-size:.93rem;}
+  footer{border-top:1px solid var(--line);padding:44px 0;}
+  .foot-in{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-family:var(--f-mono);font-size:.74rem;color:var(--muted);letter-spacing:.05em;}
+  .foot-in .m{font-family:var(--f-display);font-weight:800;font-size:1.5rem;letter-spacing:-.03em;color:var(--ink);}
+  .foot-in .m span{color:var(--amber);}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px;}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;}html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+
+<nav><div class="wrap nav-in">
+  <a class="brand" id="brandlink" href="../">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="nb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC24D"/><stop offset="1" stop-color="#E08A17"/></linearGradient></defs><rect x="2" y="2" width="60" height="60" rx="16" fill="url(#nb)"/><path d="M12 32 H18 L21 25 L25 39 L29 16 L33 48 L37 24 L40 34 L43 30 H52" fill="none" stroke="#0B0F18" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Vlocalhost <small>.AI</small>
+  </a>
+  <div class="nav-right">
+    <a class="nlink" id="sitelink" href="../">← Site</a>
+    <a class="nlink" id="installlink" href="../install/">Install</a>
+    <button class="themebtn" id="theme" aria-label="Toggle theme"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+  </div>
+</div></nav>
+
+<main id="top">
+  <header class="hero wrap">
+    <p class="eyebrow" style="justify-content:center;">Pricing</p>
+    <h1>Recording is free.<br>Forever.</h1>
+    <p>Because Vlocalhost runs on your device, capturing and transcribing your own voice costs us
+       almost nothing — so it costs you nothing. Pay only when you want automation, a team, or
+       enterprise-grade deployment.</p>
+    <div class="toggle" role="group" aria-label="Billing period">
+      <button id="mBtn">Monthly</button>
+      <button id="aBtn" class="on">Annual <span class="save">save 25%</span></button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="tiers">
+      <!-- FREE -->
+      <div class="tier">
+        <div class="tn">Solo</div>
+        <div class="td">Install and record your voice, privately.</div>
+        <div class="price"><span class="amt" data-m="0" data-a="0">$0</span><span class="suf">forever</span></div>
+        <div class="billed">no account · no card</div>
+        <a class="btn btn-ghost" id="cta-free" href="../install/">Get it free</a>
+        <ul class="flist">
+          <li><b>Unlimited</b> on-device recording &amp; transcription</li>
+          <li>Automatic <b>local</b> AI summaries</li>
+          <li>Silence-ignored · <b>no bot</b> · 0 bytes uploaded</li>
+          <li>Notes saved locally (Markdown + transcript)</li>
+          <li>1 device · Windows / macOS / Linux</li>
+          <li>Community support</li>
+        </ul>
+      </div>
+      <!-- PRO -->
+      <div class="tier pop">
+        <div class="pop-tag">Most popular</div>
+        <div class="tn">Pro</div>
+        <div class="td">For individuals who live in meetings.</div>
+        <div class="price"><span class="cur">$</span><span class="amt" data-m="12" data-a="9">9</span><span class="suf">/mo</span></div>
+        <div class="billed" data-m="billed monthly" data-a="billed annually ($108/yr)">billed annually ($108/yr)</div>
+        <a class="btn btn-primary" id="cta-pro" href="../install/">Start free →</a>
+        <ul class="flist">
+          <li class="head">Everything in Solo, plus</li>
+          <li><b>Bring your own voice model</b> — any Whisper, local folder, or custom engine</li>
+          <li>Premium large models tuned for accuracy</li>
+          <li><b>Calendar auto-start</b> (Google + Outlook)</li>
+          <li>Name notes from the event</li>
+          <li><b>Email the summary</b> to attendees</li>
+          <li>Post notes back to the event</li>
+          <li>Multiple devices · custom templates · priority updates</li>
+        </ul>
+      </div>
+      <!-- TEAM -->
+      <div class="tier">
+        <div class="tn">Team</div>
+        <div class="td">For co-working teams that share notes.</div>
+        <div class="price"><span class="cur">$</span><span class="amt" data-m="18" data-a="15">15</span><span class="suf">/user/mo</span></div>
+        <div class="billed" data-m="billed monthly · min 3 seats" data-a="billed annually · min 3 seats">billed annually · min 3 seats</div>
+        <a class="btn btn-ghost" id="cta-team" href="mailto:soham.mitra@zeron.one?subject=Vlocalhost%20Team%20plan">Start a team</a>
+        <ul class="flist">
+          <li class="head">Everything in Pro, plus</li>
+          <li>Shared <b>workspace &amp; notes library</b></li>
+          <li>Shared templates + glossary</li>
+          <li>Roles &amp; <b>admin controls</b></li>
+          <li><b>Centralized model management</b></li>
+          <li>Usage &amp; adoption dashboard</li>
+          <li><b>SSO</b> (Google / Microsoft)</li>
+        </ul>
+      </div>
+      <!-- ENTERPRISE -->
+      <div class="tier">
+        <div class="tn">Enterprise</div>
+        <div class="td">For regulated, security-first orgs.</div>
+        <div class="price"><span class="amt" style="font-size:2.3rem;">Custom</span></div>
+        <div class="billed">talk to us</div>
+        <a class="btn btn-ghost" id="cta-ent" href="mailto:soham.mitra@zeron.one?subject=Vlocalhost%20Enterprise">Contact sales</a>
+        <ul class="flist">
+          <li class="head">Everything in Team, plus</li>
+          <li><b>On-prem / air-gapped</b> deployment</li>
+          <li>SSO + <b>SCIM</b> provisioning</li>
+          <li><b>SOC 2 / HIPAA / GDPR</b>, DPA, audit logs</li>
+          <li>Self-hosted / custom <b>model hosting</b></li>
+          <li>Data residency &amp; retention controls</li>
+          <li>Dedicated success manager · SLA</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON -->
+  <section><div class="wrap">
+    <div class="sec-head"><p class="eyebrow" style="justify-content:center;">Compare</p><h2>Every plan keeps your audio on-device.</h2></div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr>
+          <th>Feature</th>
+          <th>Solo<span class="p">Free</span></th>
+          <th>Pro<span class="p">$9/mo</span></th>
+          <th>Team<span class="p">$15/user</span></th>
+          <th>Enterprise<span class="p">Custom</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="grp" colspan="5">Recording · on-device</td></tr>
+          <tr><td>On-device recording &amp; transcription</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Local AI summaries (no cloud)</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Silence-ignored VAD · no bot</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>0 bytes uploaded</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Devices</td><td class="cell-txt">1</td><td class="cell-txt">Multiple</td><td class="cell-txt">Multiple</td><td class="cell-txt">Multiple</td></tr>
+          <tr><td class="grp" colspan="5">Model freedom</td></tr>
+          <tr><td>Bring your own voice model</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Premium large models</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Centralized model management</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Self-hosted / custom model hosting</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td class="grp" colspan="5">Automation</td></tr>
+          <tr><td>Calendar auto-start (Google / Outlook)</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Name notes from the event</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Email summary to attendees</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Post notes back to event</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Custom summary templates</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td class="grp" colspan="5">Team</td></tr>
+          <tr><td>Shared workspace &amp; notes library</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Admin controls &amp; roles</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>SSO</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Usage &amp; adoption dashboard</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td class="grp" colspan="5">Enterprise &amp; security</td></tr>
+          <tr><td>On-prem / air-gapped deployment</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>SCIM provisioning</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>SOC 2 / HIPAA / GDPR · DPA · audit logs</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Data residency &amp; retention controls</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Support</td><td class="cell-txt">Community</td><td class="cell-txt">Priority</td><td class="cell-txt">Priority</td><td class="cell-txt">Dedicated + SLA</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div></section>
+
+  <!-- FAQ -->
+  <section style="padding-top:0;"><div class="wrap">
+    <div class="sec-head"><p class="eyebrow" style="justify-content:center;">FAQ</p><h2>Questions, answered plainly.</h2></div>
+    <div class="faq">
+      <div class="qa"><h3>Is the free plan really free?</h3><p>Yes — install and record forever, on-device, no account and no card. We monetize automation, team features, and enterprise deployment, not the core act of recording your own voice.</p></div>
+      <div class="qa"><h3>Does my audio ever leave my device?</h3><p>No. Recording, transcription, and summarization all run locally. The cloud is only touched by things you explicitly turn on — like emailing a summary or reading your calendar. Otherwise: 0 bytes uploaded.</p></div>
+      <div class="qa"><h3>Can I use my own voice model?</h3><p>On Pro and up, yes. Point Vlocalhost at any Whisper model, a local model folder, or a custom engine. No lock-in, no vendor model forced on you.</p></div>
+      <div class="qa"><h3>How does pricing change as you add features?</h3><p>Solo always keeps install-and-record. New automation lands in Pro, collaboration in Team, and compliance in Enterprise. We won't move a shipped free feature behind a paywall.</p></div>
+      <div class="qa"><h3>Do you offer discounts?</h3><p>Annual billing saves ~25%. Nonprofit, education, and early-stage startup discounts are available on request — reach out.</p></div>
+      <div class="qa"><h3>No bot joins the call — how?</h3><p>Vlocalhost captures your device audio locally. Nothing joins the meeting, nobody has to admit a bot, and external attendees never see a notetaker in the room.</p></div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="wrap foot-in">
+  <div class="m">Vlocalhost<span>.</span>AI</div>
+  <div>ON-DEVICE VOICE INTELLIGENCE · RECORDING IS FREE, FOREVER</div>
+</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var SITE="../";
+  var INSTALL="../install/";
+  var MAIL="mailto:soham.mitra@zeron.one";
+  document.getElementById("sitelink").href=SITE;
+  document.getElementById("brandlink").href=SITE;
+  document.getElementById("installlink").href=INSTALL;
+  document.getElementById("cta-free").href=INSTALL;
+  document.getElementById("cta-pro").href=INSTALL;
+  document.getElementById("cta-team").href=MAIL+"?subject=Vlocalhost%20Team%20plan";
+  document.getElementById("cta-ent").href=MAIL+"?subject=Vlocalhost%20Enterprise";
+
+  var r=document.documentElement,mq=matchMedia("(prefers-color-scheme: dark)");
+  document.getElementById("theme").onclick=function(){var c=r.getAttribute("data-theme")||(mq.matches?"dark":"light");r.setAttribute("data-theme",c==="dark"?"light":"dark");};
+
+  var mBtn=document.getElementById("mBtn"),aBtn=document.getElementById("aBtn");
+  function setMode(annual){
+    aBtn.classList.toggle("on",annual); mBtn.classList.toggle("on",!annual);
+    document.querySelectorAll(".amt").forEach(function(el){
+      var v=el.getAttribute(annual?"data-a":"data-m"); if(v!==null) el.textContent=v;
+    });
+    document.querySelectorAll(".billed").forEach(function(el){
+      var v=el.getAttribute(annual?"data-a":"data-m"); if(v!==null) el.textContent=v;
+    });
+  }
+  mBtn.onclick=function(){setMode(false);};
+  aBtn.onclick=function(){setMode(true);};
+  setMode(true);
+})();
+</script>
+
+</body>
+</html>

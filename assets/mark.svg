@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Vlocalhost.AI">
+  <title>Vlocalhost.AI — primary mark</title>
+  <defs>
+    <linearGradient id="vhFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFC24D"/>
+      <stop offset="1" stop-color="#E08A17"/>
+    </linearGradient>
+  </defs>
+  <!-- host tile: the on-device module that holds your voice -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#vhFill)"/>
+  <!-- oscilloscope trace: the voice, captured -->
+  <path d="M12 32 H18 L21 25 L25 39 L29 16 L33 48 L37 24 L40 34 L43 30 H52"
+        fill="none" stroke="#0B0F18" stroke-width="3.4"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
