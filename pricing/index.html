@@ -122,6 +122,54 @@
   .foot-in .m span{color:var(--amber);}
   :focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px;}
   @media (prefers-reduced-motion: reduce){*{transition:none!important;}html{scroll-behavior:auto;}}
+
+  .btn-soon{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--faint);background:transparent;border:1px dashed var(--line-2);
+    border-radius:11px;padding:13px 18px;cursor:default;user-select:none;width:100%}
+</style>
+
+<style id="lead-css">
+  .lead-ov{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;
+    background:rgba(4,7,12,.78);backdrop-filter:blur(6px);opacity:0;transition:opacity .2s ease}
+  .lead-ov.on{opacity:1}
+  .lead-ov[hidden]{display:none}
+  .lead-modal{position:relative;width:100%;max-width:452px;max-height:92vh;overflow-y:auto;
+    background:var(--bg-2);border:1px solid var(--line-2);border-radius:18px;padding:30px 28px 26px;
+    box-shadow:var(--shadow);transform:translateY(10px) scale(.985);transition:transform .22s cubic-bezier(.2,.7,.2,1)}
+  .lead-ov.on .lead-modal{transform:none}
+  .lead-x{position:absolute;top:13px;right:13px;width:32px;height:32px;border-radius:9px;
+    border:1px solid var(--line);background:transparent;color:var(--muted);font-size:19px;line-height:1;
+    cursor:pointer;transition:color .15s,border-color .15s}
+  .lead-x:hover{color:var(--ink);border-color:var(--line-2)}
+  .lead-eyebrow{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--cyan);margin:0 0 12px}
+  .lead-modal h2{font-family:var(--f-display);font-size:1.6rem;line-height:1.15;letter-spacing:-.02em;
+    margin:0 0 9px;color:var(--ink)}
+  .lead-sub{font-family:var(--f-body);font-size:.875rem;line-height:1.6;color:var(--muted);margin:0 0 22px}
+  .lead-modal form{display:flex;flex-direction:column;gap:13px}
+  .lead-modal label{display:flex;flex-direction:column;gap:6px;font-family:var(--f-mono);
+    font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .lead-modal input[type=text],.lead-modal input[type=email],.lead-modal input[type=tel]{
+    font-family:var(--f-body);font-size:.94rem;color:var(--ink);background:var(--bg);
+    border:1px solid var(--line-2);border-radius:10px;padding:11px 13px;width:100%;
+    transition:border-color .15s,box-shadow .15s}
+  .lead-modal input:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(255,180,61,.13)}
+  .lead-modal input.bad{border-color:#F2555A}
+  .lead-check{flex-direction:row!important;align-items:flex-start;gap:10px!important;
+    text-transform:none!important;letter-spacing:0!important;font-family:var(--f-body)!important;
+    font-size:.79rem!important;line-height:1.55;color:var(--muted)!important;margin-top:3px;cursor:pointer}
+  .lead-check input{margin-top:2px;width:15px;height:15px;accent-color:var(--amber);flex:none;cursor:pointer}
+  .lead-check.bad span{color:#F2555A}
+  .lead-err{font-family:var(--f-mono);font-size:.72rem;color:#F2555A;margin:0}
+  .lead-submit{margin-top:5px;width:100%;justify-content:center;font-family:var(--f-body);font-size:.95rem;
+    font-weight:600;border:none;border-radius:11px;padding:13px;cursor:pointer;
+    background:var(--amber);color:#0B0F18;transition:filter .15s,opacity .15s}
+  .lead-submit:hover{filter:brightness(1.06)}
+  .lead-submit[disabled]{opacity:.6;cursor:default}
+  .lead-fine{font-family:var(--f-mono);font-size:.63rem;line-height:1.6;color:var(--faint);
+    margin:4px 0 0;text-align:center}
+  @media (max-width:430px){.lead-modal{padding:26px 20px 22px}}
 </style>
 </head>
 <body>
@@ -177,7 +225,7 @@
         <div class="td">For individuals who live in meetings.</div>
         <div class="price"><span class="cur">$</span><span class="amt" data-m="12" data-a="9">9</span><span class="suf">/mo</span></div>
         <div class="billed" data-m="billed monthly" data-a="billed annually ($108/yr)">billed annually ($108/yr)</div>
-        <a class="btn btn-primary" id="cta-pro" href="../install/">Start free →</a>
+        <span class="btn btn-soon" aria-disabled="true" title="Not available yet">Coming soon</span>
         <ul class="flist">
           <li class="head">Everything in Solo, plus</li>
           <li><b>Bring your own voice model</b> — any Whisper, local folder, or custom engine</li>
@@ -195,7 +243,7 @@
         <div class="td">For co-working teams that share notes.</div>
         <div class="price"><span class="cur">$</span><span class="amt" data-m="18" data-a="15">15</span><span class="suf">/user/mo</span></div>
         <div class="billed" data-m="billed monthly · min 3 seats" data-a="billed annually · min 3 seats">billed annually · min 3 seats</div>
-        <a class="btn btn-ghost" id="cta-team" href="mailto:soham.mitra@zeron.one?subject=Vlocalhost%20Team%20plan">Start a team</a>
+        <span class="btn btn-soon" aria-disabled="true" title="Not available yet">Coming soon</span>
         <ul class="flist">
           <li class="head">Everything in Pro, plus</li>
           <li>Shared <b>workspace &amp; notes library</b></li>
@@ -212,7 +260,7 @@
         <div class="td">For regulated, security-first orgs.</div>
         <div class="price"><span class="amt" style="font-size:2.3rem;">Custom</span></div>
         <div class="billed">talk to us</div>
-        <a class="btn btn-ghost" id="cta-ent" href="mailto:soham.mitra@zeron.one?subject=Vlocalhost%20Enterprise">Contact sales</a>
+        <span class="btn btn-soon" aria-disabled="true" title="Not available yet">Coming soon</span>
         <ul class="flist">
           <li class="head">Everything in Team, plus</li>
           <li><b>On-prem / air-gapped</b> deployment</li>
@@ -301,9 +349,6 @@
   document.getElementById("brandlink").href=SITE;
   document.getElementById("installlink").href=INSTALL;
   document.getElementById("cta-free").href=INSTALL;
-  document.getElementById("cta-pro").href=INSTALL;
-  document.getElementById("cta-team").href=MAIL+"?subject=Vlocalhost%20Team%20plan";
-  document.getElementById("cta-ent").href=MAIL+"?subject=Vlocalhost%20Enterprise";
 
   var r=document.documentElement,mq=matchMedia("(prefers-color-scheme: dark)");
   document.getElementById("theme").onclick=function(){var c=r.getAttribute("data-theme")||(mq.matches?"dark":"light");r.setAttribute("data-theme",c==="dark"?"light":"dark");};
@@ -324,5 +369,133 @@
 })();
 </script>
 
+
+<div class="lead-ov" id="leadOv" hidden>
+  <div class="lead-modal" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
+    <button class="lead-x" id="leadX" aria-label="Close">&times;</button>
+    <p class="lead-eyebrow">Free · Solo plan</p>
+    <h2 id="leadTitle">Get Vlocalhost free</h2>
+    <p class="lead-sub">Tell us where to reach you and we'll take you straight to the installer.
+       No card, no account.</p>
+    <form id="leadForm" novalidate>
+      <label>Full name<input type="text" name="name" autocomplete="name" required /></label>
+      <label>Work email<input type="email" name="email" autocomplete="email" required /></label>
+      <label>Phone<input type="tel" name="phone" autocomplete="tel" required /></label>
+      <label>Company<input type="text" name="company" autocomplete="organization" required /></label>
+      <label class="lead-check" id="leadConsentRow">
+        <input type="checkbox" name="consent" required />
+        <span>I agree to Vlocalhost.AI storing these details and contacting me about the product.</span>
+      </label>
+      <p class="lead-err" id="leadErr" role="alert" hidden></p>
+      <button class="lead-submit" type="submit" id="leadGo">Continue to install &rarr;</button>
+      <p class="lead-fine">Your meeting audio never leaves your device.<br />This form is only how we reach you.</p>
+    </form>
+  </div>
+</div>
+
+<script id="lead-js">
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------ *
+   * WHERE THE LEADS GO. Until this is set, submissions are NOT sent     *
+   * anywhere -- they are kept in this browser's localStorage only.      *
+   * Paste a Formspree (or any JSON POST) endpoint here, e.g.            *
+   *   var LEAD_ENDPOINT = "https://formspree.io/f/xxxxxxxx";            *
+   * ------------------------------------------------------------------ */
+  var LEAD_ENDPOINT = "";
+
+  var INSTALL_URL = "../install/";
+
+  var ov = document.getElementById("leadOv");
+  var form = document.getElementById("leadForm");
+  var err = document.getElementById("leadErr");
+  var go = document.getElementById("leadGo");
+  var consentRow = document.getElementById("leadConsentRow");
+  if (!ov || !form) return;
+
+  var lastFocus = null;
+
+  function open(e) {
+    if (e) e.preventDefault();
+    lastFocus = document.activeElement;
+    ov.hidden = false;
+    requestAnimationFrame(function () { ov.classList.add("on"); });
+    var first = form.querySelector("input");
+    if (first) first.focus();
+    document.body.style.overflow = "hidden";
+  }
+
+  function close() {
+    ov.classList.remove("on");
+    document.body.style.overflow = "";
+    setTimeout(function () { ov.hidden = true; }, 200);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.getElementById("leadX").addEventListener("click", close);
+  ov.addEventListener("mousedown", function (e) { if (e.target === ov) close(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !ov.hidden) close();
+  });
+
+  /* every route to the installer goes through the form */
+  document.querySelectorAll('a[href$="install/"]').forEach(function (a) {
+    a.addEventListener("click", open);
+  });
+  var free = document.getElementById("cta-free");
+  if (free) free.addEventListener("click", open);
+
+  function fail(msg, el) {
+    err.textContent = msg;
+    err.hidden = false;
+    if (el) { el.classList.add("bad"); el.focus(); }
+    return false;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    err.hidden = true;
+    form.querySelectorAll(".bad").forEach(function (n) { n.classList.remove("bad"); });
+    consentRow.classList.remove("bad");
+
+    var f = form.elements;
+    var data = {
+      name: f.name.value.trim(),
+      email: f.email.value.trim(),
+      phone: f.phone.value.trim(),
+      company: f.company.value.trim(),
+      consent: f.consent.checked,
+      page: location.href
+    };
+
+    if (!data.name) return fail("Please enter your name.", f.name);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email))
+      return fail("Please enter a valid email address.", f.email);
+    if (data.phone.replace(/[^0-9]/g, "").length < 7)
+      return fail("Please enter a valid phone number.", f.phone);
+    if (!data.company) return fail("Please enter your company.", f.company);
+    if (!data.consent) { consentRow.classList.add("bad"); return fail("Please tick the consent box to continue."); }
+
+    go.disabled = true;
+    go.textContent = "Taking you there\u2026";
+
+    function done() { location.href = INSTALL_URL; }
+
+    try { localStorage.setItem("vlocalhost_lead", JSON.stringify(data)); } catch (x) {}
+
+    if (!LEAD_ENDPOINT) {
+      console.warn("[Vlocalhost] LEAD_ENDPOINT is not set - this lead was not sent anywhere.");
+      done();
+      return;
+    }
+    fetch(LEAD_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(data)
+    }).then(done).catch(function () { done(); });
+  });
+})();
+</script>
 </body>
 </html>
