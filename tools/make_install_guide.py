@@ -24,7 +24,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OUT = os.path.join(ROOT, "install", "vlocalhost-installation-guide.pdf")
 
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 SITE = "https://antigravitysoham-eng.github.io/vlocalhost-ai/"
 SUPPORT = SITE + "support/"
 RELEASES = "https://github.com/antigravitysoham-eng/vlocalhost-core/releases/latest"
