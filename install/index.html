@@ -187,6 +187,9 @@
   .tip-x:hover{color:var(--ink);border-color:var(--line-2)}
   .tip-eyebrow{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
     color:var(--cyan);margin:0 0 10px}
+  .tip-req{font-family:var(--f-body);font-size:.76rem;line-height:1.55;color:var(--muted);
+    margin:0 0 12px;padding:8px 10px;border:1px solid var(--line);border-radius:7px}
+  .tip-req b{color:var(--ink);font-weight:600}
   .tip-modal h2{font-family:var(--f-display);font-size:1.42rem;line-height:1.2;letter-spacing:-.02em;
     margin:0 0 9px;color:var(--ink)}
   .tip-sub{font-family:var(--f-body);font-size:.845rem;line-height:1.6;color:var(--muted);margin:0 0 18px}
@@ -538,6 +541,10 @@
   <div class="tip-modal" role="dialog" aria-modal="true" aria-labelledby="tipTitle">
     <button class="tip-x" id="tipX" aria-label="Close">&times;</button>
     <p class="tip-eyebrow">Your download has started</p>
+    <p class="tip-req"><b>Nothing to install first.</b> Python and everything else it needs are
+       inside the download. Written summaries are the one optional extra &mdash; those need
+       <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a>, and
+       recording and transcription work fully without it.</p>
     <h2 id="tipTitle">Liked Vlocalhost?<br />Buy me an Americano</h2>
     <p class="tip-sub">It's free and always will be &mdash; it runs on your machine, so it costs me
        nothing to give away. If it saves you a meeting's worth of typing, a coffee back is lovely.
