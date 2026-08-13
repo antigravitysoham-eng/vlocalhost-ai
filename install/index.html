@@ -89,6 +89,11 @@
   .nav-right { display:flex; align-items:center; gap:14px; }
   .back { font-family:var(--f-mono); font-size:0.78rem; color:var(--muted); letter-spacing:0.04em; }
   .back:hover { color:var(--ink); }
+  /* Not .back: that size is right for nav, and wrong for the one link people
+     go looking for when an install does not go to plan. */
+  .guide { font-family:var(--f-mono); font-size:0.95rem; color:var(--ink); letter-spacing:0.03em;
+    text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--line-2); }
+  .guide:hover { color:var(--cyan); text-decoration-color:var(--cyan); }
   .themebtn { width:38px; height:38px; border-radius:10px; border:1px solid var(--line-2);
               background:var(--glass); color:var(--ink); cursor:pointer; display:grid; place-items:center; }
   .themebtn:hover { border-color:var(--amber); }
@@ -251,7 +256,7 @@
       <span class="chip"><b>0 bytes</b> uploaded</span>
     </div>
     <p style="margin-top:18px;">
-      <a class="back" href="vlocalhost-installation-guide.pdf" style="text-decoration:underline;">
+      <a class="guide" href="vlocalhost-installation-guide.pdf">
         Detailed installation guide (PDF) — every platform, with troubleshooting ↓</a>
     </p>
   </header>
