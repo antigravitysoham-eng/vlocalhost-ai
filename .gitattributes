@@ -17,3 +17,15 @@
 *.txt       text
 *.png       binary
 *.svg       text
+
+# Anything Git might mistake for text and "helpfully" rewrite line endings in.
+# A PDF that has been CRLF-converted on checkout is a corrupt PDF: Git warned
+# "LF will be replaced by CRLF" for the installation guide before this line
+# existed.
+*.pdf       binary
+*.ico       binary
+*.icns      binary
+*.zip       binary
+*.gz        binary
+*.exe       binary
+*.dmg       binary
