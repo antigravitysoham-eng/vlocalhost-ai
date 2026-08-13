@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Install Vlocalhost.AI — Windows · macOS · Linux</title>
-<meta name="description" content="Download and set up Vlocalhost.AI in a couple of minutes. On-device transcription with local Ollama summaries. Requires Python 3.9+." />
+<meta name="description" content="Download and set up Vlocalhost.AI in a couple of minutes. One installer, nothing to install first — no Python, no pip. On-device transcription with optional local summaries." />
 <link rel="canonical" href="https://antigravitysoham-eng.github.io/vlocalhost-ai/install/" />
 <meta name="theme-color" content="#090C12" />
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
@@ -12,14 +12,14 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Vlocalhost.AI" />
 <meta property="og:title" content="Install Vlocalhost.AI — Windows · macOS · Linux" />
-<meta property="og:description" content="Download and set up Vlocalhost.AI in a couple of minutes. On-device transcription with local Ollama summaries. Requires Python 3.9+." />
+<meta property="og:description" content="Download and set up Vlocalhost.AI in a couple of minutes. One installer, nothing to install first — no Python, no pip. On-device transcription with optional local summaries." />
 <meta property="og:url" content="https://antigravitysoham-eng.github.io/vlocalhost-ai/install/" />
 <meta property="og:image" content="https://antigravitysoham-eng.github.io/vlocalhost-ai/assets/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Install Vlocalhost.AI — Windows · macOS · Linux" />
-<meta name="twitter:description" content="Download and set up Vlocalhost.AI in a couple of minutes. On-device transcription with local Ollama summaries. Requires Python 3.9+." />
+<meta name="twitter:description" content="Download and set up Vlocalhost.AI in a couple of minutes. One installer, nothing to install first — no Python, no pip. On-device transcription with optional local summaries." />
 <meta name="twitter:image" content="https://antigravitysoham-eng.github.io/vlocalhost-ai/assets/og-image.png" />
 
 <style>
@@ -237,21 +237,79 @@
 
 <main id="top">
   <header class="hero wrap">
-    <p class="eyebrow" style="justify-content:center;">Get Vlocalhost · on-device · v1.0.5</p>
+    <p class="eyebrow" style="justify-content:center;">Get Vlocalhost · on-device · <span id="relver">latest</span></p>
     <h1>Install Vlocalhost</h1>
-    <p>The offline voice engine that writes your meetings. Pick your platform, download the
+    <p>The offline voice engine that writes your meetings. Pick your platform, download one
        installer, and you're recording notes in a couple of minutes — nothing leaves your machine.</p>
     <div class="prereqs">
-      <span class="chip"><a href="https://www.python.org/downloads/" target="_blank" rel="noopener"><b>Python</b> 3.9+</a></span>
-      <span class="chip"><a href="https://ollama.com/download" target="_blank" rel="noopener"><b>Ollama</b> (local summaries)</a></span>
-      <span class="chip"><b>~500 MB</b> disk</span>
+      <span class="chip"><b>No Python needed</b> — it's in the download</span>
+      <span class="chip"><a href="https://ollama.com/download" target="_blank" rel="noopener"><b>Ollama</b> — optional, for summaries</a></span>
+      <span class="chip"><b>~400 MB</b> disk</span>
       <span class="chip"><b>0 bytes</b> uploaded</span>
     </div>
+    <p style="margin-top:18px;">
+      <a class="back" href="vlocalhost-installation-guide.pdf" style="text-decoration:underline;">
+        Detailed installation guide (PDF) — every platform, with troubleshooting ↓</a>
+    </p>
   </header>
 
   <div class="wrap">
     <div class="os-grid" id="os-grid"><!-- OS cards injected --></div>
   </div>
+
+  <section class="byo" id="troubleshooting">
+    <div class="wrap">
+      <p class="eyebrow">When it doesn't go smoothly</p>
+      <h2>Troubleshooting.</h2>
+      <p>The five things people actually hit. The
+         <a href="vlocalhost-installation-guide.pdf" style="text-decoration:underline;">installation
+         guide (PDF)</a> covers every platform in detail, and the
+         <a href="../support/" style="text-decoration:underline;">support page</a> takes it from there.</p>
+      <div class="byo-grid">
+        <div class="byo-card">
+          <div class="k">Windows</div>
+          <h3>&ldquo;Windows protected your PC&rdquo;</h3>
+          <p>Expected — the installer isn't code-signed yet. Click <b>More info → Run anyway</b>.
+             It's not a virus warning and says nothing about the file's contents; every line of
+             what it installs is public.</p>
+        </div>
+        <div class="byo-card">
+          <div class="k">macOS</div>
+          <h3>&ldquo;Apple could not verify&rdquo;</h3>
+          <p>Open <b>System Settings → Privacy &amp; Security</b>, scroll to the line naming
+             Vlocalhost, press <b>Open Anyway</b>. Once only. Right-click → Open no longer works
+             on macOS 15+.</p>
+        </div>
+        <div class="byo-card">
+          <div class="k">Linux</div>
+          <h3>No microphone found</h3>
+          <p>PortAudio is the one library the bundle can't carry, because it talks to your sound
+             server. <code>sudo apt install libportaudio2</code>, or <code>dnf install portaudio</code>.</p>
+        </div>
+        <div class="byo-card">
+          <div class="k">Any platform</div>
+          <h3>Transcript saved, no summary</h3>
+          <p>Ollama wasn't running. The transcript is written first on purpose, so it's never lost
+             to this. Open <code>http://localhost:11434/api/tags</code> — if that errors, start
+             Ollama, then <b>Settings → Models → Re-check</b>.</p>
+        </div>
+        <div class="byo-card">
+          <div class="k">Any platform</div>
+          <h3>Nothing happens on click</h3>
+          <p>The shortcut runs without a console, so the error had nowhere to go. Run the app from
+             a terminal once and it will tell you what's wrong — the exact command per platform is
+             in the PDF.</p>
+        </div>
+        <div class="byo-card">
+          <div class="k">Any platform</div>
+          <h3>Where are my notes?</h3>
+          <p>Outside the program folder, always — so updating or uninstalling can't touch them.
+             Run <code>Vlocalhost --paths</code> to print every location, and
+             <code>--diagnose</code> for a report to attach to a bug.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="byo">
     <div class="wrap">
@@ -263,12 +321,12 @@
         <div class="byo-card">
           <div class="k">Option 1 · pick</div>
           <h3>Any Whisper model</h3>
-          <p>From <code>tiny.en</code> to <code>large-v3</code>, or any fine-tuned CTranslate2 model on Hugging Face. One line in <code>config.py</code>.</p>
+          <p>From <code>tiny.en</code> to <code>large-v3</code>, or any fine-tuned CTranslate2 model on Hugging Face. Pick it in <b>Settings → Models</b>.</p>
         </div>
         <div class="byo-card">
           <div class="k">Option 2 · attach</div>
           <h3>A local model folder</h3>
-          <p>Point <code>WHISPER_MODEL</code> at a folder on disk — any size, any language, fully offline, no download.</p>
+          <p>Press <b>Folder…</b> in Settings and choose a converted model on disk — any size, any language, fully offline, no download.</p>
         </div>
         <div class="byo-card">
           <div class="k">Option 3 · replace</div>
@@ -311,69 +369,93 @@
   var LNX = { icon:'<path d="M12 2c-2.1 0-3.4 1.8-3.4 4.1 0 1.2.2 1.9.2 2.7 0 1-.9 1.7-1.9 3.2C5.8 13.8 5 15.2 5 16.6c0 .9.6 1.4 1.3 1.6-.1.3-.2.6-.2 1 0 1.6 2.6 2.6 5.9 2.6s5.9-1 5.9-2.6c0-.4-.1-.7-.2-1 .7-.2 1.3-.7 1.3-1.6 0-1.4-.8-2.8-1.9-4.6-1-1.5-1.9-2.2-1.9-3.2 0-.8.2-1.5.2-2.7C15.4 3.8 14.1 2 12 2z"/><circle cx="10.4" cy="6.6" r=".85" fill="var(--bg-2)"/><circle cx="13.6" cy="6.6" r=".85" fill="var(--bg-2)"/>' };
 
   var REPO = "https://github.com/antigravitysoham-eng/vlocalhost-core";
+  // Asset name patterns, matched against whatever the latest release holds.
+  // The version is never written down here: it comes from the release itself,
+  // so publishing a release is the only step. There is no page to remember to
+  // edit, and no way for the two to disagree.
   var PLATFORMS = [
     {
-      key:"windows", name:"Windows", plat:"Windows 10 / 11", icon:WIN.icon,
-      file:"install-vlocalhost.bat",
-      url:"files/install-vlocalhost.bat",
-      how:"Double-click the downloaded file. Windows may warn that it is from the internet \u2014 choose <b>More info \u2192 Run anyway</b>.",
-      note:'Leaves a <b>Vlocalhost.AI</b> icon on your desktop and in the Start menu. Nothing needs administrator rights.',
+      key:"windows", name:"Windows", plat:"Windows 10 / 11 \u00b7 64-bit", icon:WIN.icon,
+      match:/windows-x64-setup\.exe$/,
+      how:"Double-click it. Windows will show a blue <b>&ldquo;Windows protected your PC&rdquo;</b> screen because the installer isn't code-signed yet \u2014 choose <b>More info \u2192 Run anyway</b>.",
+      note:'Choose any folder, on any drive. No administrator rights needed. Leaves a <b>Vlocalhost.AI</b> icon on your desktop and in the Start menu, and a proper entry in Add/Remove Programs.',
       cmds:[
-        ["1. Download install-vlocalhost.bat","c"],
-        ["2. Double-click it","c"],
-        ["3. Double-click the desktop icon","c"],
-        ["","c"],
-        ["# prefer the terminal? this does the same:","c"],
-        ["git clone " + "https://github.com/antigravitysoham-eng/vlocalhost-core.git","p"],
-        ["cd vlocalhost-core","p"],
-        ["python -m venv .venv","p"],
-        [".venv\\Scripts\\python.exe -m pip install -r requirements.txt","p"],
-        [".venv\\Scripts\\python.exe vlocalhost.py --install-shortcut","p"]
+        ["1. Download the installer","c"],
+        ["2. Double-click \u2192 More info \u2192 Run anyway","c"],
+        ["3. Pick a folder, click Install","c"],
+        ["4. Answer the two setup questions","c"]
       ]
     },
     {
-      key:"macos", name:"macOS", plat:"macOS 12+ \u00b7 Intel & Apple silicon", icon:MAC.icon,
-      file:"install-vlocalhost-macos.command",
-      url:"files/install-vlocalhost-macos.command",
-      how:"<b>Right-click</b> the downloaded file and choose <b>Open</b>, then confirm. macOS blocks a plain double-click on anything downloaded.",
-      note:'Installs <b>Vlocalhost.AI.app</b> into your home Applications folder. macOS asks for <b>microphone permission</b> on first run \u2014 allow it.',
+      key:"macos", name:"macOS", plat:"macOS 12+ \u00b7 Apple silicon & Intel", icon:MAC.icon,
+      match:/macos-(arm64|x64)\.dmg$/,
+      how:"Open the .dmg and drag <b>Vlocalhost</b> into Applications. The first launch is refused \u2014 open <b>System Settings \u2192 Privacy &amp; Security</b> and press <b>Open Anyway</b>.",
+      note:'Pick <b>arm64</b> for M1/M2/M3/M4 and <b>x64</b> for Intel \u2014 check Apple menu \u2192 About This Mac. macOS asks for <b>microphone permission</b> on first run; allow it.',
       cmds:[
-        ["1. Download install-vlocalhost-macos.command","c"],
-        ["2. Right-click it \u2192 Open \u2192 Open","c"],
-        ["3. Launch Vlocalhost.AI from Launchpad","c"],
-        ["","c"],
-        ["# prefer the terminal? this does the same:","c"],
-        ["git clone " + "https://github.com/antigravitysoham-eng/vlocalhost-core.git","p"],
-        ["cd vlocalhost-core","p"],
-        ["brew install portaudio","p"],
-        ["python3 -m venv .venv","p"],
-        [".venv/bin/python -m pip install -r requirements.txt","p"],
-        [".venv/bin/python vlocalhost.py --install-shortcut","p"]
+        ["1. Download the .dmg for your chip","c"],
+        ["2. Drag Vlocalhost to Applications","c"],
+        ["3. Privacy & Security \u2192 Open Anyway","c"],
+        ["4. Allow the microphone when asked","c"]
       ]
     },
     {
-      key:"linux", name:"Linux", plat:"Debian / Ubuntu / Fedora", icon:LNX.icon,
-      file:"install-vlocalhost-linux.sh",
-      url:"files/install-vlocalhost-linux.sh",
-      how:"Open a terminal where you saved it and run <b>bash install-vlocalhost-linux.sh</b>.",
-      note:'Adds <b>Vlocalhost.AI</b> to your applications menu. Asks for your password only to install the audio library. No system tray? It falls back to terminal mode.',
+      key:"linux", name:"Linux", plat:"Debian / Ubuntu / Fedora \u00b7 64-bit", icon:LNX.icon,
+      match:/linux-x64\.tar\.gz$/,
+      how:"Unpack it and run <b>./install.sh</b>. Install anywhere with <b>--prefix</b>; no root required.",
+      note:'Adds <b>Vlocalhost.AI</b> to your applications menu. Needs <b>libportaudio2</b> for the microphone \u2014 the script tells you the exact command for your distribution.',
       cmds:[
-        ["1. Download install-vlocalhost-linux.sh","c"],
-        ["2. bash install-vlocalhost-linux.sh","c"],
-        ["3. Open Vlocalhost.AI from your menu","c"],
+        ["tar -xzf vlocalhost-*-linux-x64.tar.gz","p"],
+        ["cd ~/vlocalhost","p"],
+        ["./install.sh","p"],
         ["","c"],
-        ["# prefer the terminal? this does the same:","c"],
-        ["git clone " + "https://github.com/antigravitysoham-eng/vlocalhost-core.git","p"],
-        ["cd vlocalhost-core","p"],
-        ["sudo apt install libportaudio2   # dnf: portaudio","p"],
-        ["python3 -m venv .venv","p"],
-        [".venv/bin/python -m pip install -r requirements.txt","p"],
-        [".venv/bin/python vlocalhost.py --install-shortcut","p"]
+        ["# somewhere else, or remove it again:","c"],
+        ["./install.sh --prefix /opt/vlocalhost","p"],
+        ["./install.sh --uninstall","p"]
       ]
     }
   ];
 
   function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  /* ---- find the real download for each platform ----------------------------
+     Ask GitHub what the latest release actually contains, rather than hardcoding
+     a version here that has to be remembered on every release. If the call fails
+     — offline, or the unauthenticated rate limit of 60/hour/IP has been hit on a
+     busy launch day — the buttons still work and simply open the releases page. */
+  var RELEASES = REPO + "/releases/latest";
+
+  function human(bytes) {
+    return bytes ? (bytes / 1048576).toFixed(0) + " MB" : "";
+  }
+
+  function applyRelease(release) {
+    var tag = release.tag_name || "";
+    if (tag) {
+      var v = document.getElementById("relver");
+      if (v) v.textContent = tag;
+    }
+    (release.assets || []).forEach(function (asset) {
+      PLATFORMS.forEach(function (p) {
+        if (!p.url && p.match.test(asset.name)) {
+          p.url = asset.browser_download_url;
+          p.file = asset.name;
+          p.size = human(asset.size);
+        }
+      });
+    });
+    PLATFORMS.forEach(function (p) {
+      var btn = document.querySelector('.dl[data-key="' + p.key + '"]');
+      if (!btn) return;
+      var label = btn.querySelector("span");
+      if (label && p.size) label.textContent = "Download for " + p.name + " · " + p.size;
+    });
+  }
+
+  fetch("https://api.github.com/repos/antigravitysoham-eng/vlocalhost-core/releases/latest",
+        { headers: { "Accept": "application/vnd.github+json" } })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(applyRelease)
+    .catch(function () { /* buttons fall back to the releases page */ });
 
   var grid = document.getElementById("os-grid");
   PLATFORMS.forEach(function (p) {
@@ -390,7 +472,7 @@
       "</div>" +
       '<button class="dl" data-key="' + p.key + '">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 5 5-5M5 21h14"/></svg>' +
-        "Download for " + p.name +
+        "<span>Download for " + p.name + "</span>" +
       "</button>" +
       '<p class="dl-note">' + p.how + "</p>" +
       '<div class="cmds">' +
@@ -426,14 +508,19 @@
   }
 
   function download(p) {
-    // A real file on the site, not a blob built here: what we test is what
-    // people get, and they can read it before running it.
+    if (!p.url) {           // the release fetch failed or is still in flight
+      window.open(RELEASES, "_blank", "noopener");
+      say("Opening the downloads page \u2014 pick the file for your system.");
+      return;
+    }
+    // A real release asset, not a blob built here: what we test is what people
+    // get, and the checksum published beside it can be verified.
     var a = document.createElement("a");
     a.href = p.url;
     a.download = p.file;
     document.body.appendChild(a); a.click(); a.remove();
     say("Downloading " + p.file + " \u2014 then " + (p.key === "linux"
-        ? "run it with bash." : "open it."));
+        ? "unpack it and run ./install.sh" : "open it."));
   }
 
   var byKey = {}; PLATFORMS.forEach(function(p){ byKey[p.key] = p; });
