@@ -208,8 +208,15 @@ def banner(size, launch=False, tagline=None, safe_left=0, compact=False):
 
     if tagline:
         f_tag = font(F_MONO, int(h * (0.10 if compact else 0.085)))
-        d.text((tx + int(h * 0.01), top + m + int(h * 0.04)), tagline,
-               font=f_tag, fill=MUTED)
+        ty_tag = top + m + int(h * 0.04)
+        d.text((tx + int(h * 0.01), ty_tag), tagline, font=f_tag, fill=MUTED)
+        if not compact:
+            # Under the tagline, not bottom-right: on the right it landed on
+            # the crest of the wave and had to be read through it.
+            f_url = font(F_MONO, int(h * 0.05))
+            d.text((tx + int(h * 0.012), ty_tag + int(f_tag.size * 1.45)),
+                   "antigravitysoham-eng.github.io/vlocalhost-ai",
+                   font=f_url, fill=(90, 100, 120))
 
     # ---- claims, bottom-right, clear of the avatar cut-out -----------------
     if not compact:
@@ -219,10 +226,7 @@ def banner(size, launch=False, tagline=None, safe_left=0, compact=False):
         total = sum(d.textlength(t, font=f_chip) + pad * 2 + gap for t in items) - gap
         chips(d, int(w - total - w * 0.04), int(h * 0.60), items, f_chip,
               pad=pad, gap=gap)
-        f_url = font(F_MONO, int(h * 0.05))
-        url = "antigravitysoham-eng.github.io/vlocalhost-ai"
-        d.text((w - d.textlength(url, font=f_url) - w * 0.04, int(h * 0.79)),
-               url, font=f_url, fill=MUTED)
+
 
     return img.resize(size, Image.LANCZOS).convert("RGB")
 
@@ -279,15 +283,18 @@ def square_card(size, launch=True):
         d.text(((w - d.textlength(text, font=f)) / 2, y), text, font=f, fill=fill)
 
     centre("Vlocalhost.AI", f_name, int(h * 0.335), PAPER)
-    centre("Meeting notes that never", f_line, int(h * 0.60), PAPER)
-    centre("leave your machine.", f_line, int(h * 0.665), AMBER)
+    centre("Your Voice,", f_line, int(h * 0.60), PAPER)
+    centre("Hosted Locally.", f_line, int(h * 0.665), AMBER)
     centre("MADE IN INDIA  ·  ON-DEVICE  ·  FREE", f_tag, int(h * 0.79), CYAN)
     centre("link in bio  ·  windows today", f_tag, int(h * 0.855), MUTED)
     return img.resize((size, size), Image.LANCZOS).convert("RGB")
 
 
-TAG = "meeting notes that never leave your machine"
-TAG_LAUNCH = "made in india  ·  your voice stays yours"
+# One tagline everywhere. It explains the name — everything happens on
+# localhost — states the mechanism, and needs no second line to carry the
+# launch: the tricolour trace already says where it was built.
+TAG = "Your Voice Hosted Locally"
+TAG_LAUNCH = "Your Voice Hosted Locally"
 
 
 def main():

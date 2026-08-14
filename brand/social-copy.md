@@ -130,6 +130,14 @@ meeting intelligence, open source
 
 ---
 
+## The tagline
+
+**Your Voice Hosted Locally.**
+
+It carries the name — everything happens on localhost — and states the
+mechanism in four words. Used on every banner, both variants; the Independence
+Day nod is carried by the tricolour trace rather than by a second line.
+
 ## The one-liners, for reuse
 
 - Meeting notes that never leave your machine.
