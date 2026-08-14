@@ -233,10 +233,50 @@ def build():
         "those too, delete this folder afterwards:", P)]
     F += [Paragraph("%LOCALAPPDATA%\\Vlocalhost", CODE)]
 
+    F += [Paragraph("Or: the portable ZIP", H2)]
+    F += [Paragraph(
+        f"Every release also ships <b>vlocalhost-{VERSION}-windows-x64.zip</b>: the "
+        "same build with no installer. Take this one if a virus scanner refuses "
+        "the .exe, if Chrome reports \u201cVirus scan failed\u201d, or if you simply "
+        "want nothing written outside a single folder.", P)]
+    F += steps([
+        "Unpack the .zip anywhere you can write. Keep the path short \u2014 a "
+        "folder buried deeper than about 140 characters cannot unpack cleanly, "
+        "because the files inside are already long.",
+        "Open the folder and run <b>Vlocalhost.cmd</b>.",
+        "That is the whole install. Nothing is written outside this folder.",
+    ])
+    F += [Paragraph(
+        "<b>No desktop icon?</b> Correct \u2014 the ZIP deliberately touches nothing "
+        "outside its own folder. The app can still make one. Run this once from "
+        "the unpacked folder:", P)]
+    F += [Paragraph("runtime\\pythonw.exe app\\vlocalhost.py --install-shortcut", CODE)]
+    F += [Paragraph(
+        "It adds Vlocalhost.AI to your desktop and Start menu, pointing at the "
+        "copy you unpacked, and finds the real desktop folder even when OneDrive "
+        "has moved it.", NOTE)]
+
+    F += [Paragraph("Removing the portable version", H2)]
+    F += [Paragraph(
+        "There is no uninstaller and no Add/Remove Programs entry \u2014 that is "
+        "what portable means. Removing it is one step, or three if you made "
+        "shortcuts:", P)]
+    F += steps([
+        "Delete the folder you unpacked. The program is gone.",
+        "If you created shortcuts, remove them with "
+        "<font face='Courier'>runtime\\pythonw.exe app\\vlocalhost.py "
+        "--remove-shortcut</font> before deleting the folder \u2014 or delete the "
+        "two .lnk files by hand afterwards.",
+        "Notes and settings survive on purpose, in the folders listed under "
+        "\u201cWhere your files live\u201d. Delete those only if you want the "
+        "meetings gone too.",
+    ])
+
     F += [PageBreak()]
 
     # ---------------------------------------------------------------- macOS
     F += [Paragraph("macOS", H1)]
+    F += [Paragraph("<b>Coming soon.</b> Apple silicon and Intel builds are being packaged and tested. Everything below is how it will work; the download is not on the releases page yet. Today, both platforms run from source: see the README in the repository.", WARN)]
     F += [Paragraph("macOS 12 Monterey or newer.", SMALL)]
 
     F += [Paragraph("Pick the right build", H2)]
@@ -295,32 +335,20 @@ def build():
 
     # ---------------------------------------------------------------- Linux
     F += [Paragraph("Linux", H1)]
+    F += [Paragraph("<b>Coming soon.</b> The Linux archive is being packaged and tested. Everything below is how it will work; the download is not on the releases page yet. Today, both platforms run from source: see the README in the repository.", WARN)]
     F += [Paragraph("64-bit, glibc 2.35 or newer "
                     "(Ubuntu 22.04+, Debian 12+, Fedora 36+).", SMALL)]
 
     F += [Paragraph("Install", H2)]
-    F += [Paragraph(f"Download <b>vlocalhost-{VERSION}-linux-x64.tar.gz</b>, "
-                    f"then:", P)]
     F += [Paragraph(
-        f"tar -xzf vlocalhost-{VERSION}-linux-x64.tar.gz -C ~/vlocalhost<br/>"
-        f"cd ~/vlocalhost<br/>"
-        f"./install.sh", CODE)]
-    F += [Paragraph("Install somewhere else with <font face='Courier'>"
-                    "./install.sh --prefix /opt/vlocalhost</font>. The default "
-                    "is <font face='Courier'>~/.local/opt/vlocalhost</font>, "
-                    "which needs no root.", P)]
-
-    F += [Paragraph("The audio library", H2)]
+        "Unpack the archive into your home folder and run the install script "
+        "inside it. It installs for your user only, needs no root, and adds "
+        "Vlocalhost.AI to the applications menu. The exact commands are "
+        "published with the build, once the build has been tested on each "
+        "distribution named above.", P)]
     F += [Paragraph(
-        "PortAudio is the one thing the bundle cannot carry, because it talks "
-        "to your system's sound server. Install it if the script says so:", P)]
-    F += [Paragraph(
-        "sudo apt install libportaudio2       # Debian / Ubuntu<br/>"
-        "sudo dnf install portaudio           # Fedora / RHEL<br/>"
-        "sudo pacman -S portaudio             # Arch", CODE)]
-
-    F += [Paragraph("Uninstall", H2)]
-    F += [Paragraph("./install.sh --uninstall", CODE)]
+        "The microphone needs <b>libportaudio2</b>. The script names the "
+        "package for your distribution rather than guessing.", NOTE)]
     F += [Paragraph("Notes and settings are kept, in "
                     "<font face='Courier'>~/.local/share/vlocalhost</font>.", P)]
 
@@ -383,11 +411,28 @@ def build():
                     "and a way to send a diagnostic report: " + SUPPORT, P)]
 
     F += [section("Installing", problem(
+        "Chrome: \u201cFailed \u2014 Virus scan failed\u201d",
+        "Not a detection. Chrome hands the finished file to Windows to scan, "
+        "and that call failed.",
+        [Paragraph("Usually a third-party antivirus, a managed work laptop, or a "
+                   "Defender service that is not running. Press <b>Retry</b> in "
+                   "Downloads first. If it fails again, take the portable ZIP "
+                   "instead \u2014 same build, no installer \u2014 or verify the file "
+                   "against the SHA-256 published beside every download and keep "
+                   "it.", P)]))]
+    F += [problem(
+        "The installer stops part-way and rolls back",
+        "The folder you chose is too deep.",
+        [Paragraph("Windows limits a path to 260 characters, and the files inside "
+                   "the bundle are already long. An install folder beyond roughly "
+                   "140 characters cannot fit. Nothing is left behind \u2014 install "
+                   "again somewhere shorter, such as the default.", P)])]
+    F += [problem(
         "Windows: \u201cWindows protected your PC\u201d",
         "Expected. The installer is not code-signed yet.",
         [Paragraph("Click <b>More info</b> \u2192 <b>Run anyway</b>. If the "
                    "button is missing, your workplace may block unsigned "
-                   "installers \u2014 ask IT, or install from source.", P)]))]
+                   "installers \u2014 ask IT, or install from source.", P)])]
     F += [problem(
         "Windows: antivirus removed the installer",
         "Some scanners flag any unsigned installer that unpacks an "
