@@ -241,9 +241,17 @@ def profile(size, launch=False):
         ring = max(2, int(s * 0.035))
         inset = int(s * 0.02)
         box = [inset, inset, s - inset, s - inset]
+        radius = (s - inset * 2) / 2.0
+        cx = cy = s / 2.0
         for a in range(0, 360, 2):
-            # start at the top and run round, so saffron sits at 12 o'clock
-            t = ((a + 90) % 360) / 360.0
+            # Colour by height, not by angle. Running the gradient round the
+            # circumference puts saffron and green on opposite *sides*, which
+            # reads as neither — the flag stacks top to bottom, so the ring
+            # should too: saffron across the top, white at the waist, green
+            # along the bottom.
+            mid = math.radians(a + 1)
+            y = cy + math.sin(mid) * radius
+            t = min(1.0, max(0.0, (y - (cy - radius)) / (radius * 2)))
             d.arc(box, a, a + 3, fill=tricolour(t) + (255,), width=ring)
     inner = int(s * (0.855 if launch else 0.94))
     img.alpha_composite(mark(inner, round_tile=launch),
