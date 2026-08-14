@@ -201,7 +201,11 @@
 </style>
 
 <style id="tip-css">
-  .tip-ov{position:fixed;inset:0;z-index:210;display:grid;place-items:center;padding:20px;
+  /* Anchored to the top, not centred: the card is tall, and on a laptop a
+     centred one puts the tip buttons under the fold while the eyebrow that
+     explains why it appeared sits off the top. */
+  .tip-ov{position:fixed;inset:0;z-index:210;display:grid;justify-items:center;
+    align-items:start;padding:min(6vh,44px) 20px 24px;overflow-y:auto;
     background:rgba(4,7,12,.78);backdrop-filter:blur(6px);opacity:0;transition:opacity .2s ease}
   .tip-ov.on{opacity:1}
   .tip-ov[hidden]{display:none}
@@ -666,6 +670,9 @@
     if (!ov.hidden) return;
     lastFocus = document.activeElement;
     ov.hidden = false;
+    var card = ov.querySelector(".tip-modal");
+    if (card) { card.scrollTop = 0; }
+    ov.scrollTop = 0;
     requestAnimationFrame(function () { ov.classList.add("on"); });
     document.body.style.overflow = "hidden";
     document.getElementById("tipLater").focus();
@@ -686,7 +693,7 @@
 
   /* let the file actually start downloading first, then ask */
   document.addEventListener("click", function (e) {
-    var btn = e.target.closest ? e.target.closest("button.dl") : null;
+    var btn = e.target.closest ? e.target.closest("button.dl, a.alt-btn") : null;
     if (btn) setTimeout(open, 900);
   });
 
