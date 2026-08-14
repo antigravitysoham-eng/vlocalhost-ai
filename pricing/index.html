@@ -401,8 +401,10 @@
   /* ------------------------------------------------------------------ *
    * WHERE THE LEADS GO. Until this is set, submissions are NOT sent     *
    * anywhere -- they are kept in this browser's localStorage only.      *
-   * Paste a Formspree (or any JSON POST) endpoint here, e.g.            *
-   *   var LEAD_ENDPOINT = "https://formspree.io/f/xxxxxxxx";            *
+   * Paste the Google Apps Script web-app URL here, e.g.                 *
+   *   var LEAD_ENDPOINT = "https://script.google.com/macros/s/AK.../exec"; *
+   * The script lives in tools/lead-capture.gs, with setup steps at the   *
+   * top of that file. Any endpoint accepting a JSON body works.          *
    * ------------------------------------------------------------------ */
   var LEAD_ENDPOINT = "";
 
@@ -489,9 +491,14 @@
       done();
       return;
     }
+    // text/plain, not application/json: a JSON content type makes this a
+    // preflighted cross-origin request, and a Google Apps Script web app does
+    // not answer the OPTIONS probe — the lead would vanish with a console
+    // error no visitor ever sees. This stays a "simple request", which needs
+    // no preflight. The body is still JSON; the receiving end parses it.
     fetch(LEAD_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(data)
     }).then(done).catch(function () { done(); });
   });
