@@ -143,15 +143,14 @@
   .alt-dl p.alt-why { margin-top:7px; color:var(--faint); font-size:0.72rem; }
   .alt-dl b { color:var(--ink); font-weight:600; }
 
-  /* A platform the current release has no asset for. Present, honest, and
-     visibly not a button — a greyed-out control still invites a click. */
-  .os.soon { box-shadow:none; }
-  .os.soon .os-head .logo, .os.soon .os-head .name { opacity:0.55; }
-  .soon-btn { display:block; text-align:center; cursor:default; margin:20px 22px 8px;
-              padding:14px 18px; border-radius:12px;
-              background:transparent; border:1px dashed var(--line-2); color:var(--muted);
-              font-family:var(--f-mono); font-size:0.78rem; letter-spacing:0.06em; }
-  .os.soon .dl-note a { color:var(--cyan); text-decoration:underline; text-underline-offset:2px; }
+  /* A platform the current release has no asset for: badge at the top of the
+     card, button visibly out of service. Everything else stays put. */
+  .soon-chip { font-family:var(--f-mono); font-size:0.6rem; letter-spacing:0.16em;
+               text-transform:uppercase; color:var(--cyan); padding:4px 11px;
+               border:1px solid color-mix(in srgb, var(--cyan) 42%, transparent);
+               border-radius:999px; }
+  .dl.is-soon { opacity:0.4; cursor:not-allowed; box-shadow:none; }
+  .dl.is-soon:hover { transform:none; box-shadow:none; }
 
   .cmds { margin:16px 16px 20px; border:1px solid var(--line); border-radius:12px; background:var(--bg);
           overflow:hidden; display:flex; flex-direction:column; flex:1; }
@@ -490,29 +489,22 @@
     PLATFORMS.forEach(function (p) {
       var btn = document.querySelector('.dl[data-key="' + p.key + '"]');
       if (!btn) return;
-      // No asset for this platform in the release that was actually fetched —
-      // so say "coming soon" instead of handing over a button that opens a
-      // releases page with nothing on it for them. Only reachable on a
-      // successful fetch; a failed one leaves every card as it was.
+      // No asset for this platform in the release that was actually fetched.
+      // Keep the card as it is — a half-emptied card reads as broken — and
+      // just say so at the top and stop the button doing anything.
       var card = btn.closest(".os");
       if (!p.url && card) {
-        card.classList.add("soon");
-        // Deliberately not class "dl": the delegated click handler matches
-        // .dl and would look up an asset that does not exist.
-        btn.outerHTML =
-          '<span class="soon-btn">' + p.name + " build — coming soon</span>";
-        var note = card.querySelector(".dl-note");
-        if (note) {
-          note.innerHTML = "Being built and tested now. <a href=\"mailto:" +
-            "vlocalhostai@gmail.com?subject=" +
-            encodeURIComponent("Tell me when the " + p.name + " build is ready") +
-            "\">Ask to be told when it lands</a> — or run it from source today, " +
-            'it is the same code: <a href="' + REPO + '">github.com/…/vlocalhost-core</a>.';
+        btn.disabled = true;
+        btn.classList.add("is-soon");
+        var lbl = btn.querySelector("span");
+        if (lbl) { lbl.textContent = "Coming soon"; }
+        var head = card.querySelector(".os-head");
+        if (head && !head.querySelector(".soon-chip")) {
+          var chip = document.createElement("span");
+          chip.className = "soon-chip";
+          chip.textContent = "Coming soon";
+          head.appendChild(chip);
         }
-        var cmds = card.querySelector(".cmds");
-        // .cmds carries its own display rule, which beats the hidden
-        // attribute's UA style — set it directly or the block stays.
-        if (cmds) { cmds.style.display = "none"; }
         return;
       }
 
