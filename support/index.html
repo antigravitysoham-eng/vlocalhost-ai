@@ -197,12 +197,12 @@
       <p>Correct — the ZIP is deliberately portable. It writes nothing outside the
         folder you unpacked it into, which is why deleting that folder removes it
         completely, and why nothing appears on your desktop or in the Start menu.</p>
-      <p>The app can still make one. From the unpacked folder:</p>
-      <pre>runtime\pythonw.exe app\vlocalhost.py --install-shortcut</pre>
+      <p>The folder ships two helpers for exactly this. Double-click:</p>
+      <pre>Create desktop shortcut.cmd</pre>
       <p>That puts <b>Vlocalhost.AI</b> on your desktop and in the Start menu, pointing
         at the copy you unpacked. It finds the real desktop folder even when OneDrive
         has redirected it. To take them away again:</p>
-      <pre>runtime\pythonw.exe app\vlocalhost.py --remove-shortcut</pre>
+      <pre>Remove desktop shortcut.cmd</pre>
       <p>No registry writes, no admin rights, nothing outside your own home folder.</p>
     </details>
 

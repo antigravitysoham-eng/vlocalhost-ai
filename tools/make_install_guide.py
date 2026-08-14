@@ -248,9 +248,8 @@ def build():
     ])
     F += [Paragraph(
         "<b>No desktop icon?</b> Correct \u2014 the ZIP deliberately touches nothing "
-        "outside its own folder. The app can still make one. Run this once from "
-        "the unpacked folder:", P)]
-    F += [Paragraph("runtime\\pythonw.exe app\\vlocalhost.py --install-shortcut", CODE)]
+        "outside its own folder. Two helpers in the folder do it for you:", P)]
+    F += [Paragraph("Create desktop shortcut.cmd", CODE)]
     F += [Paragraph(
         "It adds Vlocalhost.AI to your desktop and Start menu, pointing at the "
         "copy you unpacked, and finds the real desktop folder even when OneDrive "
@@ -263,10 +262,8 @@ def build():
         "shortcuts:", P)]
     F += steps([
         "Delete the folder you unpacked. The program is gone.",
-        "If you created shortcuts, remove them with "
-        "<font face='Courier'>runtime\\pythonw.exe app\\vlocalhost.py "
-        "--remove-shortcut</font> before deleting the folder \u2014 or delete the "
-        "two .lnk files by hand afterwards.",
+        "If you created shortcuts, run <b>Remove desktop shortcut.cmd</b> before "
+        "deleting the folder \u2014 or delete the two .lnk files by hand afterwards.",
         "Notes and settings survive on purpose, in the folders listed under "
         "\u201cWhere your files live\u201d. Delete those only if you want the "
         "meetings gone too.",
