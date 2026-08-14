@@ -32,12 +32,10 @@
     --f-mono:ui-monospace,'Cascadia Code','SF Mono','JetBrains Mono',Consolas,monospace;
     --f-body:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
   }
-  @media (prefers-color-scheme: light){
-    :root{ --bg:#E5E8EE; --bg-2:#FCFCFD; --bg-3:#F1F3F7; --ink:#0B0F18; --muted:#55617A;
-      --faint:#97A1B4; --line:rgba(12,22,45,0.10); --line-2:rgba(12,22,45,0.18);
-      --amber:#A85F0C; --amber-d:#7F4708; --cyan:#0B8577; --glass:rgba(12,22,45,0.02);
-      --shadow:0 30px 70px -34px rgba(20,30,60,0.35); color-scheme:light; }
-  }
+  /* Dark is the product's own look and the site's default, whatever the OS
+     prefers. The light palette below stays for anyone who asks for it with
+     the toggle. */
+
   :root[data-theme="dark"]{ --bg:#090C12; --bg-2:#0E1220; --bg-3:#141B2A; --ink:#EAEEF4; --muted:#7E8AA0; --faint:#4B5468; --line:rgba(255,255,255,0.075); --line-2:rgba(255,255,255,0.14); --amber:#FFB43D; --amber-d:#E08A17; --cyan:#38E1CE; --glass:rgba(255,255,255,0.03); color-scheme:dark; }
   :root[data-theme="light"]{ --bg:#E5E8EE; --bg-2:#FCFCFD; --bg-3:#F1F3F7; --ink:#0B0F18; --muted:#55617A; --faint:#97A1B4; --line:rgba(12,22,45,0.10); --line-2:rgba(12,22,45,0.18); --amber:#A85F0C; --amber-d:#7F4708; --cyan:#0B8577; --glass:rgba(12,22,45,0.02); color-scheme:light; }
   *{box-sizing:border-box;}
@@ -354,7 +352,7 @@
   document.getElementById("cta-free").href=INSTALL;
 
   var r=document.documentElement,mq=matchMedia("(prefers-color-scheme: dark)");
-  document.getElementById("theme").onclick=function(){var c=r.getAttribute("data-theme")||(mq.matches?"dark":"light");r.setAttribute("data-theme",c==="dark"?"light":"dark");};
+  document.getElementById("theme").onclick=function(){var c=r.getAttribute("data-theme")||"dark";r.setAttribute("data-theme",c==="dark"?"light":"dark");};
 
   var mBtn=document.getElementById("mBtn"),aBtn=document.getElementById("aBtn");
   function setMode(annual){

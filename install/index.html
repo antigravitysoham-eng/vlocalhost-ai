@@ -29,14 +29,10 @@
     --amber:#FFB43D; --amber-d:#E08A17; --cyan:#38E1CE; --glass:rgba(255,255,255,0.03);
     --shadow:0 30px 80px -30px rgba(0,0,0,0.8); color-scheme:dark;
   }
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg:#E5E8EE; --bg-2:#FCFCFD; --bg-3:#F1F3F7; --ink:#0B0F18; --muted:#55617A;
-      --faint:#97A1B4; --line:rgba(12,22,45,0.10); --line-2:rgba(12,22,45,0.18);
-      --amber:#A85F0C; --amber-d:#7F4708; --cyan:#0B8577; --glass:rgba(12,22,45,0.02);
-      --shadow:0 30px 70px -34px rgba(20,30,60,0.35); color-scheme:light;
-    }
-  }
+  /* Dark is the product's own look and the site's default, whatever the OS
+     prefers. The light palette below stays for anyone who asks for it with
+     the toggle. */
+
   :root[data-theme="dark"] {
     --bg:#090C12; --bg-2:#0E1220; --bg-3:#141B2A; --ink:#EAEEF4; --muted:#7E8AA0;
     --faint:#4B5468; --line:rgba(255,255,255,0.075); --line-2:rgba(255,255,255,0.14);
@@ -146,6 +142,16 @@
   .alt-dl p { margin:10px 0 0; font-size:0.76rem; line-height:1.55; color:var(--muted); }
   .alt-dl p.alt-why { margin-top:7px; color:var(--faint); font-size:0.72rem; }
   .alt-dl b { color:var(--ink); font-weight:600; }
+
+  /* A platform the current release has no asset for. Present, honest, and
+     visibly not a button — a greyed-out control still invites a click. */
+  .os.soon { box-shadow:none; }
+  .os.soon .os-head .logo, .os.soon .os-head .name { opacity:0.55; }
+  .soon-btn { display:block; text-align:center; cursor:default; margin:20px 22px 8px;
+              padding:14px 18px; border-radius:12px;
+              background:transparent; border:1px dashed var(--line-2); color:var(--muted);
+              font-family:var(--f-mono); font-size:0.78rem; letter-spacing:0.06em; }
+  .os.soon .dl-note a { color:var(--cyan); text-decoration:underline; text-underline-offset:2px; }
 
   .cmds { margin:16px 16px 20px; border:1px solid var(--line); border-radius:12px; background:var(--bg);
           overflow:hidden; display:flex; flex-direction:column; flex:1; }
@@ -383,9 +389,8 @@
 
   /* theme toggle */
   var root = document.documentElement;
-  var mq = window.matchMedia("(prefers-color-scheme: dark)");
   document.getElementById("theme").addEventListener("click", function () {
-    var cur = root.getAttribute("data-theme") || (mq.matches ? "dark" : "light");
+    var cur = root.getAttribute("data-theme") || "dark";
     root.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
   });
 
@@ -482,6 +487,30 @@
     PLATFORMS.forEach(function (p) {
       var btn = document.querySelector('.dl[data-key="' + p.key + '"]');
       if (!btn) return;
+      // No asset for this platform in the release that was actually fetched —
+      // so say "coming soon" instead of handing over a button that opens a
+      // releases page with nothing on it for them. Only reachable on a
+      // successful fetch; a failed one leaves every card as it was.
+      var card = btn.closest(".os");
+      if (!p.url && card) {
+        card.classList.add("soon");
+        // Deliberately not class "dl": the delegated click handler matches
+        // .dl and would look up an asset that does not exist.
+        btn.outerHTML =
+          '<span class="soon-btn">' + p.name + " build — coming soon</span>";
+        var note = card.querySelector(".dl-note");
+        if (note) {
+          note.innerHTML = "Being built and tested now. <a href=\"mailto:" +
+            "vlocalhostai@gmail.com?subject=" +
+            encodeURIComponent("Tell me when the " + p.name + " build is ready") +
+            "\">Ask to be told when it lands</a> — or run it from source today, " +
+            'it is the same code: <a href="' + REPO + '">github.com/…/vlocalhost-core</a>.';
+        }
+        var cmds = card.querySelector(".cmds");
+        if (cmds) { cmds.hidden = true; }
+        return;
+      }
+
       var alt = document.querySelector('.alt-dl[data-key="' + p.key + '"]');
       if (alt && p.altUrl) {
         alt.innerHTML =
