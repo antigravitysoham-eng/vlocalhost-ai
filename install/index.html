@@ -142,6 +142,10 @@
   .alt-dl p { margin:10px 0 0; font-size:0.76rem; line-height:1.55; color:var(--muted); }
   .alt-dl p.alt-why { margin-top:7px; color:var(--faint); font-size:0.72rem; }
   .alt-dl b { color:var(--ink); font-weight:600; }
+  .alt-dl code { display:inline-block; margin-top:4px; font-family:var(--f-mono);
+                 font-size:0.68rem; line-height:1.5; color:var(--amber);
+                 background:var(--bg-3); border:1px solid var(--line);
+                 border-radius:6px; padding:3px 7px; word-break:break-all; }
 
   /* A platform the current release has no asset for: badge at the top of the
      card, button visibly out of service. Everything else stays put. */
@@ -416,7 +420,11 @@
       // — a dead end unless the page offers something else to download.
       alt:/windows-x64\.zip$/,
       altHow:"Portable ZIP — unpack anywhere and run <b>Vlocalhost.cmd</b>. " +
-             "No installer, no Start-menu entry, nothing to uninstall.",
+             "Nothing to uninstall: delete the folder and it is gone.<br /><br />" +
+             "Want the desktop icon the installer would have made? Run this once " +
+             "from the unpacked folder:<br />" +
+             "<code>runtime\pythonw.exe app\vlocalhost.py --install-shortcut</code>" +
+             "<br />and <code>--remove-shortcut</code> takes it away again.",
       how:"Double-click it. Windows will show a blue <b>&ldquo;Windows protected your PC&rdquo;</b> screen because the installer isn't code-signed yet \u2014 choose <b>More info \u2192 Run anyway</b>.",
       note:'Choose any folder, on any drive. No administrator rights needed. Leaves a <b>Vlocalhost.AI</b> icon on your desktop and in the Start menu, and a proper entry in Add/Remove Programs.',
       cmds:[
