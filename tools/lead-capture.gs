@@ -37,14 +37,31 @@
 /** Where a copy of each lead is emailed. Empty string turns email off. */
 var NOTIFY = 'vlocalhostai@gmail.com';
 
+/**
+ * The spreadsheet to write into, by id — the long string in its URL between
+ * /d/ and /edit.
+ *
+ * A script created from Extensions → Apps Script is bound to its sheet and
+ * needs none of this. With two Google accounts signed into one browser, that
+ * binding fails to open ("unable to open the file at present"), so this runs
+ * as a standalone project instead and names the sheet explicitly. Leave the
+ * string empty in a bound script and the active spreadsheet is used.
+ */
+var SHEET_ID = '1_9WqBBEILsi2Jmn4o-2mCjR6LM9-317y3BH0onrm3gs';
+
 /** Tab within the spreadsheet. Created on first use. */
 var TAB = 'Leads';
 
 var HEADERS = ['Received', 'Name', 'Email', 'Phone', 'Company',
                'Consented', 'Page', 'Source'];
 
+function book_() {
+  return SHEET_ID ? SpreadsheetApp.openById(SHEET_ID)
+                  : SpreadsheetApp.getActiveSpreadsheet();
+}
+
 function sheet_() {
-  var book = SpreadsheetApp.getActiveSpreadsheet();
+  var book = book_();
   var tab = book.getSheetByName(TAB) || book.insertSheet(TAB);
   if (tab.getLastRow() === 0) {
     tab.appendRow(HEADERS);
@@ -90,7 +107,7 @@ function doPost(e) {
           'Consent:  ' + row[5],
           'Page:     ' + row[6],
           '',
-          'Sheet: ' + SpreadsheetApp.getActiveSpreadsheet().getUrl()
+          'Sheet: ' + book_().getUrl()
         ].join('\n')
       });
     }
