@@ -480,7 +480,6 @@
         }
         if (p.alt && !p.altUrl && p.alt.test(asset.name)) {
           p.altUrl = asset.browser_download_url;
-          p.altSize = human(asset.size);
         }
       });
     });
@@ -507,7 +506,9 @@
             'it is the same code: <a href="' + REPO + '">github.com/…/vlocalhost-core</a>.';
         }
         var cmds = card.querySelector(".cmds");
-        if (cmds) { cmds.hidden = true; }
+        // .cmds carries its own display rule, which beats the hidden
+        // attribute's UA style — set it directly or the block stays.
+        if (cmds) { cmds.style.display = "none"; }
         return;
       }
 
@@ -519,7 +520,7 @@
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" ' +
             'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
             '<path d="M12 3v12M7 11l5 5 5-5M5 21h14"/></svg>' +
-            "<span>Download the ZIP" + (p.altSize ? " · " + p.altSize : "") + "</span></a>" +
+            "<span>Download the ZIP</span></a>" +
           "<p>" + p.altHow + "</p>" +
           "<p class=\"alt-why\">Pick this if a virus scanner blocks the installer or " +
           "Chrome reports <b>“Virus scan failed”</b>.</p>";
