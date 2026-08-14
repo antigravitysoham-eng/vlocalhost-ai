@@ -104,6 +104,25 @@
     border-radius:8px;padding:12px;font-family:var(--f-mono);font-size:.8rem;margin:10px 0 0}
   footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--faint);
     font-family:var(--f-mono);font-size:.72rem;text-align:center}
+
+  /* footer social */
+  .social { display:flex; align-items:center; gap:10px; }
+  .social a {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:36px; height:36px; border-radius:10px;
+    border:1px solid var(--line-2); background:var(--glass);
+    color:var(--muted); text-decoration:none;
+    transition:color .18s ease, border-color .18s ease, transform .18s ease;
+  }
+  .social a:hover, .social a:focus-visible {
+    color:var(--amber); border-color:var(--amber); transform:translateY(-2px);
+  }
+  .social a:focus-visible { outline:2px solid var(--amber); outline-offset:2px; }
+  .social svg { width:18px; height:18px; display:block; }
+  @media (prefers-reduced-motion: reduce) {
+    .social a { transition:none; }
+    .social a:hover, .social a:focus-visible { transform:none; }
+  }
 </style>
 </head>
 <body>
@@ -300,6 +319,22 @@
 
 <footer>
   Vlocalhost.AI · on-device voice intelligence · <span id="year"></span>
+  <nav class="social" style="justify-content:center;margin-top:16px;" aria-label="Vlocalhost.AI elsewhere">
+    <!-- LinkedIn: paste the company slug and uncomment.
+         <a href="https://www.linkedin.com/company/YOUR-SLUG/"
+            target="_blank" rel="me noopener"
+            aria-label="Vlocalhost.AI on LinkedIn" title="LinkedIn">
+           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="3.6"/><circle cx="7.6" cy="7.9" r="1.15" fill="currentColor" stroke="none"/><path d="M7.6 10.9v6.2"/><path d="M11.5 17.1v-6.2M11.5 13.8a2.55 2.55 0 0 1 5.1 0v3.3"/></svg></a> -->
+    <a href="https://x.com/VlocalhostAI" target="_blank" rel="me noopener"
+       aria-label="Vlocalhost.AI on X" title="X">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z"/></svg></a>
+    <a href="https://www.instagram.com/vlocalhostai/" target="_blank" rel="me noopener"
+       aria-label="Vlocalhost.AI on Instagram" title="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.1" cy="6.9" r="1" fill="currentColor" stroke="none"/></svg></a>
+    <a href="https://www.reddit.com/user/VlocalhostAI/" target="_blank" rel="me noopener"
+       aria-label="Vlocalhost.AI on Reddit" title="Reddit">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="14.3" rx="7.3" ry="5.5"/><circle cx="9.5" cy="13.7" r="1.05" fill="currentColor" stroke="none"/><circle cx="14.5" cy="13.7" r="1.05" fill="currentColor" stroke="none"/><path d="M9.6 16.9c1.45 1.02 3.35 1.02 4.8 0"/><path d="M12 8.8V5.4l3.2-.9"/><circle cx="16.8" cy="4.2" r="1.35"/></svg></a>
+  </nav>
 </footer>
 
 <script>
