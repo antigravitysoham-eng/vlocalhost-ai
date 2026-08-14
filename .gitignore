@@ -1,0 +1,6 @@
+
+# Brand and social assets: deliberately local-only. This repo IS the public
+# GitHub Pages site, so anything committed here is served at
+# antigravitysoham-eng.github.io/vlocalhost-ai/ — including files never linked
+# from a page.
+brand/
