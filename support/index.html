@@ -195,6 +195,29 @@
     </details>
 
     <details>
+      <summary>Chrome says “Failed — Virus scan failed”</summary>
+      <p>This is not a detection. Chrome hands the finished download to Windows to be
+        scanned, and that call failed — usually a third-party antivirus, a managed
+        work laptop, or a Defender service that isn’t running. The file is never
+        reported as malicious; the scan simply never returned an answer.</p>
+      <p>In order of least effort:</p>
+      <ol>
+        <li>Open <b>Downloads</b> (Ctrl+J) and press <b>Retry</b>. Transient scanner
+          failures often clear on a second attempt.</li>
+        <li>Take the <b>ZIP</b> instead, offered on the
+          <a href="../install/">install page</a>. Same build, no installer: unpack it
+          and run <b>Vlocalhost.cmd</b>.</li>
+        <li>Verify the file and keep it anyway — the SHA-256 for every release is
+          published beside the download, so you can prove the bytes are the ones
+          that were built.</li>
+      </ol>
+      <p>If a scanner quarantines it outright, that is a false positive on an
+        unsigned installer that unpacks a Python interpreter — a common shape for
+        heuristics. Reporting it to your vendor helps everyone; so does telling us,
+        because we submit these for reclassification.</p>
+    </details>
+
+    <details>
       <summary>Windows blocked the installer — “Windows protected your PC”</summary>
       <p>Expected, and worth explaining rather than waving away. The installer is
         <b>not code-signed</b>: a certificate costs a few hundred dollars a year, and
