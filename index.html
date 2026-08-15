@@ -822,10 +822,6 @@
   });
 
   /* ---------- reveal on scroll ---------- */
-  /* `isIntersecting` alone leaves anything the reader has already passed stuck
-     at opacity 0: reload the page part-way down and the browser restores the
-     scroll position, so every section above stays blank until you scroll back
-     up through it. Treat "already above the viewport" as revealed too. */
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting || e.boundingClientRect.top < 0) {
@@ -837,6 +833,26 @@
   document.querySelectorAll(".reveal").forEach(function (el, i) {
     el.style.transitionDelay = Math.min(i * 45, 260) + "ms";
     io.observe(el);
+  });
+
+  /* Reload the page part-way down and the browser restores the scroll
+     position — but it does so *after* the observer's first callback, which
+     therefore measures everything from scrollY 0. Every section the reader
+     had already passed reports "below the viewport", then jumps above it in
+     one step without ever intersecting, so no further callback arrives and it
+     stays at opacity 0. The result reads as a page full of enormous gaps.
+     Sweep whatever is above the viewport once the position has settled. */
+  function revealPassed() {
+    document.querySelectorAll(".reveal:not(.in)").forEach(function (el) {
+      if (el.getBoundingClientRect().bottom < 0) {
+        el.classList.add("in");
+        io.unobserve(el);
+      }
+    });
+  }
+  window.addEventListener("load", function () {
+    revealPassed();
+    setTimeout(revealPassed, 300);   // some browsers restore later still
   });
 
   /* ---------- oscilloscope ---------- */
