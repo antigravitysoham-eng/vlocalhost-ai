@@ -336,7 +336,11 @@
   .vlocalhost-card p { color: var(--muted); margin: 0 0 24px; font-size: 1.02rem; max-width: 34ch; }
 
   /* footer */
-  footer { border-top: 1px solid var(--line); padding: 60px 0 44px; }
+  /* The section above the footer already ends on up to 128px of its own
+     padding, and 60px more here made a band of dead space taller than the
+     footer's content. Trim the trailing section and meet it halfway. */
+  main > *:last-child { padding-bottom: clamp(36px, 4.5vw, 56px); }
+  footer { border-top: 1px solid var(--line); padding: 40px 0; }
 
   /* footer social */
   .social { display:flex; align-items:center; gap:10px; }

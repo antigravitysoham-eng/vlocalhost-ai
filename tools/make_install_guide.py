@@ -361,7 +361,7 @@ a:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:
 .toc a:hover,.toc a:focus-visible{color:var(--amber)}
 .toc a::before{content:counter(t,decimal-leading-zero);font-family:var(--f-mono);
   font-size:10px;color:var(--faint);margin-right:9px}
-main{padding:40px 0 100px;min-width:0}
+main{padding:40px 0 56px;min-width:0}
 .hero{padding-bottom:30px;margin-bottom:8px;border-bottom:1px solid var(--hair)}
 .eyebrow{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;
   text-transform:uppercase;color:var(--amber);margin:0 0 16px}
@@ -408,7 +408,7 @@ tbody td:first-child{color:var(--ink);font-weight:600}
   margin:0 0 12px;background:var(--panel)}
 .prob h4{margin-top:0}
 .prob .cause{color:var(--muted);font-size:14.5px;margin-bottom:11px}
-footer{border-top:1px solid var(--hair);margin-top:60px;padding:26px 0 0;
+footer{border-top:1px solid var(--hair);margin-top:44px;padding:24px 0 0;
   font-family:var(--f-mono);font-size:11.5px;color:var(--faint);line-height:1.8}
 @media print{.nav,.toc{display:none}.shell{grid-template-columns:1fr}}
 """

@@ -192,7 +192,11 @@
   .byo-card code { font-family:var(--f-mono); font-size:0.82em; color:var(--cyan);
                    background:var(--glass); padding:1px 6px; border-radius:5px; }
 
-  footer { border-top:1px solid var(--line); padding:48px 0; margin-top:clamp(40px,6vw,72px); }
+  /* margin-top here stacked on top of the trailing section's own bottom
+     padding, so this page had the widest gap on the site. The section is
+     trimmed instead and the margin dropped. */
+  main > *:last-child { padding-bottom:clamp(36px,4.5vw,56px); }
+  footer { border-top:1px solid var(--line); padding:40px 0; }
 
   /* footer social */
   .social { display:flex; align-items:center; gap:10px; }
