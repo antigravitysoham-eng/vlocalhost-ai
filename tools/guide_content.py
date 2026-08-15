@@ -13,7 +13,7 @@ layout change.
 """
 
 VERSION = "1.1.1"
-SITE = "https://antigravitysoham-eng.github.io/vlocalhost-ai/"
+SITE = "https://vlocal.host/"
 SUPPORT = SITE + "support/"
 GUIDE_URL = SITE + "install/guide/"
 RELEASES = "https://github.com/antigravitysoham-eng/vlocalhost-core/releases/latest"
