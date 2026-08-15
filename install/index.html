@@ -197,6 +197,13 @@
      trimmed instead and the margin dropped. */
   main > *:last-child { padding-bottom:clamp(36px,4.5vw,56px); }
   footer { border-top:1px solid var(--line); padding:40px 0; }
+  /* Footer contact links. The address itself is written by script below, so
+     it is not sitting in the markup for scrapers; without JS these fall back
+     to the support page. */
+  .foot-mail{font-family:var(--f-mono);font-size:.82rem;color:var(--muted);
+    text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px;}
+  .foot-mail:hover,.foot-mail:focus-visible{color:var(--amber);border-bottom-color:var(--amber);}
+  .foot-mail:focus-visible{outline:2px solid var(--amber);outline-offset:3px;}
 
   /* footer social */
   .social { display:flex; align-items:center; gap:10px; }
@@ -411,6 +418,9 @@
   <div class="wrap foot-in">
     <div class="m">Vlocalhost<span>.</span>AI</div>
     <div>ON-DEVICE VOICE INTELLIGENCE · WINDOWS · MACOS · LINUX</div>
+    <div><a class="foot-mail" href="../support/">Support</a><span
+      style="color:var(--faint);padding:0 8px;">&middot;</span><a class="foot-mail"
+      id="contactMail" href="../support/">Contact</a></div>
     <nav class="social" aria-label="Vlocalhost.AI elsewhere">
       <a href="https://www.linkedin.com/company/vlocalhostai/"
          target="_blank" rel="me noopener"
@@ -726,6 +736,19 @@
       ta.remove();
     }
   });
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  /* Same contact address as every other page, written at runtime. */
+  var CONTACT = "voiceit@vlocal.host";
+  var el = document.getElementById("contactMail");
+  if (el) {
+    el.textContent = CONTACT;
+    el.href = "mailto:" + CONTACT + "?subject=" +
+      encodeURIComponent("Vlocalhost.AI — enquiry");
+  }
 })();
 </script>
 </body>

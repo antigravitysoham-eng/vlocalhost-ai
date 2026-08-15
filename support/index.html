@@ -106,6 +106,14 @@
   footer{border-top:1px solid var(--line);padding:34px 0 40px;color:var(--faint);
     font-family:var(--f-mono);font-size:.72rem;text-align:center}
 
+  /* Footer contact link. The address itself is written by script below, so it
+     is not sitting in the markup for scrapers; without JS it falls back to a
+     link that still works. */
+  .foot-mail{font-family:var(--f-mono);font-size:.82rem;color:var(--muted);
+    text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px;}
+  .foot-mail:hover,.foot-mail:focus-visible{color:var(--amber);border-bottom-color:var(--amber);}
+  .foot-mail:focus-visible{outline:2px solid var(--amber);outline-offset:3px;}
+
   /* footer social */
   .social { display:flex; align-items:center; gap:10px; }
   .social a {
@@ -188,6 +196,12 @@
         <p>No GitHub account, or something you would rather not post publicly.
            Attach the report and tell us what you were doing.</p>
         <a class="btn btn-ghost" id="mailBtn" href="#">Email support →</a>
+        <!-- The button only helps someone whose machine has a mail client set
+             up. Show the address itself as well, so it can be read and copied
+             — still written by script, so it is not in the markup. -->
+        <p style="margin:12px 0 0;text-align:center;">
+          <a class="foot-mail" id="mailPlain" href="#"></a>
+        </p>
       </div>
     </div>
 
@@ -320,6 +334,7 @@
 
 <footer>
   Vlocalhost.AI · on-device voice intelligence · <span id="year"></span>
+  <div style="margin-top:10px;"><a class="foot-mail" id="contactMail" href="#top">Contact</a></div>
   <nav class="social" style="justify-content:center;margin-top:16px;" aria-label="Vlocalhost.AI elsewhere">
     <a href="https://www.linkedin.com/company/vlocalhostai/"
        target="_blank" rel="me noopener"
@@ -353,6 +368,14 @@
   document.getElementById("mailBtn").href =
     "mailto:" + EMAIL + "?subject=" + subject + "&body=" + body;
 
+  /* The address in plain sight, for copying or for a machine with no mail
+     client configured — where the button above does nothing at all. */
+  var plain = document.getElementById("mailPlain");
+  if (plain) {
+    plain.textContent = EMAIL;
+    plain.href = "mailto:" + EMAIL;
+  }
+
   /* Prefill the issue so a bug report arrives with the details already in it. */
   var issueBody = encodeURIComponent(
     "### What happened\n\n\n" +
@@ -367,6 +390,19 @@
     "?title=" + encodeURIComponent("[bug] ") + "&body=" + issueBody;
 
   document.getElementById("year").textContent = String(new Date().getFullYear());
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  /* Same contact address as every other page, written at runtime. */
+  var CONTACT = "voiceit@vlocal.host";
+  var el = document.getElementById("contactMail");
+  if (el) {
+    el.textContent = CONTACT;
+    el.href = "mailto:" + CONTACT + "?subject=" +
+      encodeURIComponent("Vlocalhost.AI — enquiry");
+  }
 })();
 </script>
 </body>

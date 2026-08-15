@@ -780,7 +780,9 @@
     <div>
       <div class="foot-mark">Vlocalhost<span>.</span>AI</div>
       <p style="color:var(--muted);margin:8px 0 0;max-width:34ch;">On-device voice intelligence. Your conversations never leave the room.</p>
-      <p style="margin:14px 0 0;"><a class="foot-mail" id="contactMail" href="support/">Support</a></p>
+      <p style="margin:14px 0 0;"><a class="foot-mail" href="support/">Support</a><span
+        style="color:var(--faint);padding:0 8px;">&middot;</span><a class="foot-mail"
+        id="contactMail" href="support/">Contact</a></p>
       <nav class="social" style="margin-top:18px;" aria-label="Vlocalhost.AI elsewhere">
         <a href="https://www.linkedin.com/company/vlocalhostai/"
            target="_blank" rel="me noopener"
@@ -1061,7 +1063,11 @@
   document.getElementById("year").textContent = String(new Date().getFullYear());
 
   /* Written at runtime so the address is not sitting in the HTML for scrapers.
-     Without JS the link falls back to the support page. */
+     Without JS the link falls back to the support page.
+
+     This fills a link that sits *beside* the Support link rather than
+     replacing it: the address is what someone wants when they already know
+     what to say, and the support page is what they want when they do not. */
   var CONTACT = "voiceit@vlocal.host";
   var contactMail = document.getElementById("contactMail");
   if (contactMail) {
