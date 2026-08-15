@@ -822,8 +822,17 @@
   });
 
   /* ---------- reveal on scroll ---------- */
+  /* `isIntersecting` alone leaves anything the reader has already passed stuck
+     at opacity 0: reload the page part-way down and the browser restores the
+     scroll position, so every section above stays blank until you scroll back
+     up through it. Treat "already above the viewport" as revealed too. */
   var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    entries.forEach(function (e) {
+      if (e.isIntersecting || e.boundingClientRect.top < 0) {
+        e.target.classList.add("in");
+        io.unobserve(e.target);
+      }
+    });
   }, { threshold: 0.14 });
   document.querySelectorAll(".reveal").forEach(function (el, i) {
     el.style.transitionDelay = Math.min(i * 45, 260) + "ms";
