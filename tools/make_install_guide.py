@@ -112,6 +112,152 @@ class Bookmark(Flowable):
         self.canv.addOutlineEntry(self.title, self.key, level=0, closed=False)
 
 
+_NUM = re.compile(r"[-+]?(?:\d*\.\d+|\d+\.?)(?:[eE][-+]?\d+)?")
+
+
+def parse_svg_path(d):
+    """SVG path data to (op, *args) tuples, in SVG user units.
+
+    Supports M L H V C S Z in both cases, which is everything the platform
+    marks use. Written out rather than pulling in svglib: three icons is not
+    worth a build dependency that every machine regenerating the docs would
+    then need installed.
+    """
+    tokens = re.findall(r"[MmLlHhVvCcSsZz]|" + _NUM.pattern, d)
+    ops, i = [], 0
+    cx = cy = sx = sy = 0.0          # current point, subpath start
+    px = py = None                   # previous cubic control, for S
+    cmd = None
+    while i < len(tokens):
+        t = tokens[i]
+        if t.isalpha():
+            cmd = t
+            i += 1
+            if cmd in "Zz":
+                ops.append(("close",))
+                cx, cy = sx, sy
+                px = py = None
+                continue
+        rel = cmd.islower()
+        up = cmd.upper()
+        need = {"M": 2, "L": 2, "H": 1, "V": 1, "C": 6, "S": 4}[up]
+        vals = [float(v) for v in tokens[i:i + need]]
+        i += need
+        if up == "M":
+            x, y = vals
+            if rel:
+                x, y = cx + x, cy + y
+            ops.append(("move", x, y))
+            cx = sx = x
+            cy = sy = y
+            cmd = "l" if rel else "L"     # implicit lineto for extra pairs
+            px = py = None
+        elif up in ("L", "H", "V"):
+            if up == "L":
+                x, y = vals
+                if rel:
+                    x, y = cx + x, cy + y
+            elif up == "H":
+                x = cx + vals[0] if rel else vals[0]
+                y = cy
+            else:
+                x = cx
+                y = cy + vals[0] if rel else vals[0]
+            ops.append(("line", x, y))
+            cx, cy = x, y
+            px = py = None
+        else:                              # C or S
+            if up == "C":
+                x1, y1, x2, y2, x, y = vals
+                if rel:
+                    x1, y1, x2, y2, x, y = (cx + x1, cy + y1, cx + x2,
+                                            cy + y2, cx + x, cy + y)
+            else:
+                x2, y2, x, y = vals
+                if rel:
+                    x2, y2, x, y = cx + x2, cy + y2, cx + x, cy + y
+                # S reflects the previous control point through the current one
+                x1 = 2 * cx - px if px is not None else cx
+                y1 = 2 * cy - py if py is not None else cy
+            ops.append(("curve", x1, y1, x2, y2, x, y))
+            px, py = x2, y2
+            cx, cy = x, y
+    return ops
+
+
+def icon_shapes(fragment):
+    """The <path>/<circle> shapes inside one OS_ICONS entry."""
+    shapes = []
+    for d in re.findall(r'<path d="([^"]+)"', fragment):
+        shapes.append(("path", parse_svg_path(d)))
+    for cx, cy, r in re.findall(
+            r'<circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)"', fragment):
+        shapes.append(("circle", float(cx), float(cy), float(r)))
+    return shapes
+
+
+class Glyph(Flowable):
+    """A platform mark in a rounded box, matching the badge on the web page."""
+
+    def __init__(self, anchor, box=11 * mm):
+        Flowable.__init__(self)
+        self.shapes = icon_shapes(OS_ICONS[anchor])
+        self.width = self.height = box
+
+    def draw(self):
+        c = self.canv
+        box = self.width
+        c.saveState()
+        c.setStrokeColor(RULE)
+        c.setLineWidth(0.6)
+        c.setFillColor(PANEL)
+        c.roundRect(0, 0, box, box, 2.2 * mm, stroke=1, fill=1)
+
+        # SVG's y axis points down and the viewBox is 24 units square; put the
+        # glyph in the middle of the box at 60% of its width.
+        glyph = box * 0.6
+        s = glyph / 24.0
+        c.translate((box - glyph) / 2, (box + glyph) / 2)
+        c.scale(s, -s)
+
+        for shape in self.shapes:
+            if shape[0] == "circle":
+                _, x, y, r = shape
+                c.setFillColor(PANEL)          # the eyes are knocked out
+                c.circle(x, y, r, stroke=0, fill=1)
+                continue
+            c.setFillColor(INK)
+            p = c.beginPath()
+            for op in shape[1]:
+                if op[0] == "move":
+                    p.moveTo(op[1], op[2])
+                elif op[0] == "line":
+                    p.lineTo(op[1], op[2])
+                elif op[0] == "curve":
+                    p.curveTo(*op[1:])
+                else:
+                    p.close()
+            c.drawPath(p, stroke=0, fill=1)
+        c.restoreState()
+
+
+def section_head(anchor, title, width):
+    """The section title, with its platform mark when it has one."""
+    if anchor not in OS_ICONS:
+        return Paragraph(title, H1)
+    pad = 15 * mm
+    t = Table([[Glyph(anchor), Paragraph(title, H1)]],
+              colWidths=[pad, width - pad], hAlign="LEFT")
+    t.setStyle(TableStyle([
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+        ("LEFTPADDING", (0, 0), (-1, -1), 0),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+        ("TOPPADDING", (0, 0), (-1, -1), 0),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+    ]))
+    return t
+
+
 class Rule(Flowable):
     """The amber rule that opens every section — the one brand mark on paper."""
 
@@ -298,7 +444,8 @@ def build_pdf():
               Bookmark(title, anchor),
               Rule(doc.width),
               Spacer(1, 7),
-              Paragraph(title, H1),
+              section_head(anchor, title, doc.width),
+              Spacer(1, 3),
               Paragraph(stand, STAND)]
         F += render_blocks(blocks)
         F += [Spacer(1, 6 * mm)]
