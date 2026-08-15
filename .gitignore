@@ -4,3 +4,8 @@
 # antigravitysoham-eng.github.io/vlocalhost-ai/ — including files never linked
 # from a page.
 brand/
+
+# Same reasoning: the generators in tools/ leave bytecode behind, and anything
+# committed here is served.
+__pycache__/
+*.pyc
