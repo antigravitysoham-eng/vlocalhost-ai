@@ -343,10 +343,15 @@ a:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:
   font-weight:600;border:none;letter-spacing:-.01em}
 .brand svg{width:19px;height:19px;color:var(--amber)}
 .brand small{color:var(--amber);font-weight:700}
+.nav-right{display:flex;align-items:center;gap:18px}
+.nlink{font-family:var(--f-mono);font-size:12px;letter-spacing:.05em;color:var(--muted);
+  border:none;white-space:nowrap}
+.nlink:hover,.nlink:focus-visible{color:var(--amber);border:none}
 .dl{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.09em;
   text-transform:uppercase;background:var(--amber);color:var(--bg);
   border-radius:9px;padding:10px 16px;border:none;font-weight:600}
 .dl:hover{background:var(--amber-d);border:none}
+@media (max-width:560px){.nlink{display:none}}
 .shell{max-width:1120px;margin:0 auto;padding:0 22px;display:grid;
   grid-template-columns:212px minmax(0,1fr);gap:46px;align-items:start}
 @media (max-width:900px){.shell{grid-template-columns:1fr;gap:0}}
@@ -371,10 +376,16 @@ h1{font-family:var(--f-display);font-size:clamp(32px,5.4vw,46px);line-height:1.0
 .meta{font-family:var(--f-mono);font-size:11.5px;color:var(--faint);
   display:flex;gap:18px;flex-wrap:wrap}
 section{scroll-margin-top:76px;padding-top:46px}
+.sec-rule{width:26px;height:3px;background:var(--amber);border-radius:2px;margin-bottom:16px}
+.sec-head{display:flex;align-items:center;gap:14px;margin:0 0 6px}
 h2.sec{font-family:var(--f-display);font-size:clamp(24px,3.2vw,31px);
-  letter-spacing:-.024em;font-weight:700;margin:0 0 6px;line-height:1.15}
-h2.sec::before{content:"";display:block;width:26px;height:3px;
-  background:var(--amber);border-radius:2px;margin-bottom:16px}
+  letter-spacing:-.024em;font-weight:700;margin:0;line-height:1.15}
+/* The platform sections carry the same mark the install page uses for them,
+   so a reader scanning for their own OS finds it by shape before they read. */
+.os-badge{width:42px;height:42px;border-radius:12px;flex:none;
+  border:1px solid var(--line);background:var(--glass);
+  display:grid;place-items:center;color:var(--ink)}
+.os-badge svg{width:23px;height:23px}
 .stand{color:var(--muted);margin:0 0 20px;max-width:60ch}
 h3{font-family:var(--f-display);font-size:18px;font-weight:650;
   letter-spacing:-.012em;margin:30px 0 8px;text-wrap:balance}
@@ -416,6 +427,37 @@ footer{border-top:1px solid var(--hair);margin-top:44px;padding:24px 0 0;
 MARK = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
         'stroke-width="2" stroke-linecap="round" aria-hidden="true">'
         '<path d="M2 12h3l2-7 3 15 3-11 2 5 2-2h5"/></svg>')
+
+#: The platform marks, taken from the install page so the two pages agree.
+#: Keyed by section anchor; a section without one simply gets no badge.
+OS_ICONS = {
+    "windows":
+        '<path d="M3 5.5l7.5-1v7.2H3V5.5zM11.3 4.4L21 3v9.3h-9.7V4.4z'
+        'M3 12.5h7.5v6.9L3 18.4v-5.9zM11.3 12.5H21V21l-9.7-1.4v-7.1z"/>',
+    "macos":
+        '<path d="M16.4 12.9c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1'
+        '-2.7.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.4 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 '
+        '8.6.7 1 1.5 2.2 2.6 2.1 1-.04 1.5-.7 2.7-.7 1.2 0 1.6.7 2.7.7 1.1-.02 '
+        '1.8-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.4-.02-.01-2.1-.8-2.1-3.2zM14.6 6.3c.6'
+        '-.7 1-1.7.9-2.7-.9.04-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.6 1 .08 1.9-.5 '
+        '2.5-1.2z"/>',
+    "linux":
+        '<path d="M12 2c-2.1 0-3.4 1.8-3.4 4.1 0 1.2.2 1.9.2 2.7 0 1-.9 1.7-1.9 '
+        '3.2C5.8 13.8 5 15.2 5 16.6c0 .9.6 1.4 1.3 1.6-.1.3-.2.6-.2 1 0 1.6 2.6 '
+        '2.6 5.9 2.6s5.9-1 5.9-2.6c0-.4-.1-.7-.2-1 .7-.2 1.3-.7 1.3-1.6 0-1.4-.8'
+        '-2.8-1.9-4.6-1-1.5-1.9-2.2-1.9-3.2 0-.8.2-1.5.2-2.7C15.4 3.8 14.1 2 12 '
+        '2z"/><circle cx="10.4" cy="6.6" r=".85" fill="var(--bg)"/>'
+        '<circle cx="13.6" cy="6.6" r=".85" fill="var(--bg)"/>',
+}
+
+
+def badge(anchor):
+    """The platform mark for a section, or nothing."""
+    icon = OS_ICONS.get(anchor)
+    if not icon:
+        return ""
+    return ('<span class="os-badge"><svg viewBox="0 0 24 24" fill="currentColor" '
+            'aria-hidden="true">' + icon + "</svg></span>")
 
 
 def h(text):
@@ -482,7 +524,9 @@ def build_html():
     body = []
     for anchor, title, stand, blocks in G.SECTIONS:
         body.append(f'<section id="{anchor}">')
-        body.append(f'<h2 class="sec">{h(title)}</h2>')
+        body.append('<div class="sec-rule"></div>')
+        body.append(f'<div class="sec-head">{badge(anchor)}'
+                    f'<h2 class="sec">{h(title)}</h2></div>')
         body.append(f'<p class="stand">{h(stand)}</p>')
         html_blocks(blocks, body)
         body.append("</section>")
@@ -502,7 +546,12 @@ def build_html():
 <nav class="nav">
   <div class="nav-in">
     <a class="brand" href="../../">{MARK} Vlocalhost <small>AI</small></a>
-    <a class="dl" href="../{pdf_name}" download>Download PDF</a>
+    <div class="nav-right">
+      <a class="nlink" href="../../">&larr; Site</a>
+      <a class="nlink" href="../">Install</a>
+      <a class="nlink" href="../../support/">Support</a>
+      <a class="dl" href="../{pdf_name}" download>Download PDF</a>
+    </div>
   </div>
 </nav>
 
