@@ -12,7 +12,7 @@ those two and nothing else, which keeps a wording change from becoming a
 layout change.
 """
 
-VERSION = "1.1.1"
+VERSION = "1.2.0"
 SITE = "https://vlocal.host/"
 SUPPORT = SITE + "support/"
 GUIDE_URL = SITE + "install/guide/"

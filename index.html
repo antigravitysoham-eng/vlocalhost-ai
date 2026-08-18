@@ -607,7 +607,7 @@
         <div class="node">
           <div class="ring">VAD</div>
           <div class="n-title">Gate</div>
-          <div class="n-desc">webrtcvad separates real speech from silence.</div>
+          <div class="n-desc">A neural detector separates real speech from silence, noise and music.</div>
         </div>
         <div class="node">
           <div class="ring">STT</div>
@@ -735,7 +735,7 @@
       <div class="spec-scroll reveal">
         <table class="spec">
           <tr><th>Capture</th><td>16 000 <span class="u">Hz</span> · mono · 16-bit PCM</td></tr>
-          <tr><th>Voice gate</th><td>webrtcvad · 30 <span class="u">ms</span> frames · aggressiveness 2</td></tr>
+          <tr><th>Voice gate</th><td>Silero <span class="u">v6</span> · 32 <span class="u">ms</span> frames · 256 <span class="u">ms</span> context</td></tr>
           <tr><th>Silence timeout</th><td>800 <span class="u">ms</span> trailing silence ends an utterance</td></tr>
           <tr><th>Transcription</th><td>faster-whisper <span class="u">·</span> base.en <span class="u">·</span> int8 / CPU <span class="u">·</span> bring your own voice model</td></tr>
           <tr><th>Summarization</th><td>Ollama <span class="u">·</span> llama3.2 <span class="u">·</span> fully local <span class="u">·</span> bring your own model</td></tr>
