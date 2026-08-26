@@ -8,7 +8,10 @@ brand/*
 brand/logo/*
 !brand/logo/*.svg
 
-# Same reasoning: the generators in tools/ leave bytecode behind, and anything
-# committed here is served.
+# The generators do not live here any more. tools/ was served -- every file in
+# this repository is -- which put lead-capture.gs, and with it the id of the
+# spreadsheet holding every lead, on vlocal.host as a 200. The generators now
+# live in the private app repository; nothing that is not a page belongs here.
+tools/
 __pycache__/
 *.pyc
