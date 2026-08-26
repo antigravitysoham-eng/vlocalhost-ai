@@ -688,10 +688,14 @@ html.js main section > .wrap.on .os:nth-child(3)::before { transition-delay: .32
 
 /* support: the three steps join up as they arrive */
 .steps3 { position: relative; }
+/* The rail that ties the three steps together. z-index puts it BEHIND the
+   cards, so it shows only in the two gaps between them -- which is the whole
+   idea. Without it the rail painted straight across the face of all three
+   cards at 26px, a yellow line through the middle of the words. */
 .steps3::before { content: ""; position: absolute; left: 8%; right: 8%; top: 26px;
-  height: 2px; background: rgba(255,255,255,.08); }
+  height: 2px; background: rgba(255,255,255,.08); z-index: -1; }
 .steps3::after { content: ""; position: absolute; left: 8%; top: 26px; height: 2px;
-  width: 0; background: linear-gradient(90deg, var(--sun), var(--sun-700)); }
+  width: 0; background: linear-gradient(90deg, var(--sun), var(--sun-700)); z-index: -1; }
 html.js main section > .wrap.on .steps3::after { width: 84%;
   transition: width 1.6s cubic-bezier(.16,1,.3,1) .3s; }
 @media (max-width: 860px) { .steps3::before, .steps3::after { display: none; } }
