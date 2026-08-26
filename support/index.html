@@ -170,6 +170,119 @@ details .body { padding: 0 0 16px 24px; color: var(--dim); font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
+
+/* --- conversion flow: lead form and tip modal --- */
+.cf-ov { position: fixed; inset: 0; z-index: 90; display: flex;
+         align-items: flex-start; justify-content: center; padding: 26px 20px;
+         overflow-y: auto; background: rgba(6,8,11,.74);
+         -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+         opacity: 0; transition: opacity .2s ease; }
+.cf-ov.on { opacity: 1; }
+.cf-ov[hidden] { display: none; }
+.cf-card { position: relative; width: 100%; max-width: 452px; margin: auto;
+           box-sizing: border-box; background: #10141B;
+           border: 1px solid rgba(255,255,255,.12); border-radius: 20px;
+           padding: 30px 30px 26px; text-align: left;
+           font-family: var(--f-body); color: var(--text); line-height: 1.55;
+           box-shadow: 0 30px 80px rgba(0,0,0,.55);
+           transform: translateY(12px) scale(.985);
+           transition: transform .22s cubic-bezier(.2,.8,.2,1); }
+.cf-ov.on .cf-card { transform: none; }
+.cf-card h2 { font-family: var(--f-display); font-weight: 800;
+              font-size: 24px; line-height: 1.2; letter-spacing: -.02em;
+              margin: 6px 0 10px; color: var(--text); }
+.cf-eyebrow { font-family: var(--f-mono); font-size: 10.5px;
+              letter-spacing: .18em; text-transform: uppercase;
+              color: var(--sun); margin: 0; }
+.cf-sub { font-size: 13.5px; color: var(--dim); margin: 0 0 18px; }
+.cf-fine { font-size: 11.5px; color: var(--muted); margin: 14px 0 0; }
+.cf-x { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px;
+        display: flex; align-items: center; justify-content: center;
+        background: transparent; border: 0; border-radius: 9px;
+        color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; }
+.cf-x:hover { background: rgba(255,255,255,.06); color: var(--text); }
+
+/* the privacy line sits above the fields, not buried under the button:
+   the objection to a form on this site is "why do you want this", and the
+   answer has to arrive before the first keystroke, not after the last. */
+.cf-guard { display: flex; gap: 9px; align-items: flex-start;
+            border: 1px solid rgba(250,204,21,.28);
+            background: rgba(250,204,21,.07); border-radius: 12px;
+            padding: 10px 12px; margin: 0 0 18px; font-size: 12px;
+            color: var(--dim); }
+.cf-guard svg { width: 15px; height: 15px; flex: 0 0 auto; margin-top: 1px;
+                fill: var(--sun); }
+
+.cf-card label { display: block; margin: 0 0 12px; font-size: 12.5px;
+                 color: var(--dim); }
+.cf-card input[type="text"], .cf-card input[type="email"],
+.cf-card input[type="tel"] {
+    display: block; width: 100%; box-sizing: border-box; margin-top: 6px;
+    padding: 10px 12px; background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.12); border-radius: 10px;
+    color: var(--text); font-family: inherit; font-size: 14px;
+    transition: border-color .16s, background .16s; }
+.cf-card input[type="text"]:focus, .cf-card input[type="email"]:focus,
+.cf-card input[type="tel"]:focus {
+    outline: none; border-color: var(--sun-edge);
+    background: rgba(250,204,21,.05); }
+.cf-card input.bad { border-color: #F87171; }
+.cf-check { display: flex; gap: 10px; align-items: flex-start;
+            margin: 16px 0 2px; font-size: 12.5px; color: var(--muted);
+            line-height: 1.5; }
+.cf-check input { flex: 0 0 auto; margin: 3px 0 0; accent-color: var(--sun);
+                  width: 15px; height: 15px; }
+.cf-check.bad span { color: #F87171; }
+.cf-err { margin: 12px 0 0; font-size: 12.5px; color: #F87171; }
+
+.cf-go { display: flex; align-items: center; justify-content: center; gap: 8px;
+         width: 100%; margin-top: 18px; padding: 12px 18px;
+         background: var(--sun); border: 1px solid var(--sun);
+         border-radius: 12px; color: #17140A; font-family: inherit;
+         font-size: 14.5px; font-weight: 700; cursor: pointer;
+         transition: background .16s, border-color .16s; }
+.cf-go:hover { background: var(--sun-300); border-color: var(--sun-300); }
+.cf-go[disabled] { opacity: .55; cursor: not-allowed; }
+.cf-later { display: block; width: 100%; margin-top: 12px; padding: 10px 16px;
+            background: transparent; border: 1px solid rgba(255,255,255,.12);
+            border-radius: 12px; color: var(--dim); font-family: inherit;
+            font-size: 13.5px; cursor: pointer; }
+.cf-later:hover { border-color: rgba(255,255,255,.22); color: var(--text); }
+
+/* --- tip modal --- */
+.cf-picks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            margin: 4px 0 18px; }
+.cf-pick { display: flex; align-items: center; gap: 8px; padding: 11px 13px;
+           border: 1px solid rgba(255,255,255,.12); border-radius: 12px;
+           background: rgba(255,255,255,.03); color: var(--text);
+           font-size: 13.5px; text-decoration: none; }
+.cf-pick:hover { border-color: var(--sun-edge); background: rgba(250,204,21,.07);
+                 color: var(--text); }
+.cf-pick .emo { font-size: 16px; line-height: 1; }
+.cf-pick .amt { margin-left: auto; font-family: var(--f-mono); font-size: 11px;
+                color: var(--sun); letter-spacing: .04em; }
+.cf-qr { display: block; margin: 0 auto; width: 158px; height: 158px;
+         border-radius: 12px; background: #fff; padding: 8px;
+         box-sizing: content-box; }
+.cf-scan { text-align: center; font-size: 11.5px; color: var(--muted);
+           margin: 10px 0 14px; }
+.cf-id { display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+         border: 1px solid rgba(255,255,255,.12); border-radius: 11px;
+         background: rgba(255,255,255,.03); }
+.cf-id code { font-family: var(--f-mono); font-size: 13px; color: var(--text); }
+.cf-copy { margin-left: auto; padding: 5px 12px; background: transparent;
+           border: 1px solid rgba(255,255,255,.14); border-radius: 8px;
+           color: var(--dim); font-family: inherit; font-size: 12px;
+           cursor: pointer; }
+.cf-copy:hover { border-color: var(--sun-edge); color: var(--sun); }
+
+@media (max-width: 480px) {
+  .cf-card { padding: 26px 20px 22px; }
+  .cf-card h2 { font-size: 21px; }
+  .cf-picks { grid-template-columns: 1fr; }
+}
+
+
 @keyframes wv     { 0%,100% { transform: scaleY(.62); } 50% { transform: scaleY(1); } }
 @keyframes halo   { 0%,100% { opacity:.75; transform: translate(-50%,-50%) scale(1); }
                     50%     { opacity:1;   transform: translate(-50%,-50%) scale(1.05); } }
@@ -709,6 +822,7 @@ html.js main section:nth-of-type(14) > .wrap.on > *:not(:first-child) { animatio
 </main>
 <footer class="ftr"><div class="wrap"><div><div class="fbrand"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CA8A04"/><stop offset="55%" stop-color="#EAB308"/><stop offset="100%" stop-color="#FACC15"/></linearGradient></defs><rect x="23" y="44" width="22" height="36" rx="11" fill="url(#sb)"/><rect x="54" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><rect x="85" y="114" width="22" height="48" rx="11" fill="url(#sb)"/><rect x="116" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><circle cx="158" cy="62" r="27" fill="#FDE047"/><path d="M 143 79 L 131 100 L 163 81 Z" fill="#FDE047"/></svg><span>Vlocalhost</span><small>AI</small></div><p class="fnote">On-device voice intelligence. Your conversations never leave the room.</p></div><div class="fcol"><a href="/support/">Support</a><a href="mailto:voiceit@vlocal.host">Contact</a><a href="/pricing/">Plans &amp; pricing</a><a href="https://github.com/antigravitysoham-eng/vlocalhost-core">Source</a></div><div class="fsocial"><a href="https://www.linkedin.com/company/vlocalhostai/" aria-label="LinkedIn" title="LinkedIn" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="https://x.com/VlocalhostAI" aria-label="X" title="X" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.25 6.93 6.06-6.93zm-1.29 19.49h2.04L6.49 3.24H4.3l13.31 17.4z"/></svg></a><a href="https://www.instagram.com/vlocalhostai/" aria-label="Instagram" title="Instagram" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23a3.7 3.7 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.42.17-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.17 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 0 0-2.13 1.38A5.9 5.9 0 0 0 .63 4.14c-.3.77-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91a5.9 5.9 0 0 0 1.38 2.13 5.9 5.9 0 0 0 2.13 1.38c.77.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.77.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.41a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg></a><a href="https://www.reddit.com/user/VlocalhostAI/" aria-label="Reddit" title="Reddit" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M24 11.78a2.6 2.6 0 0 0-4.4-1.86 12.77 12.77 0 0 0-6.96-2.22l1.19-5.58 3.87.82a1.86 1.86 0 1 0 .2-.92l-4.32-.92a.46.46 0 0 0-.55.36l-1.33 6.25a12.79 12.79 0 0 0-7.06 2.21 2.6 2.6 0 1 0-2.87 4.25 5.1 5.1 0 0 0-.06.8c0 4.07 4.74 7.37 10.58 7.37s10.58-3.3 10.58-7.37c0-.27-.02-.53-.06-.79A2.6 2.6 0 0 0 24 11.78zM6.2 13.64a1.86 1.86 0 1 1 3.72 0 1.86 1.86 0 0 1-3.72 0zm10.4 4.92c-1.27 1.27-3.7 1.37-4.41 1.37-.72 0-3.15-.1-4.42-1.37a.48.48 0 0 1 .68-.68c.8.8 2.52 1.09 3.74 1.09 1.21 0 2.93-.29 3.74-1.09a.48.48 0 1 1 .67.68zm-.34-3.06a1.86 1.86 0 1 1 0-3.72 1.86 1.86 0 0 1 0 3.72z"/></svg></a></div></div><div class="fmeta"><span>Voice engineering division</span><span>Build 2026.08, offline-first</span><span class="mono">mic &rarr; vad &rarr; whisper &rarr; ollama &rarr; notes</span></div></footer>
 </div>
+
 <script>
 (function () {
   'use strict';

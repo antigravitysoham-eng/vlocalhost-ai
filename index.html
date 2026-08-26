@@ -130,7 +130,121 @@ html, body { margin:0; padding:0; background:#0E1116; }
 @keyframes eGlide  { from { opacity:0; transform: translate(26px, 20px); }
                      to   { opacity:1; transform: none; } }
 
-/*/site-chrome:css*/</style></head>
+/*/site-chrome:css*/
+/*conversion-flow:css*/
+
+/* --- conversion flow: lead form and tip modal --- */
+.cf-ov { position: fixed; inset: 0; z-index: 90; display: flex;
+         align-items: flex-start; justify-content: center; padding: 26px 20px;
+         overflow-y: auto; background: rgba(6,8,11,.74);
+         -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+         opacity: 0; transition: opacity .2s ease; }
+.cf-ov.on { opacity: 1; }
+.cf-ov[hidden] { display: none; }
+.cf-card { position: relative; width: 100%; max-width: 452px; margin: auto;
+           box-sizing: border-box; background: #10141B;
+           border: 1px solid rgba(255,255,255,.12); border-radius: 20px;
+           padding: 30px 30px 26px; text-align: left;
+           font-family: var(--f-body); color: var(--text); line-height: 1.55;
+           box-shadow: 0 30px 80px rgba(0,0,0,.55);
+           transform: translateY(12px) scale(.985);
+           transition: transform .22s cubic-bezier(.2,.8,.2,1); }
+.cf-ov.on .cf-card { transform: none; }
+.cf-card h2 { font-family: var(--f-display); font-weight: 800;
+              font-size: 24px; line-height: 1.2; letter-spacing: -.02em;
+              margin: 6px 0 10px; color: var(--text); }
+.cf-eyebrow { font-family: var(--f-mono); font-size: 10.5px;
+              letter-spacing: .18em; text-transform: uppercase;
+              color: var(--sun); margin: 0; }
+.cf-sub { font-size: 13.5px; color: var(--dim); margin: 0 0 18px; }
+.cf-fine { font-size: 11.5px; color: var(--muted); margin: 14px 0 0; }
+.cf-x { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px;
+        display: flex; align-items: center; justify-content: center;
+        background: transparent; border: 0; border-radius: 9px;
+        color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; }
+.cf-x:hover { background: rgba(255,255,255,.06); color: var(--text); }
+
+/* the privacy line sits above the fields, not buried under the button:
+   the objection to a form on this site is "why do you want this", and the
+   answer has to arrive before the first keystroke, not after the last. */
+.cf-guard { display: flex; gap: 9px; align-items: flex-start;
+            border: 1px solid rgba(250,204,21,.28);
+            background: rgba(250,204,21,.07); border-radius: 12px;
+            padding: 10px 12px; margin: 0 0 18px; font-size: 12px;
+            color: var(--dim); }
+.cf-guard svg { width: 15px; height: 15px; flex: 0 0 auto; margin-top: 1px;
+                fill: var(--sun); }
+
+.cf-card label { display: block; margin: 0 0 12px; font-size: 12.5px;
+                 color: var(--dim); }
+.cf-card input[type="text"], .cf-card input[type="email"],
+.cf-card input[type="tel"] {
+    display: block; width: 100%; box-sizing: border-box; margin-top: 6px;
+    padding: 10px 12px; background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.12); border-radius: 10px;
+    color: var(--text); font-family: inherit; font-size: 14px;
+    transition: border-color .16s, background .16s; }
+.cf-card input[type="text"]:focus, .cf-card input[type="email"]:focus,
+.cf-card input[type="tel"]:focus {
+    outline: none; border-color: var(--sun-edge);
+    background: rgba(250,204,21,.05); }
+.cf-card input.bad { border-color: #F87171; }
+.cf-check { display: flex; gap: 10px; align-items: flex-start;
+            margin: 16px 0 2px; font-size: 12.5px; color: var(--muted);
+            line-height: 1.5; }
+.cf-check input { flex: 0 0 auto; margin: 3px 0 0; accent-color: var(--sun);
+                  width: 15px; height: 15px; }
+.cf-check.bad span { color: #F87171; }
+.cf-err { margin: 12px 0 0; font-size: 12.5px; color: #F87171; }
+
+.cf-go { display: flex; align-items: center; justify-content: center; gap: 8px;
+         width: 100%; margin-top: 18px; padding: 12px 18px;
+         background: var(--sun); border: 1px solid var(--sun);
+         border-radius: 12px; color: #17140A; font-family: inherit;
+         font-size: 14.5px; font-weight: 700; cursor: pointer;
+         transition: background .16s, border-color .16s; }
+.cf-go:hover { background: var(--sun-300); border-color: var(--sun-300); }
+.cf-go[disabled] { opacity: .55; cursor: not-allowed; }
+.cf-later { display: block; width: 100%; margin-top: 12px; padding: 10px 16px;
+            background: transparent; border: 1px solid rgba(255,255,255,.12);
+            border-radius: 12px; color: var(--dim); font-family: inherit;
+            font-size: 13.5px; cursor: pointer; }
+.cf-later:hover { border-color: rgba(255,255,255,.22); color: var(--text); }
+
+/* --- tip modal --- */
+.cf-picks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            margin: 4px 0 18px; }
+.cf-pick { display: flex; align-items: center; gap: 8px; padding: 11px 13px;
+           border: 1px solid rgba(255,255,255,.12); border-radius: 12px;
+           background: rgba(255,255,255,.03); color: var(--text);
+           font-size: 13.5px; text-decoration: none; }
+.cf-pick:hover { border-color: var(--sun-edge); background: rgba(250,204,21,.07);
+                 color: var(--text); }
+.cf-pick .emo { font-size: 16px; line-height: 1; }
+.cf-pick .amt { margin-left: auto; font-family: var(--f-mono); font-size: 11px;
+                color: var(--sun); letter-spacing: .04em; }
+.cf-qr { display: block; margin: 0 auto; width: 158px; height: 158px;
+         border-radius: 12px; background: #fff; padding: 8px;
+         box-sizing: content-box; }
+.cf-scan { text-align: center; font-size: 11.5px; color: var(--muted);
+           margin: 10px 0 14px; }
+.cf-id { display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+         border: 1px solid rgba(255,255,255,.12); border-radius: 11px;
+         background: rgba(255,255,255,.03); }
+.cf-id code { font-family: var(--f-mono); font-size: 13px; color: var(--text); }
+.cf-copy { margin-left: auto; padding: 5px 12px; background: transparent;
+           border: 1px solid rgba(255,255,255,.14); border-radius: 8px;
+           color: var(--dim); font-family: inherit; font-size: 12px;
+           cursor: pointer; }
+.cf-copy:hover { border-color: var(--sun-edge); color: var(--sun); }
+
+@media (max-width: 480px) {
+  .cf-card { padding: 26px 20px 22px; }
+  .cf-card h2 { font-size: 21px; }
+  .cf-picks { grid-template-columns: 1fr; }
+}
+
+/*/conversion-flow:css*/</style></head>
 <body><!--site-chrome:header--><header class="hdr"><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CA8A04"/><stop offset="55%" stop-color="#EAB308"/><stop offset="100%" stop-color="#FACC15"/></linearGradient></defs><rect x="23" y="44" width="22" height="36" rx="11" fill="url(#sb)"/><rect x="54" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><rect x="85" y="114" width="22" height="48" rx="11" fill="url(#sb)"/><rect x="116" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><circle cx="158" cy="62" r="27" fill="#FDE047"/><path d="M 143 79 L 131 100 L 163 81 Z" fill="#FDE047"/></svg><span>Vlocalhost</span><small>AI</small></a><nav class="nav"><a href="/" aria-current="page">Why Vlocalhost</a><a href="/install/">Install</a><a href="/pricing/">Pricing</a><a href="/security/">Security</a><a href="/support/">Support</a></nav></div></header><!--/site-chrome:header-->
 
 
@@ -2262,4 +2376,150 @@ $ ollama pull llama3.2
 })();
 </script>
 <!-- END hero-demo -->
+<!--conversion-flow-->
+
+<div class="cf-ov" id="leadOv" hidden>
+  <div class="cf-card" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
+    <button class="cf-x" id="leadX" type="button" aria-label="Close">&times;</button>
+    <p class="cf-eyebrow">Free &middot; Solo plan</p>
+    <h2 id="leadTitle">Get Vlocalhost free</h2>
+    <p class="cf-sub">Tell us where to reach you and we&rsquo;ll take you straight to
+       the installer. No card, no account.</p>
+    <div class="cf-guard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 3.4v5.3c0 5-3.4 9.6-8 11.3-4.6-1.7-8-6.3-8-11.3V5.4L12 2zm-1 13.4l5.3-5.3-1.4-1.4L11 12.6 9.1 10.7l-1.4 1.4 3.3 3.3z"/></svg><span><b>Your meeting audio never leaves your
+       device.</b> This form is only how we reach you &mdash; it is the one thing on
+       this site that is sent anywhere.</span></div>
+    <form id="leadForm" novalidate>
+      <label>Full name<input type="text" name="name" autocomplete="name" required></label>
+      <label>Email<input type="email" name="email" autocomplete="email" required></label>
+      <label>Phone<input type="tel" name="phone" autocomplete="tel" required></label>
+      <label>Company <span style="color:var(--faint)">(optional)</span><input
+        type="text" name="company" autocomplete="organization"></label>
+      <label class="cf-check" id="leadConsentRow">
+        <input type="checkbox" name="consent" required>
+        <span>I agree to Vlocalhost storing these details and contacting me about
+          the product.</span>
+      </label>
+      <p class="cf-err" id="leadErr" role="alert" hidden></p>
+      <button class="cf-go" type="submit" id="leadGo">Continue to install &rarr;</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbxIkJv9CS4SLJyZawxOhFVrOvsr5uGE9zcB8pwo6H8D9_YI2UtydgOLSrEt12aq-7w/exec";
+  var INSTALL = "/install/";
+  var KEY = "vlocalhost_lead";
+
+  var ov = document.getElementById("leadOv");
+  var form = document.getElementById("leadForm");
+  if (!ov || !form) return;
+  var err = document.getElementById("leadErr");
+  var go = document.getElementById("leadGo");
+  var consentRow = document.getElementById("leadConsentRow");
+  var lastFocus = null;
+
+  // Somebody who already gave us their details does not get asked again: the
+  // second visit would only write a duplicate row and cost them a form.
+  function known() {
+    try { return !!localStorage.getItem(KEY); } catch (e) { return false; }
+  }
+
+  function open(e) {
+    if (known()) return;               // let the click through to /install/
+    if (e) e.preventDefault();
+    lastFocus = document.activeElement;
+    ov.hidden = false;
+    requestAnimationFrame(function () { ov.classList.add("on"); });
+    var first = form.querySelector("input");
+    if (first) first.focus();
+    document.body.style.overflow = "hidden";
+  }
+
+  function close() {
+    ov.classList.remove("on");
+    document.body.style.overflow = "";
+    setTimeout(function () { ov.hidden = true; }, 200);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.getElementById("leadX").addEventListener("click", close);
+  ov.addEventListener("mousedown", function (e) { if (e.target === ov) close(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !ov.hidden) close();
+  });
+
+  // Every route to the installer goes through the form. Matching on the
+  // resolved pathname rather than the literal attribute catches the header
+  // nav, the hero buttons and the pricing CTA in one rule, however each of
+  // them happens to be written.
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var path;
+    try { path = new URL(a.href, location.href).pathname; } catch (x) { return; }
+    if (path === INSTALL) open(e);
+  });
+
+  function fail(msg, el) {
+    err.textContent = msg;
+    err.hidden = false;
+    if (el) { el.classList.add("bad"); el.focus(); }
+    return false;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    err.hidden = true;
+    form.querySelectorAll(".bad").forEach(function (n) { n.classList.remove("bad"); });
+    consentRow.classList.remove("bad");
+
+    var f = form.elements;
+    var data = {
+      name: f.name.value.trim(),
+      email: f.email.value.trim(),
+      phone: f.phone.value.trim(),
+      company: f.company.value.trim(),
+      consent: f.consent.checked,
+      page: location.href
+    };
+
+    if (!data.name) return fail("Please enter your name.", f.name);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email))
+      return fail("Please enter a valid email address.", f.email);
+    if (data.phone.replace(/[^0-9]/g, "").length < 7)
+      return fail("Please enter a valid phone number.", f.phone);
+    if (!data.consent) {
+      consentRow.classList.add("bad");
+      return fail("Please tick the consent box to continue.");
+    }
+
+    go.disabled = true;
+    go.textContent = "Taking you there\u2026";
+
+    // The installer is never held hostage to the network. Whether the POST
+    // succeeds, fails or times out, the next thing that happens is /install/.
+    var went = false;
+    function done() { if (!went) { went = true; location.href = INSTALL; } }
+    setTimeout(done, 2500);
+
+    try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (x) {}
+
+    if (!ENDPOINT) { done(); return; }
+
+    // text/plain, not application/json: a JSON content type makes this a
+    // preflighted cross-origin request, and a Google Apps Script web app does
+    // not answer the OPTIONS probe -- the lead would vanish with a console
+    // error no visitor ever sees. This stays a "simple request", which needs
+    // no preflight. The body is still JSON; the receiving end parses it.
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(data)
+    }).then(done).catch(done);
+  });
+})();
+</script>
+<!--/conversion-flow-->
 </body></html>
