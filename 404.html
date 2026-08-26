@@ -355,7 +355,14 @@ html { scroll-behavior: smooth; }
   .hdr .wrap { flex-wrap: wrap; height: auto; gap: 10px;
                padding-top: 11px; padding-bottom: 11px; }
   .nav { margin-left: 0; width: 100%; flex-wrap: wrap; gap: 2px; }
-  :target { scroll-margin-top: 128px; }
+
+  /* A finger is not a cursor. The nav links came out 34-37px tall, under both
+     Apple's 44pt and Android's 48dp minimum, which is the difference between
+     tapping a link and tapping near one. */
+  .nav a, .nav-dd-btn { padding-top: 12px; padding-bottom: 12px; }
+  .nav-dd-menu a { padding-top: 12px; padding-bottom: 12px; }
+
+  :target { scroll-margin-top: 150px; }
 
   /* The landing page is a desktop capture and overflowed a phone two ways.
      A grid child's automatic minimum is its min-content width, which on a
@@ -376,8 +383,55 @@ html { scroll-behavior: smooth; }
      is not, so these collapse to one column instead. Between them they
      accounted for eleven of the twelve pieces of text that fell off a 375px
      screen. */
-  #model [style*="grid-template-columns"],
-  #caps [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+  /* The capture's content grids, collapsed to one column, selected by the
+     declaration they carry rather than by the section they sit in. Section
+     scoping caught the wrong things: #switch IS a grid rather than containing
+     one, and the rule that finally reached it also flattened the row of
+     participant avatars nested inside it.
+
+     These are the two- and three-column text layouts. Deliberately absent:
+     repeat(4, 1fr) (avatars), repeat(8, 9px) (decoration), and auto-fit,
+     which already does the right thing. repeat(6, 1fr) looked decorative and
+     is not -- it is the six architecture layers, and at 50px a column it set
+     one word per line. */
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="grid-template-columns: 1.05fr 1fr"],
+  [style*="grid-template-columns: 1.35fr 1fr"],
+  [style*="grid-template-columns: 1fr 1.1fr"],
+  [style*="grid-template-columns: 260px"],
+  [style*="grid-template-columns: repeat(3, 1fr)"],
+  [style*="grid-template-columns: repeat(6, 1fr)"],
+  [style*="grid-template-columns: repeat(3, minmax"],
+  [style*="grid-template-columns: repeat(5, minmax"],
+  [style*="grid-template-columns: clamp("] { grid-template-columns: 1fr !important; }
+
+  /* repeat(4, 1fr) is two different things: a row of participant avatars in
+     #switch, which must stay a row, and a four-up stat strip in #caps, whose
+     columns came out 46px wide with sentences in them. Two-up rather than
+     one, because these are short stats and a single column would run the
+     section on for pages. */
+  #caps [style*="grid-template-columns: repeat(4, 1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* The capture's flex rows are desktop rows. A `space-between` pair puts its
+     second child hard against the right edge, and on a phone that child --
+     the app mock's Recording / Pause / Notes toolbar -- is wider than the room
+     left for it, so it ran off the screen and lost its last label. Letting
+     those rows wrap drops the second child onto its own line, which is what a
+     narrow screen wants anyway. */
+  [style*="space-between"] { flex-wrap: wrap; }
+
+  /* The hero is a three-column composition -- side panel, headline, download
+     card. On a phone those columns resolved to 66px, 124px and 54px, so the
+     panels crushed into slivers and the headline ran straight through them.
+     Nothing was technically off-screen, which is why an overflow check passed
+     it; it was simply unreadable. One column stacks them, which is what a
+     phone wanted from the start.
+
+     :has() is doing the selecting because the capture has no class to aim at.
+     Where it is unsupported the page falls back to exactly what it does
+     today -- no worse, just not better. */
+  [style*="grid-template-columns"]:has(h1) { grid-template-columns: 1fr !important; }
 }
 
 @keyframes wv     { 0%,100% { transform: scaleY(.62); } 50% { transform: scaleY(1); } }
@@ -917,7 +971,7 @@ html.js main section:nth-of-type(14) > .wrap.on > *:not(:first-child) { animatio
           the product.</span>
       </label>
       <p class="cf-err" id="leadErr" role="alert" hidden></p>
-      <button class="cf-go" type="submit" id="leadGo">Continue to install &rarr;</button>
+      <button class="cf-go" type="submit" id="leadGo">Continue to Install &rarr;</button>
     </form>
   </div>
 </div>
