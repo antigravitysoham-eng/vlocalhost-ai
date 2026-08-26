@@ -932,11 +932,51 @@ html.js main section:nth-of-type(14) > .wrap.on > *:not(:first-child) { animatio
   <div class="card" style="margin-top:16px;border-color:var(--sun-edge)">
     <p class="small" style="font-family:var(--f-mono);margin:0;color:var(--sun)">
       config.py &mdash; OLLAMA_URL = "http://localhost:11434"</p>
-    <p class="small" style="margin:12px 0 0">That is the whole of it. There is no licence
-    server to check in with, no update pinger, no analytics endpoint and no crash
-    reporter. Search the core for outbound requests and every hit resolves to that
-    address.</p>
+    <p class="small" style="margin:12px 0 0">There is no licence server to check in
+    with, no analytics endpoint, no crash reporter, and nothing that contacts us on a
+    schedule. Search the core for outbound requests and you will find that address
+    &mdash; and exactly one other, described below.</p>
   </div>
+
+  <h2 style="margin-top:44px">The one call, and who starts it.</h2>
+  <p class="small" style="max-width:72ch;margin-top:10px">A product that never tells
+  you a security fix exists is not protecting you. So there is one outbound request in
+  the application, and it is built so that <strong>only you can start it</strong>.</p>
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card">
+      <p class="eyebrow" style="margin:0">What it does</p>
+      <p class="small" style="margin:10px 0 0">Pressing <strong>Check for updates</strong>
+      asks GitHub&rsquo;s public API for the version number of the latest release. The
+      comparison against what you have installed happens on your machine.</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow" style="margin:0">What it sends</p>
+      <p class="small" style="margin:10px 0 0">A version number is <em>not</em> sent. No
+      install ID, no machine name, no operating system, no telemetry, no meeting data.
+      The request carries nothing that identifies you or your copy.</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow" style="margin:0">When it runs</p>
+      <p class="small" style="margin:10px 0 0">Only when clicked. There is no timer, no
+      background thread and no check at startup. An install whose button is never
+      pressed <strong>never contacts anything</strong> &mdash; which is why the app still
+      works, completely, in airplane mode.</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow" style="margin:0">The reminder</p>
+      <p class="small" style="margin:10px 0 0">Every few days the app may note that a
+      check is due. That reminder reads your system clock and a date in a local file. It
+      sends <strong>nothing</strong>. Set it to 0 days to switch it off, and that choice
+      is kept.</p>
+    </div>
+  </div>
+  <p class="small" style="max-width:72ch;margin-top:16px">You do not have to take our
+  word for any of this. It is one file &mdash;
+  <span style="font-family:var(--f-mono);color:var(--sun)">core/updates.py</span> &mdash;
+  containing a single <span style="font-family:var(--f-mono)">urlopen</span>, and the
+  source is public. Run the app behind a network monitor and press the button: one
+  request, to <span style="font-family:var(--f-mono)">api.github.com</span>, and nothing
+  else for as long as you leave it alone.</p>
 </div></section>
 
 <section><div class="wrap">
