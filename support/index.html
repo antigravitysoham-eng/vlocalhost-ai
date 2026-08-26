@@ -283,6 +283,63 @@ details .body { padding: 0 0 16px 24px; color: var(--dim); font-size: 14px; }
 }
 
 
+.nav-dd { position: relative; }
+.nav-dd-btn { display: inline-flex; align-items: center; gap: 6px;
+              padding: 7px 12px; border: 0; border-radius: 8px;
+              background: transparent; color: var(--dim);
+              font-family: inherit; font-size: 13.5px; line-height: inherit;
+              cursor: pointer; }
+.nav-dd-btn:hover { background: rgba(255,255,255,.05); color: var(--text); }
+.nav-dd-btn .cx { width: 10px; height: 10px; opacity: .7;
+                  transition: transform .18s ease; }
+.nav-dd-btn[aria-current="page"] { color: var(--sun); background: var(--sun-wash); }
+
+.nav-dd-menu { position: absolute; top: calc(100% + 9px); left: 50%;
+               transform: translateX(-50%) translateY(-6px);
+               min-width: 232px; padding: 7px;
+               background: #10141B; border: 1px solid rgba(255,255,255,.12);
+               border-radius: 14px; box-shadow: 0 22px 54px rgba(0,0,0,.5);
+               display: flex; flex-direction: column; gap: 1px;
+               opacity: 0; visibility: hidden; pointer-events: none;
+               transition: opacity .16s ease, transform .16s ease,
+                           visibility 0s linear .16s; }
+.nav-dd:hover .nav-dd-menu,
+.nav-dd:focus-within .nav-dd-menu,
+.nav-dd.open .nav-dd-menu { opacity: 1; visibility: visible;
+                            pointer-events: auto;
+                            transform: translateX(-50%) translateY(0);
+                            transition-delay: 0s; }
+.nav-dd:hover .nav-dd-btn .cx,
+.nav-dd.open .nav-dd-btn .cx { transform: rotate(180deg); }
+
+/* A hover menu with a 9px gap between button and panel closes the moment the
+   pointer crosses the gap. This bridges it without moving the panel. */
+.nav-dd-menu::before { content: ""; position: absolute; left: 0; right: 0;
+                       top: -10px; height: 10px; }
+
+.nav-dd-menu a { padding: 8px 12px; border-radius: 9px; font-size: 13.5px;
+                 color: var(--dim); white-space: nowrap; }
+.nav-dd-menu a:hover { background: rgba(255,255,255,.06); color: var(--text); }
+.dd-soon { padding: 9px 12px 5px; margin-top: 4px;
+           border-top: 1px solid rgba(255,255,255,.07);
+           font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .04em;
+           color: var(--faint); white-space: nowrap; }
+
+/* The header is sticky and 64px tall, so an anchor landing at the very top of
+   the viewport lands underneath it. Scoped to :target so it costs nothing
+   anywhere else on the page. */
+html { scroll-behavior: smooth; }
+:target { scroll-margin-top: 86px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+@media (max-width: 720px) {
+  .nav-dd-btn { padding: 7px 9px; font-size: 13px; }
+  .nav-dd-menu { left: auto; right: 0; transform: translateY(-6px);
+                 min-width: 208px; }
+  .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu,
+  .nav-dd.open .nav-dd-menu { transform: translateY(0); }
+}
+
 @keyframes wv     { 0%,100% { transform: scaleY(.62); } 50% { transform: scaleY(1); } }
 @keyframes halo   { 0%,100% { opacity:.75; transform: translate(-50%,-50%) scale(1); }
                     50%     { opacity:1;   transform: translate(-50%,-50%) scale(1.05); } }
@@ -764,7 +821,7 @@ html.js main section:nth-of-type(14) > .wrap.on > *:not(:first-child) { animatio
 <body>
 <div class="amb" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i><span class="grain"></span></div>
 <div class="shell">
-<header class="hdr"><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CA8A04"/><stop offset="55%" stop-color="#EAB308"/><stop offset="100%" stop-color="#FACC15"/></linearGradient></defs><rect x="23" y="44" width="22" height="36" rx="11" fill="url(#sb)"/><rect x="54" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><rect x="85" y="114" width="22" height="48" rx="11" fill="url(#sb)"/><rect x="116" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><circle cx="158" cy="62" r="27" fill="#FDE047"/><path d="M 143 79 L 131 100 L 163 81 Z" fill="#FDE047"/></svg><span>Vlocalhost</span><small>AI</small></a><nav class="nav"><a href="/">Why Vlocalhost</a><a href="/install/">Install</a><a href="/pricing/">Pricing</a><a href="/security/">Security</a><a href="/support/" aria-current="page">Support</a></nav></div></header>
+<header class="hdr"><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CA8A04"/><stop offset="55%" stop-color="#EAB308"/><stop offset="100%" stop-color="#FACC15"/></linearGradient></defs><rect x="23" y="44" width="22" height="36" rx="11" fill="url(#sb)"/><rect x="54" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><rect x="85" y="114" width="22" height="48" rx="11" fill="url(#sb)"/><rect x="116" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><circle cx="158" cy="62" r="27" fill="#FDE047"/><path d="M 143 79 L 131 100 L 163 81 Z" fill="#FDE047"/></svg><span>Vlocalhost</span><small>AI</small></a><nav class="nav"><a href="/">Why Vlocalhost</a><div class="nav-dd"><button class="nav-dd-btn" type="button" aria-haspopup="true" aria-expanded="false">Capabilities<svg class="cx" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="nav-dd-menu" role="menu"><a role="menuitem" href="/#why">Overview</a><a role="menuitem" href="/#path">How it works</a><a role="menuitem" href="/#app">What you get</a><a role="menuitem" href="/#model">Bring your own model</a><a role="menuitem" href="/#arch">Under the hood</a><a role="menuitem" href="/#specs">Specs</a><span class="dd-soon">More capabilities shipping soon&hellip;</span></div></div><a href="/pricing/">Pricing</a><a href="/security/">Security</a><a href="/support/" aria-current="page">Support</a></nav></div></header>
 <main>
 
 <section style="border-top:0;padding:26px 0 0"><div class="wrap"><div class="phero"><span class="dots" aria-hidden="true"></span><div class="in"><div><p class="eyebrow">Support</p><h1>Something not working?<span class="sub">Tell us what you saw.</span></h1><p class="lede">Vlocalhost runs on your machine, so we cannot see what went wrong unless you tell us. The app writes a short report you can read, check, and then send &mdash; or not.</p></div><div class="art"><div class="cap">vlocalhost-report.txt</div><div class="type"><span style="animation:t1 9000ms steps(38) infinite">vlocalhost 1.2.0 &middot; windows-x64</span><span style="animation:t2 9000ms steps(38) infinite">audio device: default input, 16 kHz</span><span style="animation:t3 9000ms steps(38) infinite">ollama: not reachable at 127.0.0.1</span><span style="animation:t4 9000ms steps(38) infinite">attached: 0 recordings, 0 transcripts</span><span style="width:auto"><i class="cur"></i></span></div><div class="cap" style="color:var(--sun)">you read it before we do</div></div></div></div></div></section>
@@ -820,10 +877,219 @@ html.js main section:nth-of-type(14) > .wrap.on > *:not(:first-child) { animatio
 </div></section>
 
 </main>
-<footer class="ftr"><div class="wrap"><div><div class="fbrand"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CA8A04"/><stop offset="55%" stop-color="#EAB308"/><stop offset="100%" stop-color="#FACC15"/></linearGradient></defs><rect x="23" y="44" width="22" height="36" rx="11" fill="url(#sb)"/><rect x="54" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><rect x="85" y="114" width="22" height="48" rx="11" fill="url(#sb)"/><rect x="116" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><circle cx="158" cy="62" r="27" fill="#FDE047"/><path d="M 143 79 L 131 100 L 163 81 Z" fill="#FDE047"/></svg><span>Vlocalhost</span><small>AI</small></div><p class="fnote">On-device voice intelligence. Your conversations never leave the room.</p></div><div class="fcol"><a href="/support/">Support</a><a href="mailto:voiceit@vlocal.host">Contact</a><a href="/pricing/">Plans &amp; pricing</a><a href="https://github.com/antigravitysoham-eng/vlocalhost-core">Source</a></div><div class="fsocial"><a href="https://www.linkedin.com/company/vlocalhostai/" aria-label="LinkedIn" title="LinkedIn" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="https://x.com/VlocalhostAI" aria-label="X" title="X" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.25 6.93 6.06-6.93zm-1.29 19.49h2.04L6.49 3.24H4.3l13.31 17.4z"/></svg></a><a href="https://www.instagram.com/vlocalhostai/" aria-label="Instagram" title="Instagram" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23a3.7 3.7 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.42.17-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.17 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 0 0-2.13 1.38A5.9 5.9 0 0 0 .63 4.14c-.3.77-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91a5.9 5.9 0 0 0 1.38 2.13 5.9 5.9 0 0 0 2.13 1.38c.77.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.77.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.41a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg></a><a href="https://www.reddit.com/user/VlocalhostAI/" aria-label="Reddit" title="Reddit" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M24 11.78a2.6 2.6 0 0 0-4.4-1.86 12.77 12.77 0 0 0-6.96-2.22l1.19-5.58 3.87.82a1.86 1.86 0 1 0 .2-.92l-4.32-.92a.46.46 0 0 0-.55.36l-1.33 6.25a12.79 12.79 0 0 0-7.06 2.21 2.6 2.6 0 1 0-2.87 4.25 5.1 5.1 0 0 0-.06.8c0 4.07 4.74 7.37 10.58 7.37s10.58-3.3 10.58-7.37c0-.27-.02-.53-.06-.79A2.6 2.6 0 0 0 24 11.78zM6.2 13.64a1.86 1.86 0 1 1 3.72 0 1.86 1.86 0 0 1-3.72 0zm10.4 4.92c-1.27 1.27-3.7 1.37-4.41 1.37-.72 0-3.15-.1-4.42-1.37a.48.48 0 0 1 .68-.68c.8.8 2.52 1.09 3.74 1.09 1.21 0 2.93-.29 3.74-1.09a.48.48 0 1 1 .67.68zm-.34-3.06a1.86 1.86 0 1 1 0-3.72 1.86 1.86 0 0 1 0 3.72z"/></svg></a></div></div><div class="fmeta"><span>Voice engineering division</span><span>Build 2026.08, offline-first</span><span class="mono">mic &rarr; vad &rarr; whisper &rarr; ollama &rarr; notes</span></div></footer>
+<footer class="ftr"><div class="wrap"><div><div class="fbrand"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CA8A04"/><stop offset="55%" stop-color="#EAB308"/><stop offset="100%" stop-color="#FACC15"/></linearGradient></defs><rect x="23" y="44" width="22" height="36" rx="11" fill="url(#sb)"/><rect x="54" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><rect x="85" y="114" width="22" height="48" rx="11" fill="url(#sb)"/><rect x="116" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><circle cx="158" cy="62" r="27" fill="#FDE047"/><path d="M 143 79 L 131 100 L 163 81 Z" fill="#FDE047"/></svg><span>Vlocalhost</span><small>AI</small></div><p class="fnote">On-device voice intelligence. Your conversations never leave the room.</p></div><div class="fcol"><a href="/install/">Install</a><a href="/support/">Support</a><a href="mailto:voiceit@vlocal.host">Contact</a><a href="/pricing/">Plans &amp; pricing</a><a href="https://github.com/antigravitysoham-eng/vlocalhost-core">Source</a></div><div class="fsocial"><a href="https://www.linkedin.com/company/vlocalhostai/" aria-label="LinkedIn" title="LinkedIn" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="https://x.com/VlocalhostAI" aria-label="X" title="X" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.25 6.93 6.06-6.93zm-1.29 19.49h2.04L6.49 3.24H4.3l13.31 17.4z"/></svg></a><a href="https://www.instagram.com/vlocalhostai/" aria-label="Instagram" title="Instagram" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23a3.7 3.7 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.42.17-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.17 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 0 0-2.13 1.38A5.9 5.9 0 0 0 .63 4.14c-.3.77-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91a5.9 5.9 0 0 0 1.38 2.13 5.9 5.9 0 0 0 2.13 1.38c.77.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.77.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.41a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg></a><a href="https://www.reddit.com/user/VlocalhostAI/" aria-label="Reddit" title="Reddit" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M24 11.78a2.6 2.6 0 0 0-4.4-1.86 12.77 12.77 0 0 0-6.96-2.22l1.19-5.58 3.87.82a1.86 1.86 0 1 0 .2-.92l-4.32-.92a.46.46 0 0 0-.55.36l-1.33 6.25a12.79 12.79 0 0 0-7.06 2.21 2.6 2.6 0 1 0-2.87 4.25 5.1 5.1 0 0 0-.06.8c0 4.07 4.74 7.37 10.58 7.37s10.58-3.3 10.58-7.37c0-.27-.02-.53-.06-.79A2.6 2.6 0 0 0 24 11.78zM6.2 13.64a1.86 1.86 0 1 1 3.72 0 1.86 1.86 0 0 1-3.72 0zm10.4 4.92c-1.27 1.27-3.7 1.37-4.41 1.37-.72 0-3.15-.1-4.42-1.37a.48.48 0 0 1 .68-.68c.8.8 2.52 1.09 3.74 1.09 1.21 0 2.93-.29 3.74-1.09a.48.48 0 1 1 .67.68zm-.34-3.06a1.86 1.86 0 1 1 0-3.72 1.86 1.86 0 0 1 0 3.72z"/></svg></a></div></div><div class="fmeta"><span>Voice engineering division</span><span>Build 2026.08, offline-first</span><span class="mono">mic &rarr; vad &rarr; whisper &rarr; ollama &rarr; notes</span></div></footer>
+</div>
+
+<div class="cf-ov" id="leadOv" hidden>
+  <div class="cf-card" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
+    <button class="cf-x" id="leadX" type="button" aria-label="Close">&times;</button>
+    <p class="cf-eyebrow">Free &middot; Solo plan</p>
+    <h2 id="leadTitle">Get Vlocalhost free</h2>
+    <p class="cf-sub">Tell us where to reach you and we&rsquo;ll take you straight to
+       the installer. No card, no account.</p>
+    <div class="cf-guard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 3.4v5.3c0 5-3.4 9.6-8 11.3-4.6-1.7-8-6.3-8-11.3V5.4L12 2zm-1 13.4l5.3-5.3-1.4-1.4L11 12.6 9.1 10.7l-1.4 1.4 3.3 3.3z"/></svg><span><b>Your meeting audio never leaves your
+       device.</b> This form is only how we reach you &mdash; it is the one thing on
+       this site that is sent anywhere.</span></div>
+    <form id="leadForm" novalidate>
+      <label>Full name<input type="text" name="name" autocomplete="name" required></label>
+      <label>Email<input type="email" name="email" autocomplete="email" required></label>
+      <label>Phone<input type="tel" name="phone" autocomplete="tel" required></label>
+      <label>Company <span style="color:var(--faint)">(optional)</span><input
+        type="text" name="company" autocomplete="organization"></label>
+      <label class="cf-check" id="leadConsentRow">
+        <input type="checkbox" name="consent" required>
+        <span>I agree to Vlocalhost storing these details and contacting me about
+          the product.</span>
+      </label>
+      <p class="cf-err" id="leadErr" role="alert" hidden></p>
+      <button class="cf-go" type="submit" id="leadGo">Continue to install &rarr;</button>
+    </form>
+  </div>
 </div>
 
 <script>
+(function () {
+  "use strict";
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbxIkJv9CS4SLJyZawxOhFVrOvsr5uGE9zcB8pwo6H8D9_YI2UtydgOLSrEt12aq-7w/exec";
+  var INSTALL = "/install/";
+  var KEY = "vlocalhost_lead";
+
+  var ov = document.getElementById("leadOv");
+  var form = document.getElementById("leadForm");
+  if (!ov || !form) return;
+  var err = document.getElementById("leadErr");
+  var go = document.getElementById("leadGo");
+  var consentRow = document.getElementById("leadConsentRow");
+  var lastFocus = null;
+
+  // Somebody who already gave us their details does not get asked again: the
+  // second visit would only write a duplicate row and cost them a form.
+  function known() {
+    try { return !!localStorage.getItem(KEY); } catch (e) { return false; }
+  }
+
+  function open(e) {
+    if (known()) return;               // let the click through to /install/
+    if (e) e.preventDefault();
+    lastFocus = document.activeElement;
+    ov.hidden = false;
+    requestAnimationFrame(function () { ov.classList.add("on"); });
+    var first = form.querySelector("input");
+    if (first) first.focus();
+    document.body.style.overflow = "hidden";
+  }
+
+  function close() {
+    ov.classList.remove("on");
+    document.body.style.overflow = "";
+    setTimeout(function () { ov.hidden = true; }, 200);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.getElementById("leadX").addEventListener("click", close);
+  ov.addEventListener("mousedown", function (e) { if (e.target === ov) close(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !ov.hidden) close();
+  });
+
+  // Every route to the installer goes through the form. Matching on the
+  // resolved pathname rather than the literal attribute catches the header
+  // nav, the hero buttons and the pricing CTA in one rule, however each of
+  // them happens to be written.
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var path;
+    try { path = new URL(a.href, location.href).pathname; } catch (x) { return; }
+    if (path === INSTALL) open(e);
+  });
+
+  function fail(msg, el) {
+    err.textContent = msg;
+    err.hidden = false;
+    if (el) { el.classList.add("bad"); el.focus(); }
+    return false;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    err.hidden = true;
+    form.querySelectorAll(".bad").forEach(function (n) { n.classList.remove("bad"); });
+    consentRow.classList.remove("bad");
+
+    var f = form.elements;
+    var data = {
+      name: f.name.value.trim(),
+      email: f.email.value.trim(),
+      phone: f.phone.value.trim(),
+      company: f.company.value.trim(),
+      consent: f.consent.checked,
+      page: location.href
+    };
+
+    if (!data.name) return fail("Please enter your name.", f.name);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email))
+      return fail("Please enter a valid email address.", f.email);
+    if (data.phone.replace(/[^0-9]/g, "").length < 7)
+      return fail("Please enter a valid phone number.", f.phone);
+    if (!data.consent) {
+      consentRow.classList.add("bad");
+      return fail("Please tick the consent box to continue.");
+    }
+
+    go.disabled = true;
+    go.textContent = "Taking you there\u2026";
+
+    // The installer is never held hostage to the network. Whether the POST
+    // succeeds, fails or times out, the next thing that happens is /install/.
+    var went = false;
+    function done() { if (!went) { went = true; location.href = INSTALL; } }
+    setTimeout(done, 2500);
+
+    try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (x) {}
+
+    if (!ENDPOINT) { done(); return; }
+
+    // text/plain, not application/json: a JSON content type makes this a
+    // preflighted cross-origin request, and a Google Apps Script web app does
+    // not answer the OPTIONS probe -- the lead would vanish with a console
+    // error no visitor ever sees. This stays a "simple request", which needs
+    // no preflight. The body is still JSON; the receiving end parses it.
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(data)
+    }).then(done).catch(done);
+  });
+})();
+
+(function () {
+  "use strict";
+  var dds = [].slice.call(document.querySelectorAll(".nav-dd"));
+  if (!dds.length) return;
+
+  function shut(dd) {
+    dd.classList.remove("open");
+    var b = dd.querySelector(".nav-dd-btn");
+    if (b) b.setAttribute("aria-expanded", "false");
+  }
+
+  dds.forEach(function (dd) {
+    var btn = dd.querySelector(".nav-dd-btn");
+    if (!btn) return;
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      var open = dd.classList.contains("open");
+      dds.forEach(shut);
+      if (!open) {
+        dd.classList.add("open");
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+    dd.addEventListener("mouseenter", function () {
+      btn.setAttribute("aria-expanded", "true");
+    });
+    dd.addEventListener("mouseleave", function () { shut(dd); });
+    // A jump link inside the menu leaves it hanging open over the section it
+    // just scrolled to.
+    dd.querySelectorAll(".nav-dd-menu a").forEach(function (a) {
+      a.addEventListener("click", function () { shut(dd); btn.blur(); });
+    });
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest || !e.target.closest(".nav-dd")) dds.forEach(shut);
+  });
+
+  // A fragment arriving from another page lands at the top of this one. The
+  // landing page's sections start at opacity 0 under a transform and grow into
+  // place as their entrance transitions run, so the document is still settling
+  // when Chrome performs its one-and-only fragment scroll -- /#specs opened on
+  // the hero. Redo the jump once the page has stopped moving.
+  function jump() {
+    if (!location.hash || location.hash.length < 2) return;
+    var el;
+    try { el = document.getElementById(decodeURIComponent(location.hash.slice(1))); }
+    catch (e) { return; }
+    // Snap rather than animate: this is arrival, not navigation, and smoothly
+    // scrolling seven thousand pixels on load is a tour nobody asked for.
+    if (el) el.scrollIntoView({ block: "start", behavior: "auto" });
+  }
+  if (location.hash) {
+    window.addEventListener("load", function () {
+      jump();
+      setTimeout(jump, 300);
+    });
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      dds.forEach(shut);
+      if (document.activeElement && document.activeElement.closest &&
+          document.activeElement.closest(".nav-dd")) document.activeElement.blur();
+    }
+  });
+})();
+
 (function () {
   'use strict';
   var wraps = [].slice.call(document.querySelectorAll('main section > .wrap'));
