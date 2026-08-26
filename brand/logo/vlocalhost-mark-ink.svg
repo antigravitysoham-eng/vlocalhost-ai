@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Vlocalhost mark, one colour">
+  <title>Vlocalhost mark, one colour</title>
+  <rect x="23" y="44" width="22" height="36" rx="11" fill="#A16207"/>
+  <rect x="54" y="79" width="22" height="42" rx="11" fill="#A16207"/>
+  <rect x="85" y="114" width="22" height="48" rx="11" fill="#A16207"/>
+  <rect x="116" y="79" width="22" height="42" rx="11" fill="#A16207"/>
+  <circle cx="158" cy="62" r="27" fill="#A16207"/>
+  <path d="M 143 79 L 131 100 L 163 81 Z" fill="#A16207"/>
+</svg>

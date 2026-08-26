@@ -1,78 +1,733 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Signal lost (404) — Vlocalhost.AI</title>
-<meta name="description" content="That page isn't here. Head back to Vlocalhost.AI." />
-<meta name="robots" content="noindex" />
-<meta name="theme-color" content="#090C12" />
-<link rel="icon" type="image/svg+xml" href="/vlocalhost-ai/assets/favicon.svg" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal lost (404) &mdash; Vlocalhost AI</title>
+<meta name="description" content="That page is not here. Head back to Vlocalhost AI.">
+<link rel="canonical" href="https://vlocal.host/404.html">
+<meta name="theme-color" content="#0E1116">
+<link rel="icon" type="image/svg+xml" href="/brand/logo/vlocalhost-appicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vlocal.host/404.html">
+<meta property="og:title" content="Signal lost (404) &mdash; Vlocalhost AI">
+<meta property="og:description" content="That page is not here. Head back to Vlocalhost AI.">
+<meta property="og:image" content="https://vlocal.host/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Signal lost (404) &mdash; Vlocalhost AI">
+<meta name="twitter:description" content="That page is not here. Head back to Vlocalhost AI.">
+<meta name="twitter:image" content="https://vlocal.host/assets/og-image.png">
+<script>document.documentElement.className+=' js'</script>
 <style>
-  :root{
-    --bg:#090C12; --bg-2:#0E1220; --ink:#EAEEF4; --muted:#7E8AA0; --faint:#4B5468;
-    --line:rgba(255,255,255,0.075); --amber:#FFB43D; --cyan:#38E1CE;
-    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans);
-    display:grid; place-items:center; padding:32px;
-    background-image:linear-gradient(var(--line) 1px,transparent 1px),
-                     linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:40px 40px;
-  }
-  .card{max-width:560px; text-align:center}
-  .chip{
-    display:inline-flex; align-items:center; gap:8px; font-family:var(--mono);
-    font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--cyan);
-    border:1px solid #1E4E4A; background:#0C1A1C; border-radius:999px; padding:7px 14px;
-  }
-  .chip i{width:6px;height:6px;border-radius:50%;background:var(--cyan);font-style:normal}
-  svg.trace{width:100%; max-width:420px; margin:34px auto 10px; display:block}
-  h1{font-size:clamp(30px,6vw,44px); margin:0 0 12px; letter-spacing:-.02em}
-  p{color:var(--muted); font-size:16px; line-height:1.65; margin:0 auto 30px; max-width:44ch}
-  .row{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
-  a.btn{
-    font-size:14.5px; font-weight:600; text-decoration:none; border-radius:11px;
-    padding:11px 20px; border:1px solid var(--line); color:var(--ink);
-    background:var(--bg-2); transition:border-color .18s ease, transform .18s ease;
-  }
-  a.btn:hover{border-color:rgba(255,255,255,.22); transform:translateY(-1px)}
-  a.btn.primary{background:var(--amber); color:#0B0F18; border-color:transparent}
-  code{font-family:var(--mono); color:var(--faint); font-size:12.5px}
-  @media (prefers-reduced-motion:no-preference){
-    svg.trace path{stroke-dasharray:600; stroke-dashoffset:600; animation:draw 1.6s ease forwards}
-  }
-  @keyframes draw{to{stroke-dashoffset:0}}
-</style>
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  --ink: #0E1116; --surface: #0F131A; --surface-2: #10141B;
+  --line: rgba(255,255,255,.07); --line-strong: rgba(255,255,255,.12);
+  --sun: #FACC15; --sun-300: #FDE047; --sun-700: #A16207;
+  --sun-wash: rgba(250,204,21,.10); --sun-edge: rgba(250,204,21,.40);
+  --text: #EDEBE7; --dim: #B7B8BE; --muted: #8C8D95; --faint: #74767E;
+  --f-display: 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+  --f-body: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --f-mono: ui-monospace, 'Cascadia Code', 'SF Mono', 'JetBrains Mono', Consolas, monospace;
+}
+html, body { margin: 0; padding: 0; background: var(--ink); }
+body { font-family: var(--f-body); color: var(--text); -webkit-font-smoothing: antialiased;
+       line-height: 1.55; }
+a { color: var(--sun); text-decoration: none; }
+a:hover { color: var(--sun-300); }
+::selection { background: rgba(250,204,21,.28); }
+:focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 26px; }
+.shell { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* header */
+.hdr { position: sticky; top: 0; z-index: 20; background: rgba(14,17,22,.86);
+       backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.hdr .wrap { display: flex; align-items: center; gap: 26px; height: 64px; }
+/* The lockup: the name in the display face, then AI set small, spaced and
+   raised like a trademark. Not "Vlocalhost AI" -- the dotted form reads as a
+   domain and collides with the real one, vlocal.host. The AI qualifies the
+   name; it is not part of it. */
+.brand { display: flex; align-items: center; gap: 11px;
+         font-family: var(--f-display); font-weight: 800; font-size: 18px;
+         color: var(--text); letter-spacing: -.02em; }
+.brand svg { width: 26px; height: 26px; display: block; }
+.brand small { font-family: var(--f-mono); font-weight: 400; font-size: 9.5px;
+               letter-spacing: .2em; color: var(--muted);
+               align-self: flex-start; margin-top: 4px; margin-left: -5px; }
+.brand:hover small { color: var(--sun); }
+.nav { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+.nav a { padding: 7px 12px; border-radius: 8px; font-size: 13.5px; color: var(--dim); }
+.nav a:hover { background: rgba(255,255,255,.05); color: var(--text); }
+.nav a[aria-current="page"] { color: var(--sun); background: var(--sun-wash); }
+
+/* type */
+h1 { font-family: var(--f-display); font-size: clamp(32px, 4.4vw, 50px); line-height: 1.08;
+     letter-spacing: -.032em; margin: 0 0 16px; font-weight: 600; }
+h1 .sub { display: block; color: var(--faint); }
+h2 { font-family: var(--f-display); font-size: clamp(24px, 3vw, 34px); line-height: 1.12;
+     letter-spacing: -.028em; margin: 0 0 12px; font-weight: 600; }
+h3 { font-size: 16px; margin: 0 0 6px; font-weight: 600; letter-spacing: -.008em; }
+.lede { color: var(--dim); font-size: 16.5px; max-width: 62ch; margin: 0 0 8px; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; color: var(--muted); }
+.eyebrow { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .14em;
+           text-transform: uppercase; color: var(--sun); margin: 0 0 14px; }
+section { padding: 60px 0; border-top: 1px solid var(--line); }
+section:first-of-type { border-top: 0; padding-top: 54px; }
+
+/* cards */
+/* Matched to the landing page's cards: 20px radius, the darker ground, and a
+   border that lifts on hover. A 12px radius beside a 26px hero read as two
+   different design systems on one page. */
+.card { background: #10141B; border: 1px solid var(--line); border-radius: 20px;
+        padding: 24px; transition: border-color .25s ease, background .25s ease,
+        transform .25s cubic-bezier(.16,1,.3,1); }
+.card:hover { border-color: rgba(255,255,255,.13); transform: translateY(-2px); }
+.grid { display: grid; gap: 16px; }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.g4 { grid-template-columns: repeat(auto-fit, minmax(238px, 1fr)); }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+       padding: 11px 18px; border-radius: 10px; font-size: 14px; font-weight: 600;
+       border: 1px solid var(--line-strong); background: var(--surface-2);
+       color: var(--text); cursor: pointer; font-family: inherit; }
+.btn:hover { border-color: rgba(255,255,255,.2); color: var(--text); }
+.btn-sun { background: var(--sun); border-color: var(--sun); color: #17140A; }
+.btn-sun:hover { background: var(--sun-300); border-color: var(--sun-300); color: #17140A; }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+.pill { display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px;
+        border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2);
+        font-size: 12px; color: var(--muted); }
+.pill-sun { border-color: var(--sun-edge); background: var(--sun-wash); color: var(--sun); }
+.dot { width: 6px; height: 6px; border-radius: 999px; background: var(--sun); }
+
+code, kbd, .mono { font-family: var(--f-mono); font-size: 12.5px; }
+code { background: rgba(255,255,255,.05); border: 1px solid var(--line);
+       border-radius: 5px; padding: 1.5px 6px; color: var(--sun-300); }
+pre { background: #0B0E13; border: 1px solid var(--line); border-radius: 10px;
+      padding: 14px 16px; overflow-x: auto; margin: 12px 0 0; }
+pre code { background: none; border: 0; padding: 0; color: var(--dim); }
+
+ul.ticks { list-style: none; margin: 14px 0 0; padding: 0; }
+ul.ticks li { position: relative; padding-left: 24px; margin: 9px 0; font-size: 14px;
+              color: var(--dim); }
+ul.ticks li::before { content: ""; position: absolute; left: 2px; top: 7px; width: 9px;
+              height: 5px; border-left: 2px solid var(--sun); border-bottom: 2px solid var(--sun);
+              transform: rotate(-45deg); }
+
+details { border: 1px solid var(--line); border-radius: 10px; background: var(--surface);
+          padding: 0 16px; margin: 10px 0; }
+details[open] { border-color: var(--line-strong); }
+summary { cursor: pointer; padding: 15px 0; font-weight: 600; font-size: 14.5px;
+          list-style: none; display: flex; align-items: center; gap: 10px; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "+"; color: var(--sun); font-family: var(--f-mono);
+                  font-size: 15px; line-height: 1; }
+details[open] summary::before { content: "\2212"; }
+details .body { padding: 0 0 16px 24px; color: var(--dim); font-size: 14px; }
+
+/* footer */
+.ftr { border-top: 1px solid var(--line); margin-top: 110px; }
+.ftr .wrap { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px;
+             padding-top: 34px; padding-bottom: 34px; }
+.ftr .fbrand { display: flex; align-items: center; gap: 10px;
+               font-family: var(--f-display); font-weight: 800; font-size: 16px;
+               color: var(--text); letter-spacing: -.02em; }
+.ftr .fbrand svg { width: 24px; height: 24px; display: block; }
+.ftr .fbrand small { font-family: var(--f-mono); font-weight: 400; font-size: 9px;
+                     letter-spacing: .2em; color: var(--muted);
+                     align-self: flex-start; margin-top: 3px; margin-left: -4px; }
+.ftr .fsocial { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.ftr .fsocial a { width: 36px; height: 36px; border-radius: 10px; display: grid;
+                  place-items: center; border: 1px solid var(--line);
+                  color: var(--muted); transition: color .18s ease,
+                  border-color .18s ease, background .18s ease; }
+.ftr .fsocial a svg { width: 17px; height: 17px; display: block; }
+.ftr .fsocial a:hover { color: var(--sun); border-color: var(--sun-edge);
+                        background: var(--sun-wash); }
+.ftr .fnote { margin: 12px 0 0; font-size: 13px; line-height: 1.65;
+              color: #6C6D75; max-width: 280px; }
+.ftr .fcol { display: flex; flex-direction: column; gap: 9px; font-size: 13px; }
+.ftr .fcol a { color: var(--muted); }
+.ftr .fcol a:hover { color: var(--sun); }
+.ftr .fmeta { max-width: 1180px; margin: 0 auto; padding: 0 26px 40px;
+              font-size: 12px; color: #5A5C64; display: flex; gap: 22px;
+              flex-wrap: wrap; }
+.ftr .fmeta .mono { font-family: var(--f-mono); font-size: 11px; }
+@media (max-width: 720px) {
+  .ftr .wrap { grid-template-columns: 1fr; gap: 24px; }
+}
+
+@media (max-width: 640px) {
+  .hdr .wrap { gap: 12px; }
+  .nav a { padding: 7px 9px; font-size: 13px; }
+  section { padding: 44px 0; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+@keyframes wv     { 0%,100% { transform: scaleY(.62); } 50% { transform: scaleY(1); } }
+@keyframes halo   { 0%,100% { opacity:.75; transform: translate(-50%,-50%) scale(1); }
+                    50%     { opacity:1;   transform: translate(-50%,-50%) scale(1.05); } }
+@keyframes ring   { 0%   { transform: scale(1);   opacity:.55; }
+                    100% { transform: scale(1.9); opacity:0; } }
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes aur1   { 0%,100% { transform: translate(-12%,0) rotate(-8deg) scale(1); }
+                    50%     { transform: translate(10%,6%) rotate(4deg) scale(1.15); } }
+@keyframes aur2   { 0%,100% { transform: translate(8%,4%) rotate(6deg) scale(1.1); }
+                    50%     { transform: translate(-10%,-4%) rotate(-5deg) scale(.95); } }
+@keyframes vlPulse{ 0%,100% { transform: scaleY(.5); } 50% { transform: scaleY(1.15); } }
+@keyframes vlBub  { 0%,100% { transform: scale(.88); } 50% { transform: scale(1.08); } }
+@keyframes drift  { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes flat   { 0%   { left:0;    opacity:0; }
+                    8%   { opacity:1; }
+                    62%  { left:calc(100% - 7px); opacity:1; }
+                    78%  { left:calc(100% - 7px); opacity:.15; }
+                    100% { left:calc(100% - 7px); opacity:0; } }
+
+/* the ambient layer, fixed behind everything */
+.amb { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+/* No will-change here on purpose: these are viewport-sized and blurred, and
+   the hint would promote three very large surfaces to their own layers for the
+   life of the page. It belongs on the small strips, not on the backdrop. */
+.amb i { position: absolute; display: block; border-radius: 50%; }
+.amb .a1 { left:-10%; top:10%;  width:70%; height:55%; filter: blur(70px);
+  background: radial-gradient(rgba(250,204,21,.05) 0%, rgba(202,138,4,.024) 45%, transparent 70%);
+  animation: aur1 26s ease-in-out infinite; }
+.amb .a2 { right:-14%; top:44%; width:64%; height:52%; filter: blur(80px);
+  background: radial-gradient(rgba(253,224,71,.04) 0%, rgba(133,77,14,.03) 48%, transparent 72%);
+  animation: aur2 34s ease-in-out infinite; }
+.amb .a3 { left:22%; bottom:-18%; width:56%; height:48%; filter: blur(90px);
+  background: radial-gradient(rgba(250,204,21,.035) 0%, transparent 68%);
+  animation: aur1 42s ease-in-out 6s infinite; }
+.amb .grain { position:absolute; inset:0; border-radius:0; opacity:.5;
+  background-image: radial-gradient(rgba(255,255,255,.043) 1px, transparent 1px);
+  background-size: 7px 7px; }
+.shell { position: relative; z-index: 1; }
+
+/* --- per-page art -------------------------------------------------------
+   One mechanic per page. They are deliberately different in kind, not just in
+   parameters: a fill is not a roll is not a particle is not a typewriter. Two
+   pages running the same motion at different speeds still read as the same
+   page twice. */
+
+/* install: the same artefact landing on three machines, then verified */
+@keyframes insFill { 0%, 6% { transform: scaleX(0); } 46%, 100% { transform: scaleX(1); } }
+@keyframes insOk   { 0%, 48% { opacity: 0; transform: scale(.72); }
+                     60%     { opacity: 1; transform: scale(1.14); }
+                     68%,100%{ opacity: 1; transform: scale(1); } }
+
+/* pricing: minutes roll, money does not */
+/* 11 cells: 0-9 then 0 again. Ten steps of exactly 1em land on the repeat,
+   so the loop has no jump. Percentages would be relative to the strip's
+   own height and drift by a fraction of a digit every cycle. */
+@keyframes roll  { to { transform: translateY(-10em); } }
+@keyframes zeroP { 0%,100% { opacity: .62; } 50% { opacity: 1; } }
+
+/* security: outbound packets meeting a wall; one turns down to disk */
+@keyframes pkt   { 0%   { left: 4%;  opacity: 0; }
+                   9%   { opacity: 1; }
+                   50%  { left: 54%; opacity: 1; }
+                   58%  { left: 57%; opacity: 0; }
+                   100% { left: 57%; opacity: 0; } }
+@keyframes spark { 0%, 46% { opacity: 0; transform: scaleY(.4); }
+                   54%     { opacity: .95; transform: scaleY(1); }
+                   72%,100%{ opacity: 0; transform: scaleY(.4); } }
+@keyframes toDisk{ 0%, 46% { top: 32%; opacity: 0; }
+                   54%     { opacity: 1; }
+                   84%,100%{ top: 66%; opacity: 1; } }
+
+/* support: the report writes itself, in front of you */
+@keyframes t1 { 0% { width:0; } 13% { width:100%; } 93% { width:100%; } 100% { width:0; } }
+@keyframes t2 { 0%,13% { width:0; } 30% { width:100%; } 93% { width:100%; } 100% { width:0; } }
+@keyframes t3 { 0%,30% { width:0; } 47% { width:100%; } 93% { width:100%; } 100% { width:0; } }
+@keyframes t4 { 0%,47% { width:0; } 64% { width:100%; } 93% { width:100%; } 100% { width:0; } }
+@keyframes caret { 0%,49% { opacity:1; } 50%,100% { opacity:0; } }
+
+/* guide: a rail filling from step to step */
+@keyframes rail  { 0% { transform:scaleY(0); } 82%,100% { transform:scaleY(1); } }
+@keyframes n1 { 0%,4% { opacity:.3; } 10%,100% { opacity:1; } }
+@keyframes n2 { 0%,26% { opacity:.3; } 32%,100% { opacity:1; } }
+@keyframes n3 { 0%,50% { opacity:.3; } 56%,100% { opacity:1; } }
+@keyframes n4 { 0%,74% { opacity:.3; } 80%,100% { opacity:1; } }
+
+.art .track { position:relative; height:5px; border-radius:3px; flex:1 1 0;
+              background: rgba(255,255,255,.08); overflow:hidden; }
+.art .track i { position:absolute; inset:0; display:block; border-radius:3px;
+                transform-origin:left center; will-change:transform;
+                background: linear-gradient(90deg, var(--sun-700), var(--sun)); }
+.art .ok { font-family: var(--f-mono); font-size:10px; color: var(--sun);
+           border:1px solid var(--sun-edge); background: var(--sun-wash);
+           border-radius:999px; padding:2px 7px; white-space:nowrap; }
+.art .odo { display:flex; align-items:center; gap:3px; font-family: var(--f-mono);
+            font-size:34px; letter-spacing:-.02em; color: var(--sun); line-height:1; }
+/* Three parts, three selectors. An earlier version styled `.reel span`, which
+   matched the strip as well as the cells inside it -- so the strip was clipped
+   to one digit tall and the roll came apart on screen. */
+.art .reel { display:inline-block; height:1em; overflow:hidden; vertical-align:top; }
+.art .reel > i { display:block; font-style:normal; }
+.art .reel > i > span { display:block; height:1em; line-height:1em; }
+.art .field { position:relative; height:96px; border-radius:12px; overflow:hidden;
+              border:1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+.art .field .wall { position:absolute; left:57%; top:8%; bottom:8%; width:2px;
+                    background: repeating-linear-gradient(180deg,
+                    rgba(224,112,90,.95) 0 6px, transparent 6px 11px); }
+.art .field .pkt { position:absolute; top:34%; width:7px; height:7px; border-radius:2px;
+                   background: var(--sun); }
+.art .field .spark { position:absolute; left:57%; top:26%; width:2px; height:34px;
+                     background: rgba(224,112,90,.95); transform-origin:center; }
+/* The one that turns down does so *before* the wall, and lands on the tray
+   drawn directly beneath it. Dropping it at the wall read as debris falling
+   off the barrier rather than as data being written somewhere on purpose. */
+.art .field .disk { position:absolute; left:44%; width:7px; height:7px; border-radius:50%;
+                    background: var(--sun); box-shadow:0 0 10px rgba(250,204,21,.8); }
+.art .field .tray { position:absolute; left:36%; right:50%; bottom:14px; height:3px;
+                    border-radius:2px; background: var(--sun-edge); }
+.art .field .label { position:absolute; font-family: var(--f-mono); font-size:9.5px;
+                     letter-spacing:.06em; }
+.art .type { font-family: var(--f-mono); font-size:11.5px; color: var(--dim);
+             display:flex; flex-direction:column; gap:5px; }
+.art .type span { display:block; white-space:nowrap; overflow:hidden; width:0; }
+.art .type .cur { display:inline-block; width:6px; height:12px; background: var(--sun);
+                  vertical-align:-2px; animation: caret 1s steps(1) infinite; }
+.art .steps { display:flex; flex-direction:column; gap:0; position:relative;
+              padding-left:22px; }
+.art .steps .rail { position:absolute; left:5px; top:8px; bottom:8px; width:2px;
+                    background: rgba(255,255,255,.08); }
+.art .steps .rail i { position:absolute; inset:0; display:block; width:2px;
+                      transform-origin:top center; will-change:transform;
+                      background: var(--sun); animation: rail 7.2s ease-in-out infinite; }
+.art .steps b { position:relative; font-weight:500; font-size:12.5px; color: var(--dim);
+                padding:6px 0; }
+.art .steps b::before { content:""; position:absolute; left:-21px; top:11px; width:8px;
+                        height:8px; border-radius:50%; background: var(--sun); }
+
+/* --- animated devices ----------------------------------------------------
+   One per section. The rule is that a device shows what its section claims,
+   so the motion carries meaning rather than attention. */
+
+/* a small machine, receiving something */
+.dev { border:1px solid rgba(255,255,255,.07); border-radius:12px; overflow:hidden;
+       background:#0B0E14; }
+.dev .bar { display:flex; align-items:center; gap:5px; padding:7px 10px;
+            border-bottom:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.02); }
+.dev .bar u { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.14);
+              display:block; text-decoration:none; }
+.dev .bar span { margin-left:4px; font-family:var(--f-mono); font-size:10px;
+                 color:var(--faint); letter-spacing:.04em; }
+.dev .body { padding:12px; display:flex; flex-direction:column; gap:9px; }
+
+/* the install strip: fills, then flips to ready */
+.dev .strip { position:relative; height:6px; border-radius:3px;
+              background:rgba(255,255,255,.08); overflow:hidden; }
+.dev .strip i { position:absolute; inset:0; border-radius:3px; display:block;
+                transform-origin:left center; will-change:transform;
+                background:linear-gradient(90deg,var(--sun-700),var(--sun));
+                animation:devFill 6s cubic-bezier(.4,0,.2,1) infinite; }
+.dev .state { display:flex; align-items:center; gap:6px; font-family:var(--f-mono);
+              font-size:10.5px; color:var(--faint); }
+.dev .state b { color:var(--sun); font-weight:400; opacity:0;
+                animation:devReady 6s ease-out infinite; }
+@keyframes devFill  { 0%,4% { transform:scaleX(0); } 52%,100% { transform:scaleX(1); } }
+@keyframes devReady { 0%,52% { opacity:0; } 60%,100% { opacity:1; } }
+
+/* a level meter that is actually listening */
+.lvl { display:flex; flex-direction:column; gap:7px; }
+.lvl .r { display:flex; align-items:center; gap:8px; }
+.lvl .r span { font-family:var(--f-mono); font-size:10px; color:var(--faint);
+               width:82px; flex:0 0 auto; white-space:nowrap; }
+.lvl .m { display:flex; align-items:flex-end; gap:2px; height:26px; flex:1 1 0; }
+.lvl .m i { flex:1 1 0; border-radius:1.5px; background:var(--sun); display:block;
+            transform-origin:bottom; }
+.lvl .r.b .m i { background:rgba(250,204,21,.42); }
+
+/* a terminal that types */
+.term { font-family:var(--f-mono); font-size:11px; line-height:1.75; color:var(--dim); }
+.term p { margin:0; white-space:nowrap; overflow:hidden; width:0; }
+.term p.a { animation:tw1 7s steps(30) infinite; }
+.term p.b { animation:tw2 7s steps(30) infinite; }
+.term p.c { animation:tw3 7s steps(22) infinite; color:var(--sun); }
+@keyframes tw1 { 0%{width:0} 16%{width:100%} 94%{width:100%} 100%{width:0} }
+@keyframes tw2 { 0%,20%{width:0} 40%{width:100%} 94%{width:100%} 100%{width:0} }
+@keyframes tw3 { 0%,58%{width:0} 72%{width:100%} 94%{width:100%} 100%{width:0} }
+
+/* words firming into notes */
+/* A fixed footprint. Without it the card's height follows whatever the
+   animation happens to be showing, so the third card sat visibly shorter than
+   the two beside it for most of the loop. */
+.firm { display:flex; flex-direction:column; gap:9px; min-height:76px;
+        justify-content:center; }
+.firm .w { display:flex; gap:5px; flex-wrap:wrap; align-items:center; min-height:20px; }
+.firm .w i { display:block; height:7px; border-radius:3px; background:rgba(255,255,255,.14);
+             opacity:0; animation:wordIn 6.4s ease-out infinite; }
+.firm .n { display:flex; align-items:center; gap:7px; font-size:11.5px; color:var(--dim);
+           opacity:0; animation:noteIn 6.4s ease-out infinite; }
+.firm .n u { width:9px; height:9px; border-radius:2px; text-decoration:none; flex:0 0 auto;
+             border:1px solid var(--sun-edge); background:var(--sun-wash); }
+@keyframes wordIn { 0%{opacity:0} 8%,52%{opacity:1} 62%,100%{opacity:.18} }
+@keyframes noteIn { 0%,48%{opacity:0;transform:translateY(5px)}
+                    62%,94%{opacity:1;transform:none}
+                    100%{opacity:0;transform:translateY(5px)} }
+
+/* one bill climbs, one does not */
+.cost { display:flex; align-items:flex-end; gap:14px; height:96px; }
+.cost .c { flex:1 1 0; display:flex; flex-direction:column; justify-content:flex-end;
+           gap:6px; height:100%; }
+.cost .c .t { position:relative; flex:1 1 0; border-radius:8px 8px 0 0;
+              background:rgba(255,255,255,.05); overflow:hidden; }
+.cost .c .t i { position:absolute; inset:0; display:block; border-radius:8px 8px 0 0;
+                transform-origin:bottom center; transform:scaleY(0); will-change:transform; }
+.cost .them .t i { background:linear-gradient(180deg,rgba(224,112,90,.75),rgba(224,112,90,.25));
+                   animation:climb 5.4s cubic-bezier(.4,0,.2,1) infinite; }
+.cost .you .t i  { background:linear-gradient(180deg,var(--sun),var(--sun-700));
+                   transform:scaleY(.05); }
+.cost .c em { font-style:normal; font-family:var(--f-mono); font-size:10px;
+              color:var(--faint); text-align:center; }
+@keyframes climb { 0%,6%{transform:scaleY(.05)} 70%,100%{transform:scaleY(.92)} }
+
+/* a checklist that ticks itself */
+.ticks2 { display:flex; flex-direction:column; gap:9px; }
+.ticks2 div { display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--dim); }
+.ticks2 u { width:15px; height:15px; border-radius:4px; flex:0 0 auto; text-decoration:none;
+            border:1px solid var(--line-strong); position:relative; }
+.ticks2 u::after { content:""; position:absolute; left:4px; top:3px; width:5px; height:8px;
+            border-right:2px solid var(--sun); border-bottom:2px solid var(--sun);
+            transform:rotate(40deg) scale(.4); opacity:0; }
+.ticks2 div:nth-child(1) u::after { animation:tick 5.6s ease-out infinite; }
+.ticks2 div:nth-child(2) u::after { animation:tick 5.6s ease-out .5s infinite; }
+.ticks2 div:nth-child(3) u::after { animation:tick 5.6s ease-out 1s infinite; }
+.ticks2 div:nth-child(4) u::after { animation:tick 5.6s ease-out 1.5s infinite; }
+@keyframes tick { 0%,8%{opacity:0;transform:rotate(40deg) scale(.4)}
+                  18%{opacity:1;transform:rotate(40deg) scale(1.15)}
+                  26%,90%{opacity:1;transform:rotate(40deg) scale(1)}
+                  100%{opacity:0;transform:rotate(40deg) scale(.4)} }
+
+/* two hashes meeting in the middle */
+.hash { display:flex; align-items:center; gap:10px; font-family:var(--f-mono);
+        font-size:10.5px; color:var(--faint); }
+.hash .h { flex:1 1 0; padding:7px 9px; border-radius:8px; border:1px solid var(--line);
+           background:rgba(255,255,255,.02); overflow:hidden; text-overflow:ellipsis;
+           white-space:nowrap; }
+.hash .eq { width:26px; height:26px; border-radius:50%; flex:0 0 auto; display:grid;
+            place-items:center; border:1px solid var(--sun-edge); color:var(--sun);
+            background:var(--sun-wash); animation:eqPop 4.6s ease-out infinite; }
+@keyframes eqPop { 0%,40%{transform:scale(.75);opacity:.35}
+                   52%{transform:scale(1.15);opacity:1}
+                   60%,100%{transform:scale(1);opacity:1} }
+
+@media (prefers-reduced-motion: reduce) {
+  .dev .strip i, .dev .state b, .lvl .m i, .term p, .firm .w i, .firm .n,
+  .cost .them .t i, .ticks2 u::after, .hash .eq { animation: none !important; }
+  .dev .strip i { width:100%; } .term p { width:100%; }
+  .firm .w i, .firm .n, .dev .state b { opacity:1; }
+  .cost .them .t i { height:92%; }
+  .ticks2 u::after { opacity:1; transform:rotate(40deg) scale(1); }
+}
+
+/* --- chrome motion -------------------------------------------------------
+   Shared deliberately. Furniture that behaves the same everywhere is what
+   makes seven pages feel like one product; it is the hero mechanic that has
+   to differ, not the trim. */
+
+/* every h2 draws its own rule as the section arrives */
+main section h2 { position: relative; padding-bottom: 14px; }
+main section h2::after { content: ""; position: absolute; left: 0; bottom: 0;
+  height: 2px; width: 0; border-radius: 2px;
+  background: linear-gradient(90deg, var(--sun), rgba(250,204,21,0)); }
+html.js main section > .wrap.on h2::after { width: 54px;
+  transition: width .8s cubic-bezier(.16,1,.3,1) .15s; }
+html:not(.js) main section h2::after { width: 54px; }
+
+/* cards answer the cursor */
+.card { position: relative; }
+.card::after { content: ""; position: absolute; inset: -1px; border-radius: inherit;
+  pointer-events: none; opacity: 0; transition: opacity .3s ease;
+  background: radial-gradient(60% 80% at 50% 0%, rgba(250,204,21,.10), transparent 70%); }
+.card:hover::after { opacity: 1; }
+.card:hover { border-color: var(--sun-edge); }
+
+/* buttons take a sheen */
+.btn { position: relative; overflow: hidden; }
+.btn::after { content: ""; position: absolute; top: 0; bottom: 0; width: 42%;
+  left: -55%; transform: skewX(-18deg); pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent); }
+.btn:hover::after { animation: sheen .75s ease-out; }
+@keyframes sheen { to { left: 125%; } }
+
+/* anything live actually looks live */
+.pill-sun .dot { animation: livedot 1.9s ease-in-out infinite; }
+@keyframes livedot { 0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(250,204,21,.45); }
+                     50%     { transform: scale(.82); box-shadow: 0 0 0 5px rgba(250,204,21,0); } }
+
+/* a caret for any inline terminal line */
+.blink { display: inline-block; width: 7px; height: 13px; background: var(--sun);
+         vertical-align: -2px; margin-left: 3px; animation: caret 1s steps(1) infinite; }
+
+/* install: each platform card fills a hairline as it arrives */
+.os { position: relative; overflow: hidden; }
+.os::before { content: ""; position: absolute; top: 0; left: 0; height: 2px; width: 0;
+  background: linear-gradient(90deg, var(--sun-700), var(--sun)); }
+html.js main section > .wrap.on .os::before { width: 100%;
+  transition: width 1.1s cubic-bezier(.16,1,.3,1); }
+html.js main section > .wrap.on .os:nth-child(2)::before { transition-delay: .16s; }
+html.js main section > .wrap.on .os:nth-child(3)::before { transition-delay: .32s; }
+
+/* support: the three steps join up as they arrive */
+.steps3 { position: relative; }
+.steps3::before { content: ""; position: absolute; left: 8%; right: 8%; top: 26px;
+  height: 2px; background: rgba(255,255,255,.08); }
+.steps3::after { content: ""; position: absolute; left: 8%; top: 26px; height: 2px;
+  width: 0; background: linear-gradient(90deg, var(--sun), var(--sun-700)); }
+html.js main section > .wrap.on .steps3::after { width: 84%;
+  transition: width 1.6s cubic-bezier(.16,1,.3,1) .3s; }
+@media (max-width: 860px) { .steps3::before, .steps3::after { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-sun .dot, .blink, .btn:hover::after { animation: none !important; }
+  main section h2::after, .os::before, .steps3::after { transition: none !important; }
+}
+
+/* the hero: copy on the left, something alive on the right */
+.phero { position: relative; overflow: hidden; border:1px solid rgba(255,255,255,.06);
+         border-radius: 26px; padding: 46px 44px;
+         background: radial-gradient(120% 90% at 50% 55%, #17150C 0%, #101319 55%, #0E1116 100%); }
+.phero .in { position:relative; z-index:2; display:grid;
+             grid-template-columns: 1.05fr .95fr; gap: 40px; align-items:center; }
+.phero .dots { position:absolute; inset:0; opacity:.5; pointer-events:none;
+               background-image: radial-gradient(rgba(255,255,255,.043) 1px, transparent 1px);
+               background-size: 7px 7px; }
+.phero h1 { margin-bottom: 14px; }
+
+/* the art panel every hero carries */
+.art { position:relative; border:1px solid rgba(255,255,255,.07); border-radius:18px;
+       background: rgba(11,14,19,.72); padding: 20px; min-height: 232px;
+       display:flex; flex-direction:column; justify-content:center; gap:14px;
+       overflow:hidden; }
+.art .cap { font-family: var(--f-mono); font-size: 11px; letter-spacing:.08em;
+            color: var(--faint); }
+.art .row { display:flex; align-items:center; gap:10px; }
+.art .wave { display:flex; align-items:center; gap:3px; height:56px; flex:1 1 0; }
+.art .wave b { flex:1 1 0; border-radius:2px; background: var(--sun);
+               transform-origin:center; display:block; }
+.art .halo { position:absolute; left:50%; top:52%; width:120%; height:44px;
+             transform: translate(-50%,-50%); filter: blur(26px); pointer-events:none;
+             background: linear-gradient(90deg, transparent, rgba(200,135,5,.20) 26%,
+             rgba(252,222,103,.40) 50%, rgba(200,135,5,.20) 74%, transparent);
+             animation: halo 6s ease-in-out infinite; }
+.art .tile { display:flex; align-items:center; gap:9px; padding:9px 11px;
+             border:1px solid rgba(255,255,255,.07); border-radius:11px;
+             background: rgba(255,255,255,.028); font-size:12.5px; color: var(--dim); }
+.art .tile svg { width:15px; height:15px; fill: var(--sun); flex:0 0 auto; }
+.art .meter { font-family: var(--f-mono); font-size: 30px; letter-spacing:-.02em;
+              color: var(--sun); }
+.art .line { height:6px; border-radius:3px; background: rgba(255,255,255,.13); width:0;
+             transition: width .8s cubic-bezier(.16,1,.3,1); }
+.art .bub { width:9px; height:9px; border-radius:50%; background: var(--sun);
+            animation: vlBub 1.2s ease-in-out infinite; flex:0 0 auto; }
+
+/* --- entrances -----------------------------------------------------------
+   Sixteen of them. Which section gets which is decided per page in
+   entrance_css() below, rotated by the page's path, and split so a heading and
+   its content arrive on different beats.
+
+   Each runs once and stops: motion is for arriving, not for reading.
+
+   The hidden state is gated on `html.js`, set by a one-line script in <head>
+   before the body paints. Putting `opacity:0` in plain CSS would hide the site
+   from anyone whose JavaScript never arrives; adding the class from script
+   instead would show the content and then blink it away. This does neither,
+   and the six-second failsafe still guarantees nothing stays hidden. */
+
+html.js main section > .wrap > * { opacity: 0; }
+html.js main section > .wrap.on > * {
+  animation-duration: .85s;
+  animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+  animation-fill-mode: forwards; }
+
+html.js main section > .wrap.on > *:nth-child(2) { animation-delay: 80ms; }
+html.js main section > .wrap.on > *:nth-child(3) { animation-delay: 160ms; }
+html.js main section > .wrap.on > *:nth-child(4) { animation-delay: 240ms; }
+html.js main section > .wrap.on > *:nth-child(5) { animation-delay: 320ms; }
+html.js main section > .wrap.on > *:nth-child(n+6) { animation-delay: 400ms; }
+
+@keyframes eRise   { from { opacity:0; transform: translateY(26px); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eWipe   { from { opacity:0; clip-path: inset(0 100% 0 0); }
+                     to   { opacity:1; clip-path: inset(0 0 0 0); } }
+@keyframes eLift   { from { opacity:0; transform: translateY(38px) scale(.97); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eSoft   { from { opacity:0; filter: blur(9px); transform: translateY(12px); }
+                     to   { opacity:1; filter: none; transform: none; } }
+@keyframes eLeft   { from { opacity:0; transform: translateX(-34px); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eRight  { from { opacity:0; transform: translateX(34px); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eTilt   { from { opacity:0; transform: perspective(900px) rotateX(9deg) translateY(24px);
+                            transform-origin: top center; }
+                     to   { opacity:1; transform: none; } }
+@keyframes eOpen   { from { opacity:0; transform: scaleY(.86); transform-origin: top center; }
+                     to   { opacity:1; transform: none; } }
+@keyframes eDrop   { 0%   { opacity:0; transform: translateY(-22px); }
+                     70%  { opacity:1; transform: translateY(4px); }
+                     100% { opacity:1; transform: none; } }
+@keyframes eZoom   { from { opacity:0; transform: scale(.94); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eIris   { from { opacity:0; clip-path: circle(0% at 50% 55%); }
+                     to   { opacity:1; clip-path: circle(140% at 50% 55%); } }
+@keyframes eSkew   { from { opacity:0; transform: skewY(2.4deg) translateY(22px); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eUnroll { from { opacity:0; clip-path: inset(0 0 100% 0); }
+                     to   { opacity:1; clip-path: inset(0 0 0 0); } }
+@keyframes eFold   { from { opacity:0; transform: perspective(900px) rotateY(9deg) translateX(22px);
+                            transform-origin: left center; }
+                     to   { opacity:1; transform: none; } }
+@keyframes eSpring { 0%   { opacity:0; transform: translateY(30px); }
+                     62%  { opacity:1; transform: translateY(-7px); }
+                     100% { opacity:1; transform: none; } }
+@keyframes eGlide  { from { opacity:0; transform: translate(26px, 20px); }
+                     to   { opacity:1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .amb i, .art .wave b, .art .halo, .art .bub, .vfield b { animation: none !important; }
+  html.js main section > .wrap > * { opacity:1; transform:none; filter:none;
+                                     animation:none !important; }
+}
+@media (max-width: 900px) {
+  .phero { padding: 34px 24px; }
+  .phero .in { grid-template-columns: 1fr; gap: 28px; }
+}
+
+@view-transition { navigation: auto; }
+
+/* A cross-fade, and nothing else.
+
+   An earlier version slid the outgoing page up 6px and the incoming page up
+   from 10px. The incoming page then ran its own section entrances on top of
+   that, so two different motions moved the same pixels at once -- which is
+   exactly what reads as a rough transition. The transition's job is to get you
+   there without a flash; the entrances are the movement. */
+::view-transition-old(root) { animation: vtFade .20s ease both reverse; }
+::view-transition-new(root) { animation: vtFade .26s ease both; }
+@keyframes vtFade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Honour the OS setting: the navigation still happens, it just does not fade. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+html.js main section > .wrap.now > * { opacity: 1 !important; animation: none !important; }
+html.js main section:nth-of-type(1) > .wrap.on > *:first-child { animation-name: eOpen; }
+html.js main section:nth-of-type(1) > .wrap.on > *:not(:first-child) { animation-name: eSpring; }
+html.js main section:nth-of-type(2) > .wrap.on > *:first-child { animation-name: eUnroll; }
+html.js main section:nth-of-type(2) > .wrap.on > *:not(:first-child) { animation-name: eSoft; }
+html.js main section:nth-of-type(3) > .wrap.on > *:first-child { animation-name: eWipe; }
+html.js main section:nth-of-type(3) > .wrap.on > *:not(:first-child) { animation-name: eDrop; }
+html.js main section:nth-of-type(4) > .wrap.on > *:first-child { animation-name: eTilt; }
+html.js main section:nth-of-type(4) > .wrap.on > *:not(:first-child) { animation-name: eFold; }
+html.js main section:nth-of-type(5) > .wrap.on > *:first-child { animation-name: eSkew; }
+html.js main section:nth-of-type(5) > .wrap.on > *:not(:first-child) { animation-name: eLift; }
+html.js main section:nth-of-type(6) > .wrap.on > *:first-child { animation-name: eRise; }
+html.js main section:nth-of-type(6) > .wrap.on > *:not(:first-child) { animation-name: eOpen; }
+html.js main section:nth-of-type(7) > .wrap.on > *:first-child { animation-name: eRight; }
+html.js main section:nth-of-type(7) > .wrap.on > *:not(:first-child) { animation-name: eUnroll; }
+html.js main section:nth-of-type(8) > .wrap.on > *:first-child { animation-name: eIris; }
+html.js main section:nth-of-type(8) > .wrap.on > *:not(:first-child) { animation-name: eWipe; }
+html.js main section:nth-of-type(9) > .wrap.on > *:first-child { animation-name: eGlide; }
+html.js main section:nth-of-type(9) > .wrap.on > *:not(:first-child) { animation-name: eTilt; }
+html.js main section:nth-of-type(10) > .wrap.on > *:first-child { animation-name: eLeft; }
+html.js main section:nth-of-type(10) > .wrap.on > *:not(:first-child) { animation-name: eSkew; }
+html.js main section:nth-of-type(11) > .wrap.on > *:first-child { animation-name: eZoom; }
+html.js main section:nth-of-type(11) > .wrap.on > *:not(:first-child) { animation-name: eRise; }
+html.js main section:nth-of-type(12) > .wrap.on > *:first-child { animation-name: eSpring; }
+html.js main section:nth-of-type(12) > .wrap.on > *:not(:first-child) { animation-name: eRight; }
+html.js main section:nth-of-type(13) > .wrap.on > *:first-child { animation-name: eSoft; }
+html.js main section:nth-of-type(13) > .wrap.on > *:not(:first-child) { animation-name: eIris; }
+html.js main section:nth-of-type(14) > .wrap.on > *:first-child { animation-name: eDrop; }
+html.js main section:nth-of-type(14) > .wrap.on > *:not(:first-child) { animation-name: eGlide; }</style>
 </head>
 <body>
-  <div class="card">
-    <span class="chip"><i></i>No signal</span>
+<div class="amb" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i><span class="grain"></span></div>
+<div class="shell">
+<header class="hdr"><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CA8A04"/><stop offset="55%" stop-color="#EAB308"/><stop offset="100%" stop-color="#FACC15"/></linearGradient></defs><rect x="23" y="44" width="22" height="36" rx="11" fill="url(#sb)"/><rect x="54" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><rect x="85" y="114" width="22" height="48" rx="11" fill="url(#sb)"/><rect x="116" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><circle cx="158" cy="62" r="27" fill="#FDE047"/><path d="M 143 79 L 131 100 L 163 81 Z" fill="#FDE047"/></svg><span>Vlocalhost</span><small>AI</small></a><nav class="nav"><a href="/">Why Vlocalhost</a><a href="/install/">Install</a><a href="/pricing/">Pricing</a><a href="/security/">Security</a><a href="/support/">Support</a></nav></div></header>
+<main>
 
-    <svg class="trace" viewBox="0 0 400 80" fill="none" aria-hidden="true">
-      <line x1="0" y1="40" x2="400" y2="40" stroke="#1B2231" stroke-width="1.5"/>
-      <path d="M0 40 H92 l10-22 12 44 14-34 9 20 8-12 10 4"
-            stroke="#FFB43D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M175 40 H400" stroke="#2A3244" stroke-width="2.6"
-            stroke-linecap="round" stroke-dasharray="5 9"/>
+<section style="padding:110px 0 90px"><div class="wrap" style="text-align:center">
+  <p class="eyebrow">404</p>
+  <h1 style="margin-bottom:18px">The trace goes flat here.</h1>
+  <p class="lede" style="margin:0 auto 28px">That page is not on this machine, or any
+  other. Nothing was uploaded in the making of this error.</p>
+  <div style="position:relative;max-width:420px;margin:0 auto">
+    <svg viewBox="0 0 420 60" width="100%" height="60" style="opacity:.55" aria-hidden="true">
+      <path d="M0 30 H150 l8 -18 l9 34 l8 -26 l7 12 l6 -6 H420" fill="none"
+            stroke="#FACC15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-
-    <h1>The trace goes flat here</h1>
-    <p>
-      That page doesn't exist — or it moved when the site did. Nothing was recorded,
-      and nothing left your machine.
-    </p>
-    <div class="row">
-      <a class="btn primary" href="/vlocalhost-ai/">Back to Vlocalhost.AI</a>
-      <a class="btn" href="/vlocalhost-ai/install/">Install</a>
-      <a class="btn" href="/vlocalhost-ai/pricing/">Pricing</a>
-      <a class="btn" href="/vlocalhost-ai/support/">Support</a>
-    </div>
-    <p style="margin-top:28px"><code>404 · page not found</code></p>
+    <!-- One last pulse walks the trace and dies at the flat end. The page is
+         about a signal that stopped; a still line says it, a line that stops
+         while you watch means it. -->
+    <span aria-hidden="true" style="position:absolute;top:50%;left:0;width:7px;height:7px;
+      margin-top:-3.5px;border-radius:50%;background:#FACC15;
+      box-shadow:0 0 12px rgba(250,204,21,.9);animation:flat 4.4s ease-in-out infinite"></span>
   </div>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px">
+    <a class="btn btn-sun" href="/">Back to the start</a>
+    <a class="btn" href="/install/">Install Vlocalhost</a>
+  </div>
+</div></section>
+
+</main>
+<footer class="ftr"><div class="wrap"><div><div class="fbrand"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CA8A04"/><stop offset="55%" stop-color="#EAB308"/><stop offset="100%" stop-color="#FACC15"/></linearGradient></defs><rect x="23" y="44" width="22" height="36" rx="11" fill="url(#sb)"/><rect x="54" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><rect x="85" y="114" width="22" height="48" rx="11" fill="url(#sb)"/><rect x="116" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><circle cx="158" cy="62" r="27" fill="#FDE047"/><path d="M 143 79 L 131 100 L 163 81 Z" fill="#FDE047"/></svg><span>Vlocalhost</span><small>AI</small></div><p class="fnote">On-device voice intelligence. Your conversations never leave the room.</p></div><div class="fcol"><a href="/support/">Support</a><a href="mailto:voiceit@vlocal.host">Contact</a><a href="/pricing/">Plans &amp; pricing</a><a href="https://github.com/antigravitysoham-eng/vlocalhost-core">Source</a></div><div class="fsocial"><a href="https://www.linkedin.com/company/vlocalhostai/" aria-label="LinkedIn" title="LinkedIn" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="https://x.com/VlocalhostAI" aria-label="X" title="X" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.25 6.93 6.06-6.93zm-1.29 19.49h2.04L6.49 3.24H4.3l13.31 17.4z"/></svg></a><a href="https://www.instagram.com/vlocalhostai/" aria-label="Instagram" title="Instagram" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23a3.7 3.7 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.42.17-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.17 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 0 0-2.13 1.38A5.9 5.9 0 0 0 .63 4.14c-.3.77-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91a5.9 5.9 0 0 0 1.38 2.13 5.9 5.9 0 0 0 2.13 1.38c.77.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.77.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.41a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg></a><a href="https://www.reddit.com/user/VlocalhostAI/" aria-label="Reddit" title="Reddit" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M24 11.78a2.6 2.6 0 0 0-4.4-1.86 12.77 12.77 0 0 0-6.96-2.22l1.19-5.58 3.87.82a1.86 1.86 0 1 0 .2-.92l-4.32-.92a.46.46 0 0 0-.55.36l-1.33 6.25a12.79 12.79 0 0 0-7.06 2.21 2.6 2.6 0 1 0-2.87 4.25 5.1 5.1 0 0 0-.06.8c0 4.07 4.74 7.37 10.58 7.37s10.58-3.3 10.58-7.37c0-.27-.02-.53-.06-.79A2.6 2.6 0 0 0 24 11.78zM6.2 13.64a1.86 1.86 0 1 1 3.72 0 1.86 1.86 0 0 1-3.72 0zm10.4 4.92c-1.27 1.27-3.7 1.37-4.41 1.37-.72 0-3.15-.1-4.42-1.37a.48.48 0 0 1 .68-.68c.8.8 2.52 1.09 3.74 1.09 1.21 0 2.93-.29 3.74-1.09a.48.48 0 1 1 .67.68zm-.34-3.06a1.86 1.86 0 1 1 0-3.72 1.86 1.86 0 0 1 0 3.72z"/></svg></a></div></div><div class="fmeta"><span>Voice engineering division</span><span>Build 2026.08, offline-first</span><span class="mono">mic &rarr; vad &rarr; whisper &rarr; ollama &rarr; notes</span></div></footer>
+</div>
+<script>
+(function () {
+  'use strict';
+  var wraps = [].slice.call(document.querySelectorAll('main section > .wrap'));
+  var showAll = function () {
+    wraps.forEach(function (w) { w.classList.add('on'); });
+  };
+  var showAllNow = function () {
+    wraps.forEach(function (w) { w.classList.add('now'); });
+  };
+  if (!wraps.length) return;
+  if (!('IntersectionObserver' in window) ||
+      (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    showAllNow();
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      e.target.classList.add('on');
+    });
+  }, { rootMargin: '0px 0px -60px 0px' });
+  wraps.forEach(function (w) { io.observe(w); });
+
+  // Nothing may stay invisible. An un-animated section is a far better
+  // failure than a blank one -- and this is the guarantee that makes it safe
+  // to put the hidden state in CSS at all.
+  setTimeout(showAll, 6000);
+
+  // Anything already on screen is revealed NOW -- synchronously, before the
+  // first paint -- not in a rAF callback.
+  //
+  // This script runs at the end of <body>, so "now" is still before the
+  // document's first frame. A rAF callback is not: it lands one frame later,
+  // and a cross-document view transition captures the incoming page before
+  // then. The result was a cross-fade from the old page to an empty one, with
+  // the content appearing after the transition had finished -- the single
+  // biggest reason navigating between pages felt rough.
+  var vh = window.innerHeight || 800;
+  wraps.forEach(function (w) {
+    var r = w.getBoundingClientRect();
+    if (r.top < vh && r.bottom > 0) {
+      w.classList.add('now');
+      io.unobserve(w);
+    }
+  });
+})();
+</script>
 </body>
 </html>

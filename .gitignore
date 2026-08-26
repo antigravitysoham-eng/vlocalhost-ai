@@ -1,9 +1,12 @@
-
-# Brand and social assets: deliberately local-only. This repo IS the public
-# GitHub Pages site, so anything committed here is served at
-# antigravitysoham-eng.github.io/vlocalhost-ai/ — including files never linked
-# from a page.
-brand/
+# Brand and social assets are deliberately local-only: anything committed here
+# is served, including files never linked from a page. The one exception is
+# the logo directory -- the redesign's favicon is served from
+# /brand/logo/vlocalhost-appicon.svg, so those SVGs have to ship. The film,
+# the social cards and their generators stay out.
+brand/*
+!brand/logo/
+brand/logo/*
+!brand/logo/*.svg
 
 # Same reasoning: the generators in tools/ leave bytecode behind, and anything
 # committed here is served.
