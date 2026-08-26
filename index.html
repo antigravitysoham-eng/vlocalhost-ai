@@ -188,6 +188,45 @@ html { scroll-behavior: smooth; }
   .nav-dd.open .nav-dd-menu { transform: translateY(0); }
 }
 
+/* The header is one flex row of a brand and five controls, and on a phone it
+   does not fit. It did not shrink -- it overflowed, and because it is inside
+   the document it took the document with it: every page on the site scrolled
+   sideways on a 375px screen, the landing page to 651px wide.
+
+   The nav wraps onto its own line instead. Not a scroller: a horizontally
+   scrolling nav would need overflow, and overflow would clip the dropdown --
+   and the header's backdrop-filter makes it a containing block, so the menu
+   cannot escape with position:fixed either. Wrapping costs a taller header on
+   small screens and nothing else, which is why :target grows to match. */
+@media (max-width: 640px) {
+  .hdr .wrap { flex-wrap: wrap; height: auto; gap: 10px;
+               padding-top: 11px; padding-bottom: 11px; }
+  .nav { margin-left: 0; width: 100%; flex-wrap: wrap; gap: 2px; }
+  :target { scroll-margin-top: 128px; }
+
+  /* The landing page is a desktop capture and overflowed a phone two ways.
+     A grid child's automatic minimum is its min-content width, which on a
+     375px screen is wider than its column -- `minmax(0, 1fr)` is the fix the
+     capture used in most places and missed in a few, and min-width:0 is the
+     same fix applied from outside. The rest is absolutely positioned
+     decoration that was never measured against a phone; it is clipped rather
+     than reflowed, because it carries no text to lose.
+
+     `clip`, not `hidden`: hidden would make the body a scroll container and
+     the sticky header would stop sticking. */
+  [style*="grid-template-columns"] > * { min-width: 0; }
+  body { overflow-x: clip; }
+
+  /* Two grids on the landing page hold real text in a fixed second column --
+     the model comparison bars (260px 0px, which starves the bars to nothing)
+     and the blocked-egress rows. Clipping decoration is fine; clipping words
+     is not, so these collapse to one column instead. Between them they
+     accounted for eleven of the twelve pieces of text that fell off a 375px
+     screen. */
+  #model [style*="grid-template-columns"],
+  #caps [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+}
+
 /*/site-chrome:css*/
 /*conversion-flow:css*/
 
