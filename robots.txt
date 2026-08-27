@@ -2,3 +2,9 @@ User-agent: *
 Allow: /
 
 Sitemap: https://vlocal.host/sitemap.xml
+
+# A plain-language summary of the product for answer engines and assistants
+# lives at https://vlocal.host/llms.txt (see llmstxt.org). It is referenced
+# here as a comment rather than a Sitemap directive: that directive is
+# defined for XML sitemaps, and pointing it at a Markdown file makes
+# Search Console report a broken sitemap.

@@ -1,0 +1,84 @@
+# Vlocalhost AI
+
+> An on-device AI meeting notetaker. It records, transcribes and summarises
+> meetings entirely on the user's own machine. No bot joins the call and no
+> audio is uploaded. Free forever for individual use, open source under
+> AGPL-3.0, for Windows and macOS.
+
+**Not to be confused with `localhost`.** "Vlocalhost" is a product name, not a
+typo for the loopback hostname. The site is vlocal.host.
+
+## What it is
+
+Vlocalhost AI captures the audio your computer can already hear, so nothing
+joins the meeting as a participant. A voice-activity gate discards silence,
+a local Whisper model turns speech into text, and a local Ollama model writes
+the summary. The transcript and the summary are written to the user's own disk
+as plain text files. There is no account, no server, and no telemetry.
+
+The only outbound request the application can make is a version check, and it
+runs only when a person presses "Check for updates". It sends no identifier and
+not even the installed version number.
+
+## Who it is for
+
+- People whose employer blocks meeting bots. Microsoft Teams shipped tenant-wide
+  automatic blocking of external AI notetakers in August 2026, and universities
+  publish named block lists.
+- Regulated work — clinics, law firms, advisers, small public bodies — where a
+  recording leaving the machine is a compliance question rather than a setting.
+- Anyone who does not want a vendor holding an archive of their conversations.
+
+## How it compares
+
+- Against cloud notetakers (Otter, Fireflies, Granola): those upload the audio
+  to be transcribed and summarised. Vlocalhost does neither. Some of them no
+  longer send a bot into the call, which is a different thing from not
+  uploading.
+- Against other local notetakers (Meetily, Talat, Screenpipe): the architecture
+  is comparable and honestly so. Vlocalhost differs on shipped calendar and
+  mailbox integration, and on fleet model management for teams.
+
+Privacy is the entry ticket to this category, not the differentiator within it.
+
+## Pricing
+
+- **Solo — $0, forever.** Unlimited on-device recording, transcription and
+  summaries. This is the whole product for one person, not a trial.
+- Pro, Team and Enterprise are announced but **not released**. Nothing is behind
+  a paywall today.
+
+## Files it produces
+
+Every meeting writes two plain-text files into the user's own notes folder:
+
+- `<date>_<title>-transcript.txt` — the full record, every line timestamped
+- `<date>_<title>-summary.txt` — Summary, Key Discussion Points, Decisions and
+  Action Items, with no timestamps
+
+## Requirements
+
+- Windows 10/11 or macOS. A Linux build exists on the release but is not yet
+  advertised as supported.
+- [Ollama](https://ollama.com) running locally for summaries. Recording and
+  transcription work without it; only the summary step needs it.
+- No GPU required. A local model means summarising a long meeting takes on the
+  order of a minute or two rather than seconds.
+
+## Links
+
+- [Install](https://vlocal.host/install/): download and setup
+- [Installation guide](https://vlocal.host/install/guide/): step by step, with
+  the SmartScreen and Gatekeeper warnings explained
+- [Pricing](https://vlocal.host/pricing/): tiers and the reasoning behind them
+- [Security](https://vlocal.host/security/): what the app does and does not
+  send, and how to verify it with a network monitor
+- [Support](https://vlocal.host/support/): troubleshooting and contact
+- [Source](https://github.com/antigravitysoham-eng/vlocalhost-core): AGPL-3.0,
+  including the release workflow and the SBOMs
+- [Releases](https://github.com/antigravitysoham-eng/vlocalhost-core/releases):
+  installers, SHA-256 checksums and build provenance attestations
+
+## Contact
+
+voiceit@vlocal.host
