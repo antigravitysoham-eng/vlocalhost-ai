@@ -1,0 +1,1587 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo &mdash; Vlocalhost AI</title>
+<meta name="description" content="Watch a meeting get recorded, transcribed and summarised entirely on your own machine, with an external network monitor stuck at zero the whole time.">
+<link rel="canonical" href="https://vlocal.host/demo/">
+<meta name="theme-color" content="#0E1116">
+<link rel="icon" type="image/svg+xml" href="/brand/logo/vlocalhost-appicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vlocal.host/demo/">
+<meta property="og:title" content="Demo &mdash; Vlocalhost AI">
+<meta property="og:description" content="Watch a meeting get recorded, transcribed and summarised entirely on your own machine, with an external network monitor stuck at zero the whole time.">
+<meta property="og:image" content="https://vlocal.host/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Demo &mdash; Vlocalhost AI">
+<meta name="twitter:description" content="Watch a meeting get recorded, transcribed and summarised entirely on your own machine, with an external network monitor stuck at zero the whole time.">
+<meta name="twitter:image" content="https://vlocal.host/assets/og-image.png">
+<script>document.documentElement.className+=' js'</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  --ink: #0E1116; --surface: #0F131A; --surface-2: #10141B;
+  --line: rgba(255,255,255,.07); --line-strong: rgba(255,255,255,.12);
+  --sun: #FACC15; --sun-300: #FDE047; --sun-700: #A16207;
+  --sun-wash: rgba(250,204,21,.10); --sun-edge: rgba(250,204,21,.40);
+  --text: #EDEBE7; --dim: #B7B8BE; --muted: #8C8D95; --faint: #74767E;
+  --f-display: 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+  --f-body: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --f-mono: ui-monospace, 'Cascadia Code', 'SF Mono', 'JetBrains Mono', Consolas, monospace;
+}
+html, body { margin: 0; padding: 0; background: var(--ink); }
+body { font-family: var(--f-body); color: var(--text); -webkit-font-smoothing: antialiased;
+       line-height: 1.55; }
+a { color: var(--sun); text-decoration: none; }
+a:hover { color: var(--sun-300); }
+::selection { background: rgba(250,204,21,.28); }
+:focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 26px; }
+.shell { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* header */
+.hdr { position: sticky; top: 0; z-index: 20; background: rgba(14,17,22,.86);
+       backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.hdr .wrap { display: flex; align-items: center; gap: 26px; height: 64px; }
+/* The lockup: the name in the display face, then AI set small, spaced and
+   raised like a trademark. Not "Vlocalhost AI" -- the dotted form reads as a
+   domain and collides with the real one, vlocal.host. The AI qualifies the
+   name; it is not part of it. */
+.brand { display: flex; align-items: center; gap: 11px;
+         font-family: var(--f-display); font-weight: 800; font-size: 18px;
+         color: var(--text); letter-spacing: -.02em; }
+.brand svg { width: 26px; height: 26px; display: block; }
+.brand small { font-family: var(--f-mono); font-weight: 400; font-size: 9.5px;
+               letter-spacing: .2em; color: var(--muted);
+               align-self: flex-start; margin-top: 4px; margin-left: -5px; }
+.brand:hover small { color: var(--sun); }
+.nav { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+.nav a { padding: 7px 12px; border-radius: 8px; font-size: 13.5px; color: var(--dim); }
+.nav a:hover { background: rgba(255,255,255,.05); color: var(--text); }
+.nav a[aria-current="page"] { color: var(--sun); background: var(--sun-wash); }
+
+/* type */
+h1 { font-family: var(--f-display); font-size: clamp(32px, 4.4vw, 50px); line-height: 1.08;
+     letter-spacing: -.032em; margin: 0 0 16px; font-weight: 600; }
+h1 .sub { display: block; color: var(--faint); }
+h2 { font-family: var(--f-display); font-size: clamp(24px, 3vw, 34px); line-height: 1.12;
+     letter-spacing: -.028em; margin: 0 0 12px; font-weight: 600; }
+h3 { font-size: 16px; margin: 0 0 6px; font-weight: 600; letter-spacing: -.008em; }
+.lede { color: var(--dim); font-size: 16.5px; max-width: 62ch; margin: 0 0 8px; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; color: var(--muted); }
+.eyebrow { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .14em;
+           text-transform: uppercase; color: var(--sun); margin: 0 0 14px; }
+section { padding: 60px 0; border-top: 1px solid var(--line); }
+section:first-of-type { border-top: 0; padding-top: 54px; }
+
+/* cards */
+/* Matched to the landing page's cards: 20px radius, the darker ground, and a
+   border that lifts on hover. A 12px radius beside a 26px hero read as two
+   different design systems on one page. */
+.card { background: #10141B; border: 1px solid var(--line); border-radius: 20px;
+        padding: 24px; transition: border-color .25s ease, background .25s ease,
+        transform .25s cubic-bezier(.16,1,.3,1); }
+.card:hover { border-color: rgba(255,255,255,.13); transform: translateY(-2px); }
+.grid { display: grid; gap: 16px; }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.g4 { grid-template-columns: repeat(auto-fit, minmax(238px, 1fr)); }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+       padding: 11px 18px; border-radius: 10px; font-size: 14px; font-weight: 600;
+       border: 1px solid var(--line-strong); background: var(--surface-2);
+       color: var(--text); cursor: pointer; font-family: inherit; }
+.btn:hover { border-color: rgba(255,255,255,.2); color: var(--text); }
+.btn-sun { background: var(--sun); border-color: var(--sun); color: #17140A; }
+.btn-sun:hover { background: var(--sun-300); border-color: var(--sun-300); color: #17140A; }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.btn-off { opacity: .5; cursor: not-allowed; pointer-events: none; }
+
+.pill { display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px;
+        border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2);
+        font-size: 12px; color: var(--muted); }
+.pill-sun { border-color: var(--sun-edge); background: var(--sun-wash); color: var(--sun); }
+.dot { width: 6px; height: 6px; border-radius: 999px; background: var(--sun); }
+
+code, kbd, .mono { font-family: var(--f-mono); font-size: 12.5px; }
+code { background: rgba(255,255,255,.05); border: 1px solid var(--line);
+       border-radius: 5px; padding: 1.5px 6px; color: var(--sun-300); }
+pre { background: #0B0E13; border: 1px solid var(--line); border-radius: 10px;
+      padding: 14px 16px; overflow-x: auto; margin: 12px 0 0; }
+pre code { background: none; border: 0; padding: 0; color: var(--dim); }
+
+ul.ticks { list-style: none; margin: 14px 0 0; padding: 0; }
+ul.ticks li { position: relative; padding-left: 24px; margin: 9px 0; font-size: 14px;
+              color: var(--dim); }
+ul.ticks li::before { content: ""; position: absolute; left: 2px; top: 7px; width: 9px;
+              height: 5px; border-left: 2px solid var(--sun); border-bottom: 2px solid var(--sun);
+              transform: rotate(-45deg); }
+
+details { border: 1px solid var(--line); border-radius: 10px; background: var(--surface);
+          padding: 0 16px; margin: 10px 0; }
+details[open] { border-color: var(--line-strong); }
+summary { cursor: pointer; padding: 15px 0; font-weight: 600; font-size: 14.5px;
+          list-style: none; display: flex; align-items: center; gap: 10px; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "+"; color: var(--sun); font-family: var(--f-mono);
+                  font-size: 15px; line-height: 1; }
+details[open] summary::before { content: "\2212"; }
+details .body { padding: 0 0 16px 24px; color: var(--dim); font-size: 14px; }
+
+/* footer */
+.ftr { border-top: 1px solid var(--line); margin-top: 110px; }
+.ftr .wrap { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px;
+             padding-top: 34px; padding-bottom: 34px; }
+.ftr .fbrand { display: flex; align-items: center; gap: 10px;
+               font-family: var(--f-display); font-weight: 800; font-size: 16px;
+               color: var(--text); letter-spacing: -.02em; }
+.ftr .fbrand svg { width: 24px; height: 24px; display: block; }
+.ftr .fbrand small { font-family: var(--f-mono); font-weight: 400; font-size: 9px;
+                     letter-spacing: .2em; color: var(--muted);
+                     align-self: flex-start; margin-top: 3px; margin-left: -4px; }
+.ftr .fsocial { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.ftr .fsocial a { width: 36px; height: 36px; border-radius: 10px; display: grid;
+                  place-items: center; border: 1px solid var(--line);
+                  color: var(--muted); transition: color .18s ease,
+                  border-color .18s ease, background .18s ease; }
+.ftr .fsocial a svg { width: 17px; height: 17px; display: block; }
+.ftr .fsocial a:hover { color: var(--sun); border-color: var(--sun-edge);
+                        background: var(--sun-wash); }
+.ftr .fnote { margin: 12px 0 0; font-size: 13px; line-height: 1.65;
+              color: #6C6D75; max-width: 280px; }
+.ftr .fcol { display: flex; flex-direction: column; gap: 9px; font-size: 13px; }
+.ftr .fcol a { color: var(--muted); }
+.ftr .fcol a:hover { color: var(--sun); }
+.ftr .fmeta { max-width: 1180px; margin: 0 auto; padding: 0 26px 40px;
+              font-size: 12px; color: #5A5C64; display: flex; gap: 22px;
+              flex-wrap: wrap; }
+.ftr .fmeta .mono { font-family: var(--f-mono); font-size: 11px; }
+@media (max-width: 720px) {
+  .ftr .wrap { grid-template-columns: 1fr; gap: 24px; }
+}
+
+@media (max-width: 640px) {
+  .hdr .wrap { gap: 12px; }
+  .nav a { padding: 7px 9px; font-size: 13px; }
+  section { padding: 44px 0; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+
+/* --- conversion flow: lead form and tip modal --- */
+.cf-ov { position: fixed; inset: 0; z-index: 90; display: flex;
+         align-items: flex-start; justify-content: center; padding: 26px 20px;
+         overflow-y: auto; background: rgba(6,8,11,.74);
+         -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+         opacity: 0; transition: opacity .2s ease; }
+.cf-ov.on { opacity: 1; }
+.cf-ov[hidden] { display: none; }
+.cf-card { position: relative; width: 100%; max-width: 452px; margin: auto;
+           box-sizing: border-box; background: #10141B;
+           border: 1px solid rgba(255,255,255,.12); border-radius: 20px;
+           padding: 30px 30px 26px; text-align: left;
+           font-family: var(--f-body); color: var(--text); line-height: 1.55;
+           box-shadow: 0 30px 80px rgba(0,0,0,.55);
+           transform: translateY(12px) scale(.985);
+           transition: transform .22s cubic-bezier(.2,.8,.2,1); }
+.cf-ov.on .cf-card { transform: none; }
+.cf-card h2 { font-family: var(--f-display); font-weight: 800;
+              font-size: 24px; line-height: 1.2; letter-spacing: -.02em;
+              margin: 6px 0 10px; color: var(--text); }
+.cf-eyebrow { font-family: var(--f-mono); font-size: 10.5px;
+              letter-spacing: .18em; text-transform: uppercase;
+              color: var(--sun); margin: 0; }
+.cf-sub { font-size: 13.5px; color: var(--dim); margin: 0 0 18px; }
+.cf-fine { font-size: 11.5px; color: var(--muted); margin: 14px 0 0; }
+.cf-x { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px;
+        display: flex; align-items: center; justify-content: center;
+        background: transparent; border: 0; border-radius: 9px;
+        color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; }
+.cf-x:hover { background: rgba(255,255,255,.06); color: var(--text); }
+
+/* the privacy line sits above the fields, not buried under the button:
+   the objection to a form on this site is "why do you want this", and the
+   answer has to arrive before the first keystroke, not after the last. */
+.cf-guard { display: flex; gap: 9px; align-items: flex-start;
+            border: 1px solid rgba(250,204,21,.28);
+            background: rgba(250,204,21,.07); border-radius: 12px;
+            padding: 10px 12px; margin: 0 0 18px; font-size: 12px;
+            color: var(--dim); }
+.cf-guard svg { width: 15px; height: 15px; flex: 0 0 auto; margin-top: 1px;
+                fill: var(--sun); }
+
+.cf-card label { display: block; margin: 0 0 12px; font-size: 12.5px;
+                 color: var(--dim); }
+.cf-card input[type="text"], .cf-card input[type="email"],
+.cf-card input[type="tel"] {
+    display: block; width: 100%; box-sizing: border-box; margin-top: 6px;
+    padding: 10px 12px; background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.12); border-radius: 10px;
+    color: var(--text); font-family: inherit; font-size: 14px;
+    transition: border-color .16s, background .16s; }
+.cf-card input[type="text"]:focus, .cf-card input[type="email"]:focus,
+.cf-card input[type="tel"]:focus {
+    outline: none; border-color: var(--sun-edge);
+    background: rgba(250,204,21,.05); }
+.cf-card input.bad { border-color: #F87171; }
+.cf-check { display: flex; gap: 10px; align-items: flex-start;
+            margin: 16px 0 2px; font-size: 12.5px; color: var(--muted);
+            line-height: 1.5; }
+.cf-check input { flex: 0 0 auto; margin: 3px 0 0; accent-color: var(--sun);
+                  width: 15px; height: 15px; }
+.cf-check.bad span { color: #F87171; }
+.cf-err { margin: 12px 0 0; font-size: 12.5px; color: #F87171; }
+
+.cf-go { display: flex; align-items: center; justify-content: center; gap: 8px;
+         width: 100%; margin-top: 18px; padding: 12px 18px;
+         background: var(--sun); border: 1px solid var(--sun);
+         border-radius: 12px; color: #17140A; font-family: inherit;
+         font-size: 14.5px; font-weight: 700; cursor: pointer;
+         transition: background .16s, border-color .16s; }
+.cf-go:hover { background: var(--sun-300); border-color: var(--sun-300); }
+.cf-go[disabled] { opacity: .55; cursor: not-allowed; }
+.cf-later { display: block; width: 100%; margin-top: 12px; padding: 10px 16px;
+            background: transparent; border: 1px solid rgba(255,255,255,.12);
+            border-radius: 12px; color: var(--dim); font-family: inherit;
+            font-size: 13.5px; cursor: pointer; }
+.cf-later:hover { border-color: rgba(255,255,255,.22); color: var(--text); }
+
+/* --- tip modal --- */
+.cf-picks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            margin: 4px 0 18px; }
+.cf-pick { display: flex; align-items: center; gap: 8px; padding: 11px 13px;
+           border: 1px solid rgba(255,255,255,.12); border-radius: 12px;
+           background: rgba(255,255,255,.03); color: var(--text);
+           font-size: 13.5px; text-decoration: none; }
+.cf-pick:hover { border-color: var(--sun-edge); background: rgba(250,204,21,.07);
+                 color: var(--text); }
+.cf-pick .emo { font-size: 16px; line-height: 1; }
+.cf-pick .amt { margin-left: auto; font-family: var(--f-mono); font-size: 11px;
+                color: var(--sun); letter-spacing: .04em; }
+.cf-qr { display: block; margin: 0 auto; width: 158px; height: 158px;
+         border-radius: 12px; background: #fff; padding: 8px;
+         box-sizing: content-box; }
+.cf-scan { text-align: center; font-size: 11.5px; color: var(--muted);
+           margin: 10px 0 14px; }
+.cf-id { display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+         border: 1px solid rgba(255,255,255,.12); border-radius: 11px;
+         background: rgba(255,255,255,.03); }
+.cf-id code { font-family: var(--f-mono); font-size: 13px; color: var(--text); }
+.cf-copy { margin-left: auto; padding: 5px 12px; background: transparent;
+           border: 1px solid rgba(255,255,255,.14); border-radius: 8px;
+           color: var(--dim); font-family: inherit; font-size: 12px;
+           cursor: pointer; }
+.cf-copy:hover { border-color: var(--sun-edge); color: var(--sun); }
+
+@media (max-width: 480px) {
+  .cf-card { padding: 26px 20px 22px; }
+  .cf-card h2 { font-size: 21px; }
+  .cf-picks { grid-template-columns: 1fr; }
+}
+
+
+.nav-dd { position: relative; }
+.nav-dd-btn { display: inline-flex; align-items: center; gap: 6px;
+              padding: 7px 12px; border: 0; border-radius: 8px;
+              background: transparent; color: var(--dim);
+              font-family: inherit; font-size: 13.5px; line-height: inherit;
+              cursor: pointer; }
+.nav-dd-btn:hover { background: rgba(255,255,255,.05); color: var(--text); }
+.nav-dd-btn .cx { width: 10px; height: 10px; opacity: .7;
+                  transition: transform .18s ease; }
+.nav-dd-btn[aria-current="page"] { color: var(--sun); background: var(--sun-wash); }
+
+.nav-dd-menu { position: absolute; top: calc(100% + 9px); left: 50%;
+               transform: translateX(-50%) translateY(-6px);
+               min-width: 232px; padding: 7px;
+               background: #10141B; border: 1px solid rgba(255,255,255,.12);
+               border-radius: 14px; box-shadow: 0 22px 54px rgba(0,0,0,.5);
+               display: flex; flex-direction: column; gap: 1px;
+               opacity: 0; visibility: hidden; pointer-events: none;
+               transition: opacity .16s ease, transform .16s ease,
+                           visibility 0s linear .16s; }
+.nav-dd:hover .nav-dd-menu,
+.nav-dd:focus-within .nav-dd-menu,
+.nav-dd.open .nav-dd-menu { opacity: 1; visibility: visible;
+                            pointer-events: auto;
+                            transform: translateX(-50%) translateY(0);
+                            transition-delay: 0s; }
+.nav-dd:hover .nav-dd-btn .cx,
+.nav-dd.open .nav-dd-btn .cx { transform: rotate(180deg); }
+
+/* A hover menu with a 9px gap between button and panel closes the moment the
+   pointer crosses the gap. This bridges it without moving the panel. */
+.nav-dd-menu::before { content: ""; position: absolute; left: 0; right: 0;
+                       top: -10px; height: 10px; }
+
+.nav-dd-menu a { padding: 8px 12px; border-radius: 9px; font-size: 13.5px;
+                 color: var(--dim); white-space: nowrap; }
+.nav-dd-menu a:hover { background: rgba(255,255,255,.06); color: var(--text); }
+.dd-soon { padding: 9px 12px 5px; margin-top: 4px;
+           border-top: 1px solid rgba(255,255,255,.07);
+           font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .04em;
+           color: var(--faint); white-space: nowrap; }
+
+/* The header is sticky and 64px tall, so an anchor landing at the very top of
+   the viewport lands underneath it. Scoped to :target so it costs nothing
+   anywhere else on the page. */
+html { scroll-behavior: smooth; }
+:target { scroll-margin-top: 86px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+@media (max-width: 720px) {
+  .nav-dd-btn { padding: 7px 9px; font-size: 13px; }
+  .nav-dd-menu { left: auto; right: 0; transform: translateY(-6px);
+                 min-width: 208px; }
+  .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu,
+  .nav-dd.open .nav-dd-menu { transform: translateY(0); }
+}
+
+/* The header is one flex row of a brand and five controls, and on a phone it
+   does not fit. It did not shrink -- it overflowed, and because it is inside
+   the document it took the document with it: every page on the site scrolled
+   sideways on a 375px screen, the landing page to 651px wide.
+
+   The nav wraps onto its own line instead. Not a scroller: a horizontally
+   scrolling nav would need overflow, and overflow would clip the dropdown --
+   and the header's backdrop-filter makes it a containing block, so the menu
+   cannot escape with position:fixed either. Wrapping costs a taller header on
+   small screens and nothing else, which is why :target grows to match. */
+@media (max-width: 640px) {
+  .hdr .wrap { flex-wrap: wrap; height: auto; gap: 10px;
+               padding-top: 11px; padding-bottom: 11px; }
+  .nav { margin-left: 0; width: 100%; flex-wrap: wrap; gap: 2px; }
+
+  /* A finger is not a cursor. The nav links came out 34-37px tall, under both
+     Apple's 44pt and Android's 48dp minimum, which is the difference between
+     tapping a link and tapping near one. */
+  .nav a, .nav-dd-btn { padding-top: 12px; padding-bottom: 12px; }
+  .nav-dd-menu a { padding-top: 12px; padding-bottom: 12px; }
+
+  :target { scroll-margin-top: 150px; }
+
+  /* The landing page is a desktop capture and overflowed a phone two ways.
+     A grid child's automatic minimum is its min-content width, which on a
+     375px screen is wider than its column -- `minmax(0, 1fr)` is the fix the
+     capture used in most places and missed in a few, and min-width:0 is the
+     same fix applied from outside. The rest is absolutely positioned
+     decoration that was never measured against a phone; it is clipped rather
+     than reflowed, because it carries no text to lose.
+
+     `clip`, not `hidden`: hidden would make the body a scroll container and
+     the sticky header would stop sticking. */
+  [style*="grid-template-columns"] > * { min-width: 0; }
+  body { overflow-x: clip; }
+
+  /* Two grids on the landing page hold real text in a fixed second column --
+     the model comparison bars (260px 0px, which starves the bars to nothing)
+     and the blocked-egress rows. Clipping decoration is fine; clipping words
+     is not, so these collapse to one column instead. Between them they
+     accounted for eleven of the twelve pieces of text that fell off a 375px
+     screen. */
+  /* The capture's content grids, collapsed to one column, selected by the
+     declaration they carry rather than by the section they sit in. Section
+     scoping caught the wrong things: #switch IS a grid rather than containing
+     one, and the rule that finally reached it also flattened the row of
+     participant avatars nested inside it.
+
+     These are the two- and three-column text layouts. Deliberately absent:
+     repeat(4, 1fr) (avatars), repeat(8, 9px) (decoration), and auto-fit,
+     which already does the right thing. repeat(6, 1fr) looked decorative and
+     is not -- it is the six architecture layers, and at 50px a column it set
+     one word per line. */
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="grid-template-columns: 1.05fr 1fr"],
+  [style*="grid-template-columns: 1.35fr 1fr"],
+  [style*="grid-template-columns: 1fr 1.1fr"],
+  [style*="grid-template-columns: 260px"],
+  [style*="grid-template-columns: repeat(3, 1fr)"],
+  [style*="grid-template-columns: repeat(6, 1fr)"],
+  [style*="grid-template-columns: repeat(3, minmax"],
+  [style*="grid-template-columns: repeat(5, minmax"],
+  [style*="grid-template-columns: clamp("] { grid-template-columns: 1fr !important; }
+
+  /* repeat(4, 1fr) is two different things: a row of participant avatars in
+     #switch, which must stay a row, and a four-up stat strip in #caps, whose
+     columns came out 46px wide with sentences in them. Two-up rather than
+     one, because these are short stats and a single column would run the
+     section on for pages. */
+  #caps [style*="grid-template-columns: repeat(4, 1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* The capture's flex rows are desktop rows. A `space-between` pair puts its
+     second child hard against the right edge, and on a phone that child --
+     the app mock's Recording / Pause / Notes toolbar -- is wider than the room
+     left for it, so it ran off the screen and lost its last label. Letting
+     those rows wrap drops the second child onto its own line, which is what a
+     narrow screen wants anyway. */
+  [style*="space-between"] { flex-wrap: wrap; }
+
+  /* The hero is a three-column composition -- side panel, headline, download
+     card. On a phone those columns resolved to 66px, 124px and 54px, so the
+     panels crushed into slivers and the headline ran straight through them.
+     Nothing was technically off-screen, which is why an overflow check passed
+     it; it was simply unreadable. One column stacks them, which is what a
+     phone wanted from the start.
+
+     :has() is doing the selecting because the capture has no class to aim at.
+     Where it is unsupported the page falls back to exactly what it does
+     today -- no worse, just not better. */
+  [style*="grid-template-columns"]:has(h1) { grid-template-columns: 1fr !important; }
+}
+
+@keyframes wv     { 0%,100% { transform: scaleY(.62); } 50% { transform: scaleY(1); } }
+@keyframes halo   { 0%,100% { opacity:.75; transform: translate(-50%,-50%) scale(1); }
+                    50%     { opacity:1;   transform: translate(-50%,-50%) scale(1.05); } }
+@keyframes ring   { 0%   { transform: scale(1);   opacity:.55; }
+                    100% { transform: scale(1.9); opacity:0; } }
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes aur1   { 0%,100% { transform: translate(-12%,0) rotate(-8deg) scale(1); }
+                    50%     { transform: translate(10%,6%) rotate(4deg) scale(1.15); } }
+@keyframes aur2   { 0%,100% { transform: translate(8%,4%) rotate(6deg) scale(1.1); }
+                    50%     { transform: translate(-10%,-4%) rotate(-5deg) scale(.95); } }
+@keyframes vlPulse{ 0%,100% { transform: scaleY(.5); } 50% { transform: scaleY(1.15); } }
+@keyframes vlBub  { 0%,100% { transform: scale(.88); } 50% { transform: scale(1.08); } }
+@keyframes drift  { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes flat   { 0%   { left:0;    opacity:0; }
+                    8%   { opacity:1; }
+                    62%  { left:calc(100% - 7px); opacity:1; }
+                    78%  { left:calc(100% - 7px); opacity:.15; }
+                    100% { left:calc(100% - 7px); opacity:0; } }
+
+/* the ambient layer, fixed behind everything */
+.amb { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+/* No will-change here on purpose: these are viewport-sized and blurred, and
+   the hint would promote three very large surfaces to their own layers for the
+   life of the page. It belongs on the small strips, not on the backdrop. */
+.amb i { position: absolute; display: block; border-radius: 50%; }
+.amb .a1 { left:-10%; top:10%;  width:70%; height:55%; filter: blur(70px);
+  background: radial-gradient(rgba(250,204,21,.05) 0%, rgba(202,138,4,.024) 45%, transparent 70%);
+  animation: aur1 26s ease-in-out infinite; }
+.amb .a2 { right:-14%; top:44%; width:64%; height:52%; filter: blur(80px);
+  background: radial-gradient(rgba(253,224,71,.04) 0%, rgba(133,77,14,.03) 48%, transparent 72%);
+  animation: aur2 34s ease-in-out infinite; }
+.amb .a3 { left:22%; bottom:-18%; width:56%; height:48%; filter: blur(90px);
+  background: radial-gradient(rgba(250,204,21,.035) 0%, transparent 68%);
+  animation: aur1 42s ease-in-out 6s infinite; }
+.amb .grain { position:absolute; inset:0; border-radius:0; opacity:.5;
+  background-image: radial-gradient(rgba(255,255,255,.043) 1px, transparent 1px);
+  background-size: 7px 7px; }
+.shell { position: relative; z-index: 1; }
+
+/* --- per-page art -------------------------------------------------------
+   One mechanic per page. They are deliberately different in kind, not just in
+   parameters: a fill is not a roll is not a particle is not a typewriter. Two
+   pages running the same motion at different speeds still read as the same
+   page twice. */
+
+/* install: the same artefact landing on three machines, then verified */
+@keyframes insFill { 0%, 6% { transform: scaleX(0); } 46%, 100% { transform: scaleX(1); } }
+@keyframes insOk   { 0%, 48% { opacity: 0; transform: scale(.72); }
+                     60%     { opacity: 1; transform: scale(1.14); }
+                     68%,100%{ opacity: 1; transform: scale(1); } }
+
+/* pricing: minutes roll, money does not */
+/* 11 cells: 0-9 then 0 again. Ten steps of exactly 1em land on the repeat,
+   so the loop has no jump. Percentages would be relative to the strip's
+   own height and drift by a fraction of a digit every cycle. */
+@keyframes roll  { to { transform: translateY(-10em); } }
+@keyframes zeroP { 0%,100% { opacity: .62; } 50% { opacity: 1; } }
+
+/* security: outbound packets meeting a wall; one turns down to disk */
+@keyframes pkt   { 0%   { left: 4%;  opacity: 0; }
+                   9%   { opacity: 1; }
+                   50%  { left: 54%; opacity: 1; }
+                   58%  { left: 57%; opacity: 0; }
+                   100% { left: 57%; opacity: 0; } }
+@keyframes spark { 0%, 46% { opacity: 0; transform: scaleY(.4); }
+                   54%     { opacity: .95; transform: scaleY(1); }
+                   72%,100%{ opacity: 0; transform: scaleY(.4); } }
+@keyframes toDisk{ 0%, 46% { top: 32%; opacity: 0; }
+                   54%     { opacity: 1; }
+                   84%,100%{ top: 66%; opacity: 1; } }
+
+/* support: the report writes itself, in front of you */
+@keyframes t1 { 0% { width:0; } 13% { width:100%; } 93% { width:100%; } 100% { width:0; } }
+@keyframes t2 { 0%,13% { width:0; } 30% { width:100%; } 93% { width:100%; } 100% { width:0; } }
+@keyframes t3 { 0%,30% { width:0; } 47% { width:100%; } 93% { width:100%; } 100% { width:0; } }
+@keyframes t4 { 0%,47% { width:0; } 64% { width:100%; } 93% { width:100%; } 100% { width:0; } }
+@keyframes caret { 0%,49% { opacity:1; } 50%,100% { opacity:0; } }
+
+/* guide: a rail filling from step to step */
+@keyframes rail  { 0% { transform:scaleY(0); } 82%,100% { transform:scaleY(1); } }
+@keyframes n1 { 0%,4% { opacity:.3; } 10%,100% { opacity:1; } }
+@keyframes n2 { 0%,26% { opacity:.3; } 32%,100% { opacity:1; } }
+@keyframes n3 { 0%,50% { opacity:.3; } 56%,100% { opacity:1; } }
+@keyframes n4 { 0%,74% { opacity:.3; } 80%,100% { opacity:1; } }
+
+.art .track { position:relative; height:5px; border-radius:3px; flex:1 1 0;
+              background: rgba(255,255,255,.08); overflow:hidden; }
+.art .track i { position:absolute; inset:0; display:block; border-radius:3px;
+                transform-origin:left center; will-change:transform;
+                background: linear-gradient(90deg, var(--sun-700), var(--sun)); }
+.art .ok { font-family: var(--f-mono); font-size:10px; color: var(--sun);
+           border:1px solid var(--sun-edge); background: var(--sun-wash);
+           border-radius:999px; padding:2px 7px; white-space:nowrap; }
+.art .odo { display:flex; align-items:center; gap:3px; font-family: var(--f-mono);
+            font-size:34px; letter-spacing:-.02em; color: var(--sun); line-height:1; }
+/* Three parts, three selectors. An earlier version styled `.reel span`, which
+   matched the strip as well as the cells inside it -- so the strip was clipped
+   to one digit tall and the roll came apart on screen. */
+.art .reel { display:inline-block; height:1em; overflow:hidden; vertical-align:top; }
+.art .reel > i { display:block; font-style:normal; }
+.art .reel > i > span { display:block; height:1em; line-height:1em; }
+.art .field { position:relative; height:96px; border-radius:12px; overflow:hidden;
+              border:1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+.art .field .wall { position:absolute; left:57%; top:8%; bottom:8%; width:2px;
+                    background: repeating-linear-gradient(180deg,
+                    rgba(224,112,90,.95) 0 6px, transparent 6px 11px); }
+.art .field .pkt { position:absolute; top:34%; width:7px; height:7px; border-radius:2px;
+                   background: var(--sun); }
+.art .field .spark { position:absolute; left:57%; top:26%; width:2px; height:34px;
+                     background: rgba(224,112,90,.95); transform-origin:center; }
+/* The one that turns down does so *before* the wall, and lands on the tray
+   drawn directly beneath it. Dropping it at the wall read as debris falling
+   off the barrier rather than as data being written somewhere on purpose. */
+.art .field .disk { position:absolute; left:44%; width:7px; height:7px; border-radius:50%;
+                    background: var(--sun); box-shadow:0 0 10px rgba(250,204,21,.8); }
+.art .field .tray { position:absolute; left:36%; right:50%; bottom:14px; height:3px;
+                    border-radius:2px; background: var(--sun-edge); }
+.art .field .label { position:absolute; font-family: var(--f-mono); font-size:9.5px;
+                     letter-spacing:.06em; }
+.art .type { font-family: var(--f-mono); font-size:11.5px; color: var(--dim);
+             display:flex; flex-direction:column; gap:5px; }
+.art .type span { display:block; white-space:nowrap; overflow:hidden; width:0; }
+.art .type .cur { display:inline-block; width:6px; height:12px; background: var(--sun);
+                  vertical-align:-2px; animation: caret 1s steps(1) infinite; }
+.art .steps { display:flex; flex-direction:column; gap:0; position:relative;
+              padding-left:22px; }
+.art .steps .rail { position:absolute; left:5px; top:8px; bottom:8px; width:2px;
+                    background: rgba(255,255,255,.08); }
+.art .steps .rail i { position:absolute; inset:0; display:block; width:2px;
+                      transform-origin:top center; will-change:transform;
+                      background: var(--sun); animation: rail 7.2s ease-in-out infinite; }
+.art .steps b { position:relative; font-weight:500; font-size:12.5px; color: var(--dim);
+                padding:6px 0; }
+.art .steps b::before { content:""; position:absolute; left:-21px; top:11px; width:8px;
+                        height:8px; border-radius:50%; background: var(--sun); }
+
+/* --- animated devices ----------------------------------------------------
+   One per section. The rule is that a device shows what its section claims,
+   so the motion carries meaning rather than attention. */
+
+/* a small machine, receiving something */
+.dev { border:1px solid rgba(255,255,255,.07); border-radius:12px; overflow:hidden;
+       background:#0B0E14; }
+.dev .bar { display:flex; align-items:center; gap:5px; padding:7px 10px;
+            border-bottom:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.02); }
+.dev .bar u { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.14);
+              display:block; text-decoration:none; }
+.dev .bar span { margin-left:4px; font-family:var(--f-mono); font-size:10px;
+                 color:var(--faint); letter-spacing:.04em; }
+.dev .body { padding:12px; display:flex; flex-direction:column; gap:9px; }
+
+/* the install strip: fills, then flips to ready */
+.dev .strip { position:relative; height:6px; border-radius:3px;
+              background:rgba(255,255,255,.08); overflow:hidden; }
+.dev .strip i { position:absolute; inset:0; border-radius:3px; display:block;
+                transform-origin:left center; will-change:transform;
+                background:linear-gradient(90deg,var(--sun-700),var(--sun));
+                animation:devFill 6s cubic-bezier(.4,0,.2,1) infinite; }
+.dev .state { display:flex; align-items:center; gap:6px; font-family:var(--f-mono);
+              font-size:10.5px; color:var(--faint); }
+.dev .state b { color:var(--sun); font-weight:400; opacity:0;
+                animation:devReady 6s ease-out infinite; }
+@keyframes devFill  { 0%,4% { transform:scaleX(0); } 52%,100% { transform:scaleX(1); } }
+@keyframes devReady { 0%,52% { opacity:0; } 60%,100% { opacity:1; } }
+
+/* a level meter that is actually listening */
+.lvl { display:flex; flex-direction:column; gap:7px; }
+.lvl .r { display:flex; align-items:center; gap:8px; }
+.lvl .r span { font-family:var(--f-mono); font-size:10px; color:var(--faint);
+               width:82px; flex:0 0 auto; white-space:nowrap; }
+.lvl .m { display:flex; align-items:flex-end; gap:2px; height:26px; flex:1 1 0; }
+.lvl .m i { flex:1 1 0; border-radius:1.5px; background:var(--sun); display:block;
+            transform-origin:bottom; }
+.lvl .r.b .m i { background:rgba(250,204,21,.42); }
+
+/* a terminal that types */
+.term { font-family:var(--f-mono); font-size:11px; line-height:1.75; color:var(--dim); }
+.term p { margin:0; white-space:nowrap; overflow:hidden; width:0; }
+.term p.a { animation:tw1 7s steps(30) infinite; }
+.term p.b { animation:tw2 7s steps(30) infinite; }
+.term p.c { animation:tw3 7s steps(22) infinite; color:var(--sun); }
+@keyframes tw1 { 0%{width:0} 16%{width:100%} 94%{width:100%} 100%{width:0} }
+@keyframes tw2 { 0%,20%{width:0} 40%{width:100%} 94%{width:100%} 100%{width:0} }
+@keyframes tw3 { 0%,58%{width:0} 72%{width:100%} 94%{width:100%} 100%{width:0} }
+
+/* words firming into notes */
+/* A fixed footprint. Without it the card's height follows whatever the
+   animation happens to be showing, so the third card sat visibly shorter than
+   the two beside it for most of the loop. */
+.firm { display:flex; flex-direction:column; gap:9px; min-height:76px;
+        justify-content:center; }
+.firm .w { display:flex; gap:5px; flex-wrap:wrap; align-items:center; min-height:20px; }
+.firm .w i { display:block; height:7px; border-radius:3px; background:rgba(255,255,255,.14);
+             opacity:0; animation:wordIn 6.4s ease-out infinite; }
+.firm .n { display:flex; align-items:center; gap:7px; font-size:11.5px; color:var(--dim);
+           opacity:0; animation:noteIn 6.4s ease-out infinite; }
+.firm .n u { width:9px; height:9px; border-radius:2px; text-decoration:none; flex:0 0 auto;
+             border:1px solid var(--sun-edge); background:var(--sun-wash); }
+@keyframes wordIn { 0%{opacity:0} 8%,52%{opacity:1} 62%,100%{opacity:.18} }
+@keyframes noteIn { 0%,48%{opacity:0;transform:translateY(5px)}
+                    62%,94%{opacity:1;transform:none}
+                    100%{opacity:0;transform:translateY(5px)} }
+
+/* one bill climbs, one does not */
+.cost { display:flex; align-items:flex-end; gap:14px; height:96px; }
+.cost .c { flex:1 1 0; display:flex; flex-direction:column; justify-content:flex-end;
+           gap:6px; height:100%; }
+.cost .c .t { position:relative; flex:1 1 0; border-radius:8px 8px 0 0;
+              background:rgba(255,255,255,.05); overflow:hidden; }
+.cost .c .t i { position:absolute; inset:0; display:block; border-radius:8px 8px 0 0;
+                transform-origin:bottom center; transform:scaleY(0); will-change:transform; }
+.cost .them .t i { background:linear-gradient(180deg,rgba(224,112,90,.75),rgba(224,112,90,.25));
+                   animation:climb 5.4s cubic-bezier(.4,0,.2,1) infinite; }
+.cost .you .t i  { background:linear-gradient(180deg,var(--sun),var(--sun-700));
+                   transform:scaleY(.05); }
+.cost .c em { font-style:normal; font-family:var(--f-mono); font-size:10px;
+              color:var(--faint); text-align:center; }
+@keyframes climb { 0%,6%{transform:scaleY(.05)} 70%,100%{transform:scaleY(.92)} }
+
+/* a checklist that ticks itself */
+.ticks2 { display:flex; flex-direction:column; gap:9px; }
+.ticks2 div { display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--dim); }
+.ticks2 u { width:15px; height:15px; border-radius:4px; flex:0 0 auto; text-decoration:none;
+            border:1px solid var(--line-strong); position:relative; }
+.ticks2 u::after { content:""; position:absolute; left:4px; top:3px; width:5px; height:8px;
+            border-right:2px solid var(--sun); border-bottom:2px solid var(--sun);
+            transform:rotate(40deg) scale(.4); opacity:0; }
+.ticks2 div:nth-child(1) u::after { animation:tick 5.6s ease-out infinite; }
+.ticks2 div:nth-child(2) u::after { animation:tick 5.6s ease-out .5s infinite; }
+.ticks2 div:nth-child(3) u::after { animation:tick 5.6s ease-out 1s infinite; }
+.ticks2 div:nth-child(4) u::after { animation:tick 5.6s ease-out 1.5s infinite; }
+@keyframes tick { 0%,8%{opacity:0;transform:rotate(40deg) scale(.4)}
+                  18%{opacity:1;transform:rotate(40deg) scale(1.15)}
+                  26%,90%{opacity:1;transform:rotate(40deg) scale(1)}
+                  100%{opacity:0;transform:rotate(40deg) scale(.4)} }
+
+/* two hashes meeting in the middle */
+.hash { display:flex; align-items:center; gap:10px; font-family:var(--f-mono);
+        font-size:10.5px; color:var(--faint); }
+.hash .h { flex:1 1 0; padding:7px 9px; border-radius:8px; border:1px solid var(--line);
+           background:rgba(255,255,255,.02); overflow:hidden; text-overflow:ellipsis;
+           white-space:nowrap; }
+.hash .eq { width:26px; height:26px; border-radius:50%; flex:0 0 auto; display:grid;
+            place-items:center; border:1px solid var(--sun-edge); color:var(--sun);
+            background:var(--sun-wash); animation:eqPop 4.6s ease-out infinite; }
+@keyframes eqPop { 0%,40%{transform:scale(.75);opacity:.35}
+                   52%{transform:scale(1.15);opacity:1}
+                   60%,100%{transform:scale(1);opacity:1} }
+
+@media (prefers-reduced-motion: reduce) {
+  .dev .strip i, .dev .state b, .lvl .m i, .term p, .firm .w i, .firm .n,
+  .cost .them .t i, .ticks2 u::after, .hash .eq { animation: none !important; }
+  .dev .strip i { width:100%; } .term p { width:100%; }
+  .firm .w i, .firm .n, .dev .state b { opacity:1; }
+  .cost .them .t i { height:92%; }
+  .ticks2 u::after { opacity:1; transform:rotate(40deg) scale(1); }
+}
+
+/* --- chrome motion -------------------------------------------------------
+   Shared deliberately. Furniture that behaves the same everywhere is what
+   makes seven pages feel like one product; it is the hero mechanic that has
+   to differ, not the trim. */
+
+/* every h2 draws its own rule as the section arrives */
+main section h2 { position: relative; padding-bottom: 14px; }
+main section h2::after { content: ""; position: absolute; left: 0; bottom: 0;
+  height: 2px; width: 0; border-radius: 2px;
+  background: linear-gradient(90deg, var(--sun), rgba(250,204,21,0)); }
+html.js main section > .wrap.on h2::after { width: 54px;
+  transition: width .8s cubic-bezier(.16,1,.3,1) .15s; }
+html:not(.js) main section h2::after { width: 54px; }
+
+/* cards answer the cursor */
+.card { position: relative; }
+.card::after { content: ""; position: absolute; inset: -1px; border-radius: inherit;
+  pointer-events: none; opacity: 0; transition: opacity .3s ease;
+  background: radial-gradient(60% 80% at 50% 0%, rgba(250,204,21,.10), transparent 70%); }
+.card:hover::after { opacity: 1; }
+.card:hover { border-color: var(--sun-edge); }
+
+/* buttons take a sheen */
+.btn { position: relative; overflow: hidden; }
+.btn::after { content: ""; position: absolute; top: 0; bottom: 0; width: 42%;
+  left: -55%; transform: skewX(-18deg); pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent); }
+.btn:hover::after { animation: sheen .75s ease-out; }
+@keyframes sheen { to { left: 125%; } }
+
+/* anything live actually looks live */
+.pill-sun .dot { animation: livedot 1.9s ease-in-out infinite; }
+@keyframes livedot { 0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(250,204,21,.45); }
+                     50%     { transform: scale(.82); box-shadow: 0 0 0 5px rgba(250,204,21,0); } }
+
+/* a caret for any inline terminal line */
+.blink { display: inline-block; width: 7px; height: 13px; background: var(--sun);
+         vertical-align: -2px; margin-left: 3px; animation: caret 1s steps(1) infinite; }
+
+/* install: each platform card fills a hairline as it arrives */
+.os { position: relative; overflow: hidden; }
+.os::before { content: ""; position: absolute; top: 0; left: 0; height: 2px; width: 0;
+  background: linear-gradient(90deg, var(--sun-700), var(--sun)); }
+html.js main section > .wrap.on .os::before { width: 100%;
+  transition: width 1.1s cubic-bezier(.16,1,.3,1); }
+html.js main section > .wrap.on .os:nth-child(2)::before { transition-delay: .16s; }
+html.js main section > .wrap.on .os:nth-child(3)::before { transition-delay: .32s; }
+
+/* support: the three steps join up as they arrive */
+.steps3 { position: relative; }
+/* The rail that ties the three steps together. z-index puts it BEHIND the
+   cards, so it shows only in the two gaps between them -- which is the whole
+   idea. Without it the rail painted straight across the face of all three
+   cards at 26px, a yellow line through the middle of the words. */
+.steps3::before { content: ""; position: absolute; left: 8%; right: 8%; top: 26px;
+  height: 2px; background: rgba(255,255,255,.08); z-index: -1; }
+.steps3::after { content: ""; position: absolute; left: 8%; top: 26px; height: 2px;
+  width: 0; background: linear-gradient(90deg, var(--sun), var(--sun-700)); z-index: -1; }
+html.js main section > .wrap.on .steps3::after { width: 84%;
+  transition: width 1.6s cubic-bezier(.16,1,.3,1) .3s; }
+@media (max-width: 860px) { .steps3::before, .steps3::after { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-sun .dot, .blink, .btn:hover::after { animation: none !important; }
+  main section h2::after, .os::before, .steps3::after { transition: none !important; }
+}
+
+/* the hero: copy on the left, something alive on the right */
+.phero { position: relative; overflow: hidden; border:1px solid rgba(255,255,255,.06);
+         border-radius: 26px; padding: 46px 44px;
+         background: radial-gradient(120% 90% at 50% 55%, #17150C 0%, #101319 55%, #0E1116 100%); }
+.phero .in { position:relative; z-index:2; display:grid;
+             grid-template-columns: 1.05fr .95fr; gap: 40px; align-items:center; }
+.phero .dots { position:absolute; inset:0; opacity:.5; pointer-events:none;
+               background-image: radial-gradient(rgba(255,255,255,.043) 1px, transparent 1px);
+               background-size: 7px 7px; }
+.phero h1 { margin-bottom: 14px; }
+
+/* the art panel every hero carries */
+.art { position:relative; border:1px solid rgba(255,255,255,.07); border-radius:18px;
+       background: rgba(11,14,19,.72); padding: 20px; min-height: 232px;
+       display:flex; flex-direction:column; justify-content:center; gap:14px;
+       overflow:hidden; }
+.art .cap { font-family: var(--f-mono); font-size: 11px; letter-spacing:.08em;
+            color: var(--faint); }
+.art .row { display:flex; align-items:center; gap:10px; }
+.art .wave { display:flex; align-items:center; gap:3px; height:56px; flex:1 1 0; }
+.art .wave b { flex:1 1 0; border-radius:2px; background: var(--sun);
+               transform-origin:center; display:block; }
+.art .halo { position:absolute; left:50%; top:52%; width:120%; height:44px;
+             transform: translate(-50%,-50%); filter: blur(26px); pointer-events:none;
+             background: linear-gradient(90deg, transparent, rgba(200,135,5,.20) 26%,
+             rgba(252,222,103,.40) 50%, rgba(200,135,5,.20) 74%, transparent);
+             animation: halo 6s ease-in-out infinite; }
+.art .tile { display:flex; align-items:center; gap:9px; padding:9px 11px;
+             border:1px solid rgba(255,255,255,.07); border-radius:11px;
+             background: rgba(255,255,255,.028); font-size:12.5px; color: var(--dim); }
+.art .tile svg { width:15px; height:15px; fill: var(--sun); flex:0 0 auto; }
+.art .meter { font-family: var(--f-mono); font-size: 30px; letter-spacing:-.02em;
+              color: var(--sun); }
+.art .line { height:6px; border-radius:3px; background: rgba(255,255,255,.13); width:0;
+             transition: width .8s cubic-bezier(.16,1,.3,1); }
+.art .bub { width:9px; height:9px; border-radius:50%; background: var(--sun);
+            animation: vlBub 1.2s ease-in-out infinite; flex:0 0 auto; }
+
+/* --- entrances -----------------------------------------------------------
+   Sixteen of them. Which section gets which is decided per page in
+   entrance_css() below, rotated by the page's path, and split so a heading and
+   its content arrive on different beats.
+
+   Each runs once and stops: motion is for arriving, not for reading.
+
+   The hidden state is gated on `html.js`, set by a one-line script in <head>
+   before the body paints. Putting `opacity:0` in plain CSS would hide the site
+   from anyone whose JavaScript never arrives; adding the class from script
+   instead would show the content and then blink it away. This does neither,
+   and the six-second failsafe still guarantees nothing stays hidden. */
+
+html.js main section > .wrap > * { opacity: 0; }
+html.js main section > .wrap.on > * {
+  animation-duration: .85s;
+  animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+  animation-fill-mode: forwards; }
+
+html.js main section > .wrap.on > *:nth-child(2) { animation-delay: 80ms; }
+html.js main section > .wrap.on > *:nth-child(3) { animation-delay: 160ms; }
+html.js main section > .wrap.on > *:nth-child(4) { animation-delay: 240ms; }
+html.js main section > .wrap.on > *:nth-child(5) { animation-delay: 320ms; }
+html.js main section > .wrap.on > *:nth-child(n+6) { animation-delay: 400ms; }
+
+@keyframes eRise   { from { opacity:0; transform: translateY(26px); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eWipe   { from { opacity:0; clip-path: inset(0 100% 0 0); }
+                     to   { opacity:1; clip-path: inset(0 0 0 0); } }
+@keyframes eLift   { from { opacity:0; transform: translateY(38px) scale(.97); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eSoft   { from { opacity:0; filter: blur(9px); transform: translateY(12px); }
+                     to   { opacity:1; filter: none; transform: none; } }
+@keyframes eLeft   { from { opacity:0; transform: translateX(-34px); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eRight  { from { opacity:0; transform: translateX(34px); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eTilt   { from { opacity:0; transform: perspective(900px) rotateX(9deg) translateY(24px);
+                            transform-origin: top center; }
+                     to   { opacity:1; transform: none; } }
+@keyframes eOpen   { from { opacity:0; transform: scaleY(.86); transform-origin: top center; }
+                     to   { opacity:1; transform: none; } }
+@keyframes eDrop   { 0%   { opacity:0; transform: translateY(-22px); }
+                     70%  { opacity:1; transform: translateY(4px); }
+                     100% { opacity:1; transform: none; } }
+@keyframes eZoom   { from { opacity:0; transform: scale(.94); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eIris   { from { opacity:0; clip-path: circle(0% at 50% 55%); }
+                     to   { opacity:1; clip-path: circle(140% at 50% 55%); } }
+@keyframes eSkew   { from { opacity:0; transform: skewY(2.4deg) translateY(22px); }
+                     to   { opacity:1; transform: none; } }
+@keyframes eUnroll { from { opacity:0; clip-path: inset(0 0 100% 0); }
+                     to   { opacity:1; clip-path: inset(0 0 0 0); } }
+@keyframes eFold   { from { opacity:0; transform: perspective(900px) rotateY(9deg) translateX(22px);
+                            transform-origin: left center; }
+                     to   { opacity:1; transform: none; } }
+@keyframes eSpring { 0%   { opacity:0; transform: translateY(30px); }
+                     62%  { opacity:1; transform: translateY(-7px); }
+                     100% { opacity:1; transform: none; } }
+@keyframes eGlide  { from { opacity:0; transform: translate(26px, 20px); }
+                     to   { opacity:1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .amb i, .art .wave b, .art .halo, .art .bub, .vfield b { animation: none !important; }
+  html.js main section > .wrap > * { opacity:1; transform:none; filter:none;
+                                     animation:none !important; }
+}
+@media (max-width: 900px) {
+  .phero { padding: 34px 24px; }
+  .phero .in { grid-template-columns: 1fr; gap: 28px; }
+}
+
+@view-transition { navigation: auto; }
+
+/* A cross-fade, and nothing else.
+
+   An earlier version slid the outgoing page up 6px and the incoming page up
+   from 10px. The incoming page then ran its own section entrances on top of
+   that, so two different motions moved the same pixels at once -- which is
+   exactly what reads as a rough transition. The transition's job is to get you
+   there without a flash; the entrances are the movement. */
+::view-transition-old(root) { animation: vtFade .20s ease both reverse; }
+::view-transition-new(root) { animation: vtFade .26s ease both; }
+@keyframes vtFade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Honour the OS setting: the navigation still happens, it just does not fade. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+html.js main section > .wrap.now > * { opacity: 1 !important; animation: none !important; }
+html.js main section:nth-of-type(1) > .wrap.on > *:first-child { animation-name: eSpring; }
+html.js main section:nth-of-type(1) > .wrap.on > *:not(:first-child) { animation-name: eRight; }
+html.js main section:nth-of-type(2) > .wrap.on > *:first-child { animation-name: eSoft; }
+html.js main section:nth-of-type(2) > .wrap.on > *:not(:first-child) { animation-name: eIris; }
+html.js main section:nth-of-type(3) > .wrap.on > *:first-child { animation-name: eDrop; }
+html.js main section:nth-of-type(3) > .wrap.on > *:not(:first-child) { animation-name: eGlide; }
+html.js main section:nth-of-type(4) > .wrap.on > *:first-child { animation-name: eFold; }
+html.js main section:nth-of-type(4) > .wrap.on > *:not(:first-child) { animation-name: eLeft; }
+html.js main section:nth-of-type(5) > .wrap.on > *:first-child { animation-name: eLift; }
+html.js main section:nth-of-type(5) > .wrap.on > *:not(:first-child) { animation-name: eZoom; }
+html.js main section:nth-of-type(6) > .wrap.on > *:first-child { animation-name: eOpen; }
+html.js main section:nth-of-type(6) > .wrap.on > *:not(:first-child) { animation-name: eSpring; }
+html.js main section:nth-of-type(7) > .wrap.on > *:first-child { animation-name: eUnroll; }
+html.js main section:nth-of-type(7) > .wrap.on > *:not(:first-child) { animation-name: eSoft; }
+html.js main section:nth-of-type(8) > .wrap.on > *:first-child { animation-name: eWipe; }
+html.js main section:nth-of-type(8) > .wrap.on > *:not(:first-child) { animation-name: eDrop; }
+html.js main section:nth-of-type(9) > .wrap.on > *:first-child { animation-name: eTilt; }
+html.js main section:nth-of-type(9) > .wrap.on > *:not(:first-child) { animation-name: eFold; }
+html.js main section:nth-of-type(10) > .wrap.on > *:first-child { animation-name: eSkew; }
+html.js main section:nth-of-type(10) > .wrap.on > *:not(:first-child) { animation-name: eLift; }
+html.js main section:nth-of-type(11) > .wrap.on > *:first-child { animation-name: eRise; }
+html.js main section:nth-of-type(11) > .wrap.on > *:not(:first-child) { animation-name: eOpen; }
+html.js main section:nth-of-type(12) > .wrap.on > *:first-child { animation-name: eRight; }
+html.js main section:nth-of-type(12) > .wrap.on > *:not(:first-child) { animation-name: eUnroll; }
+html.js main section:nth-of-type(13) > .wrap.on > *:first-child { animation-name: eIris; }
+html.js main section:nth-of-type(13) > .wrap.on > *:not(:first-child) { animation-name: eWipe; }
+html.js main section:nth-of-type(14) > .wrap.on > *:first-child { animation-name: eGlide; }
+html.js main section:nth-of-type(14) > .wrap.on > *:not(:first-child) { animation-name: eTilt; }
+/* --- footer: brand column carries the social row, third column visualises --- */
+.ftr .fsocial{margin-top:18px}
+.ftr .fviz{display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:10px;min-height:96px}
+.ftr .fviz-bars{display:flex;align-items:flex-end;gap:4px;height:56px;width:100%;max-width:260px}
+.ftr .fviz-bars i{flex:1 1 0;min-width:3px;border-radius:3px;transform-origin:50% 100%;
+  background:linear-gradient(180deg,var(--sun,#FACC15),rgba(250,204,21,.22));
+  opacity:.5;height:calc(14px + (var(--h) * 42px));
+  animation:fvizPulse var(--d) ease-in-out var(--o) infinite}
+.ftr .fviz-cap{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#5A5C64}
+@keyframes fvizPulse{
+  0%,100%{transform:scaleY(.34);opacity:.34}
+  50%{transform:scaleY(1);opacity:.72}
+}
+/* A decorative loop is not worth a vestibular headache, and an always-moving
+   footer is exactly the kind of thing reduced-motion is asking about. Frozen
+   mid-level still reads as a meter. */
+@media (prefers-reduced-motion:reduce){
+  .ftr .fviz-bars i{animation:none;transform:scaleY(.62);opacity:.45}
+}
+@media (max-width:760px){
+  .ftr .fviz{display:none}
+}
+</style>
+<style>
+/* /demo — the console. Uses the site's own tokens; every class is dm- scoped so
+   nothing here can collide with the shared stylesheet above. */
+.dm-console { background: #10141B; border: 1px solid var(--line); border-radius: 20px;
+  overflow: hidden; margin-top: 22px; }
+.dm-bar { display: flex; align-items: center; gap: 14px; padding: 13px 20px;
+  background: rgba(255,255,255,.025); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.dm-bar .nm { font-family: var(--f-mono); font-size: 12px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); }
+.dm-bar .tg { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--faint); border: 1px solid var(--line);
+  border-radius: 999px; padding: 5px 11px; margin-left: auto; }
+.dm-body { display: grid; grid-template-columns: 1fr 330px; }
+@media (max-width: 900px) { .dm-body { grid-template-columns: 1fr; } }
+.dm-left { padding: 22px 24px; display: flex; flex-direction: column; gap: 18px; }
+.dm-right { border-left: 1px solid var(--line); background: #0B0E13; padding: 22px;
+  display: flex; flex-direction: column; gap: 20px; }
+@media (max-width: 900px) { .dm-right { border-left: 0; border-top: 1px solid var(--line); } }
+
+.dm-ctl { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.dm-hint { font-family: var(--f-mono); font-size: 11.5px; color: var(--faint); }
+.dm-hint kbd { border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px;
+  color: var(--muted); background: rgba(255,255,255,.04); }
+
+.dm-meter { display: flex; align-items: center; gap: 14px; }
+.dm-wave { display: flex; align-items: flex-end; gap: 3px; height: 38px; flex-grow: 1; }
+.dm-wave i { flex: 1; min-width: 2px; border-radius: 2px 2px 0 0; background: #2A2E36;
+  height: 12%; transition: height .16s ease, background .3s; }
+.dm-wave.live i { background: linear-gradient(180deg, var(--sun), var(--sun-700)); }
+.dm-clock { font-family: var(--f-mono); font-size: 17px; font-weight: 700; color: var(--text); }
+.dm-state { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--faint); border: 1px solid var(--line);
+  border-radius: 999px; padding: 6px 11px; white-space: nowrap; }
+.dm-state.rec { color: var(--sun); border-color: var(--sun-edge); background: var(--sun-wash); }
+.dm-state.done { color: #5EE3C4; border-color: rgba(94,227,196,.3); background: rgba(94,227,196,.08); }
+
+.dm-pane { border: 1px solid var(--line); border-radius: 12px; background: #0B0E13; overflow: hidden; }
+.dm-pane .h { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 15px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.02); }
+.dm-pane .h span { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--faint); }
+.dm-pane .h .f { text-transform: none; letter-spacing: .04em; color: var(--muted); }
+.dm-lines { padding: 13px 15px; display: flex; flex-direction: column; gap: 9px;
+  overflow-y: auto; max-height: 250px; min-height: 132px; }
+.dm-ln { display: grid; grid-template-columns: 52px 72px 1fr; gap: 12px;
+  font-family: var(--f-mono); font-size: 13px; line-height: 1.5; }
+@media (max-width: 560px) { .dm-ln { grid-template-columns: 46px 1fr; } .dm-ln .tx { grid-column: 1 / -1; } }
+.dm-ln .t { color: var(--faint); }
+.dm-ln .w { color: var(--sun-300); }
+.dm-ln .tx { color: var(--dim); }
+.dm-ln.new { animation: dmfade .3s ease; }
+@keyframes dmfade { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+.dm-notes { padding: 15px 17px; font-family: var(--f-mono); font-size: 13px; line-height: 1.72;
+  color: var(--dim); white-space: pre-wrap; min-height: 110px; }
+.dm-notes b { color: var(--text); font-weight: 700; }
+
+.dm-mon { display: flex; flex-direction: column; gap: 12px; }
+.dm-lab { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .17em;
+  text-transform: uppercase; color: var(--faint); }
+.dm-big { font-family: var(--f-mono); font-size: 33px; font-weight: 700;
+  letter-spacing: -.03em; color: var(--sun); }
+.dm-kv { display: flex; flex-direction: column; gap: 9px; margin: 0; }
+.dm-kv > div { display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+  font-family: var(--f-mono); font-size: 12.5px; }
+.dm-kv dt { color: var(--faint); }
+.dm-kv dd { margin: 0; color: var(--text); }
+.dm-kv dd.z { color: #5EE3C4; }
+.dm-net { display: flex; flex-direction: column; gap: 11px; border-top: 1px solid var(--line);
+  padding-top: 16px; }
+.dm-tog { display: flex; align-items: center; gap: 11px; cursor: pointer; user-select: none; }
+.dm-tog input { position: absolute; opacity: 0; width: 0; height: 0; }
+.dm-track { width: 42px; height: 24px; border-radius: 999px; background: var(--surface-2);
+  border: 1px solid var(--line-strong); position: relative; flex-shrink: 0; transition: background .16s; }
+.dm-track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px;
+  border-radius: 50%; background: var(--muted); transition: transform .16s, background .16s; }
+.dm-tog input:checked + .dm-track { background: rgba(232,98,79,.2); border-color: rgba(232,98,79,.5); }
+.dm-tog input:checked + .dm-track::after { transform: translateX(18px); background: #E8624F; }
+.dm-tog input:focus-visible + .dm-track { outline: 2px solid var(--sun); outline-offset: 2px; }
+.dm-tog .tl { font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); }
+.dm-verdict { font-family: var(--f-mono); font-size: 12px; line-height: 1.6; color: #5EE3C4;
+  border-left: 2px solid rgba(94,227,196,.3); padding-left: 12px; margin: 0; }
+.dm-verdict.cut { color: var(--sun); border-left-color: var(--sun-edge); }
+
+.dm-machine { border: 1px dashed var(--sun-edge); border-radius: 20px; background: var(--sun-wash);
+  padding: 28px 24px 24px; position: relative; margin-top: 20px; }
+.dm-machine > .cap { position: absolute; top: -10px; left: 22px; background: var(--ink);
+  padding: 0 10px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .19em;
+  text-transform: uppercase; color: var(--sun); }
+.dm-flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+.dm-step { background: #10141B; border: 1px solid var(--line); border-radius: 14px; padding: 16px 17px;
+  display: flex; flex-direction: column; gap: 7px; }
+.dm-step .n { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .15em; color: var(--faint); }
+.dm-step .w { font-size: 15px; font-weight: 600; color: var(--text); }
+.dm-step .d { font-size: 13px; line-height: 1.5; color: var(--muted); }
+.dm-out { margin-top: 18px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  border: 1px solid var(--line); border-radius: 16px; background: var(--surface-2); padding: 18px 22px; }
+.dm-out .x { font-family: var(--f-mono); font-size: 12.5px; font-weight: 700; letter-spacing: .1em;
+  color: #E8624F; border: 1px solid rgba(232,98,79,.45); border-radius: 7px; padding: 8px 12px;
+  background: rgba(232,98,79,.08); white-space: nowrap; }
+.dm-out p { margin: 0; font-size: 14px; color: var(--muted); }
+.dm-empty { margin: 0; padding: 10px 2px; font-family: var(--f-mono); font-size: 12.5px;
+  line-height: 1.65; color: var(--faint); }
+.dm-empty b { color: var(--muted); font-weight: 700; }
+.dm-start { padding: 12px 22px; font-size: 14.5px; }
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .001s !important; } }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://vlocal.host/#organization","name":"Vlocalhost AI","alternateName":["Vlocalhost","Vlocalhost.AI","vlocal.host"],"url":"https://vlocal.host/","logo":"https://vlocal.host/brand/logo/vlocalhost-mark.svg","email":"voiceit@vlocal.host","description":"Maker of Vlocalhost AI, an on-device meeting notetaker that records, transcribes and summarises meetings entirely on the user's own machine.","sameAs":["https://github.com/antigravitysoham-eng/vlocalhost-core","https://www.linkedin.com/company/vlocalhostai/","https://x.com/VlocalhostAI","https://www.instagram.com/vlocalhostai/","https://www.reddit.com/user/VlocalhostAI/"]},{"@type":"SoftwareApplication","@id":"https://vlocal.host/#software","name":"Vlocalhost AI","alternateName":"Vlocalhost","applicationCategory":"BusinessApplication","applicationSubCategory":"Meeting transcription and notes","operatingSystem":"Windows 10, Windows 11, macOS","softwareVersion":"1.2.3","downloadUrl":"https://github.com/antigravitysoham-eng/vlocalhost-core/releases/latest","installUrl":"https://vlocal.host/install/","license":"https://www.gnu.org/licenses/agpl-3.0.html","isAccessibleForFree":true,"publisher":{"@id":"https://vlocal.host/#organization"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","name":"Solo","description":"Free forever. Unlimited on-device recording, transcription and summaries."},"featureList":["Records and transcribes meetings entirely on your own device","No meeting bot joins the call","Local summarisation with an Ollama model","Bring your own Whisper model","Works offline","Notes saved as plain text on your own disk"],"description":"Vlocalhost AI records, transcribes and summarises your meetings entirely on your own machine. No bot joins the call and no audio is uploaded; transcription runs on a local Whisper model and the summary on a local Ollama model."}]}</script></head>
+<body>
+<div class="amb" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i><span class="grain"></span></div>
+<div class="shell">
+<header class="hdr"><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CA8A04"/><stop offset="55%" stop-color="#EAB308"/><stop offset="100%" stop-color="#FACC15"/></linearGradient></defs><rect x="23" y="44" width="22" height="36" rx="11" fill="url(#sb)"/><rect x="54" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><rect x="85" y="114" width="22" height="48" rx="11" fill="url(#sb)"/><rect x="116" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><circle cx="158" cy="62" r="27" fill="#FDE047"/><path d="M 143 79 L 131 100 L 163 81 Z" fill="#FDE047"/></svg><span>Vlocalhost</span><small>AI</small></a><nav class="nav"><a href="/">Why Vlocalhost</a><div class="nav-dd"><button class="nav-dd-btn" type="button" aria-haspopup="true" aria-expanded="false">Capabilities<svg class="cx" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="nav-dd-menu" role="menu"><a role="menuitem" href="/#path">How it works</a><a role="menuitem" href="/#arch">Architecture</a><a role="menuitem" href="/#model">Bring your own model</a><a role="menuitem" href="/#app">Output &amp; delivery</a><a role="menuitem" href="/#proof">Privacy &amp; data handling</a><a role="menuitem" href="/#specs">Technical specifications</a><span class="dd-soon">More capabilities shipping soon&hellip;</span></div></div><a href="/pricing/">Pricing</a><a href="/security/">Security</a><a href="/support/">Support</a></nav></div></header>
+<main>
+
+<section style="border-top:0;padding:38px 0 0"><div class="wrap">
+  <p class="eyebrow">Live demo</p>
+  <h1>Watch a meeting get recorded.<span class="sub">Then check what left the machine.</span></h1>
+
+  <div class="dm-console">
+    <div class="dm-bar">
+      <span class="nm">Vlocalhost &mdash; Weekly sync</span>
+      <span class="tg">Interactive walkthrough &middot; sample meeting</span>
+    </div>
+    <div class="dm-body">
+      <div class="dm-left">
+        <div class="dm-ctl">
+          <button class="btn btn-sun dm-start" id="dmPlay" type="button">Start demo</button>
+          <button class="btn" id="dmReset" type="button">Reset</button>
+          <span class="dm-hint">In the app: <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Space</kbd> from anywhere</span>
+        </div>
+
+        <div class="dm-meter">
+          <span class="dm-state" id="dmState">Ready</span>
+          <div class="dm-wave" id="dmWave" aria-hidden="true"></div>
+          <span class="dm-clock" id="dmClock">00:00</span>
+        </div>
+
+        <div class="dm-pane">
+          <div class="h"><span>Transcript</span><span class="f" id="dmTFile">nothing recorded yet</span></div>
+          <div class="dm-lines" id="dmLines"></div>
+        </div>
+
+        <div class="dm-pane">
+          <div class="h"><span>Notes</span><span class="f" id="dmNFile">waiting</span></div>
+          <div class="dm-notes" id="dmNotes"></div>
+        </div>
+      </div>
+
+      <div class="dm-right">
+        <div class="dm-mon">
+          <span class="dm-lab">External network monitor</span>
+          <span class="dm-big" id="dmEgress">0.00 KB</span>
+          <span class="dm-lab" style="letter-spacing:.02em;text-transform:none;color:var(--muted);line-height:1.5">Meeting
+          bytes sent, as recorded by a packet capture running outside the app.</span>
+        </div>
+
+        <dl class="dm-kv">
+          <div><dt>Outbound connections</dt><dd class="z">0</dd></div>
+          <div><dt>Endpoint contacted</dt><dd class="z">none</dd></div>
+          <div><dt>Audio uploaded</dt><dd class="z">0 bytes</dd></div>
+          <div><dt>Transcript uploaded</dt><dd class="z">0 bytes</dd></div>
+          <div><dt>Written to your disk</dt><dd id="dmDisk">6.4 KB</dd></div>
+          <div><dt>Transcription</dt><dd>local</dd></div>
+          <div><dt>Summary model</dt><dd>local</dd></div>
+        </dl>
+
+        <div class="dm-net">
+          <label class="dm-tog" for="dmCut">
+            <input type="checkbox" id="dmCut">
+            <span class="dm-track" aria-hidden="true"></span>
+            <span class="tl">Pull the network cable</span>
+          </label>
+          <p class="dm-verdict" id="dmVerdict">Connected. Nothing is using it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="lede" style="margin-top:20px">Vlocalhost captures the call, transcribes it and writes the
+  notes &mdash; all of it on your own computer. Press <b>Start demo</b> and watch the counter on the
+  right while it runs.</p>
+
+  <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:16px">
+    <span class="pill pill-sun"><span class="dot"></span>Shipping &middot; v1.2.3</span>
+    <span class="pill">Windows</span>
+    <span class="pill">macOS &middot; Apple silicon &amp; Intel</span>
+    <span class="pill">No account</span>
+  </div>
+
+  <p class="small" style="margin-top:18px;max-width:76ch">An interactive walkthrough with a sample
+  meeting and compressed timing &mdash; not the installed app. The sequence is the real one: audio is
+  captured, the transcript is written to your disk <b>before</b> anything else happens, and the summary
+  is written afterwards by a model running locally.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Every step runs inside the box.</h2>
+  <p class="lede">There is no upload step to disable, because there was never an upload step. The order
+  is deliberate: the transcript is on disk before the summary is even attempted, so if the model is
+  missing or asleep, you still keep every word.</p>
+
+  <div class="dm-machine">
+    <span class="cap">Your machine</span>
+    <div class="dm-flow">
+      <div class="dm-step"><span class="n">01</span><span class="w">Capture</span><span class="d">Microphone and system audio, so both sides of a call are recorded. Silence is ignored.</span></div>
+      <div class="dm-step"><span class="n">02</span><span class="w">Transcribe</span><span class="d">faster-whisper, running locally. Words appear live as people talk.</span></div>
+      <div class="dm-step"><span class="n">03</span><span class="w">Save first</span><span class="d">transcript.txt is written to your disk before anything else can go wrong.</span></div>
+      <div class="dm-step"><span class="n">04</span><span class="w">Summarise</span><span class="d">A local model you choose writes summary.md. Swap it whenever you like.</span></div>
+    </div>
+  </div>
+
+  <div class="dm-out">
+    <span class="x">NEVER LEAVES</span>
+    <p>The audio, the transcript, the notes, your filenames and your search. No telemetry, no crash
+    reporting, no analytics &mdash; there is no endpoint to send them to.</p>
+  </div>
+
+  <p class="small" style="margin-top:20px;max-width:76ch">Said precisely, so it can be tested:
+  <b>no audio, transcript or note produced by this app is transmitted anywhere.</b> The app does reach
+  the network to check for updates, and to fetch a model once, through a separate program. That is the
+  whole surface, and <a href="/security/">Security</a> names the one address it knows.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>What you actually get.</h2>
+  <div class="grid g3" style="margin-top:20px">
+    <div class="card"><h3>Free to record, forever</h3><p class="small">No account, no card, no trial, no minute meter. Your machine does the work, so there is no bill to pass on.</p></div>
+    <div class="card"><h3>Files you own</h3><p class="small">Markdown and plain text, on your disk. Not rows in a database we keep. Grep them, back them up, move them.</p></div>
+    <div class="card"><h3>Bring your own model</h3><p class="small">Any Whisper size, a local folder, or your own engine. Summaries run on whichever local model you point it at.</p></div>
+    <div class="card"><h3>Works with no connection</h3><p class="small">One switch in Settings refuses every outbound connection. Recording is unaffected, because it never needed one.</p></div>
+    <div class="card"><h3>Drive it from your assistant</h3><p class="small">Eleven tools, free: start, stop, follow the live transcript and search your own notes from Claude, Cursor, or anything speaking the same protocol.</p></div>
+    <div class="card"><h3>Checkable builds</h3><p class="small">Every release publishes a SHA-256 for every file, and every build carries a GitHub attestation.</p></div>
+  </div>
+
+  <p class="small" style="margin-top:22px;max-width:76ch"><b>One thing we say before you find it:</b>
+  Windows is unsigned and macOS is ad-hoc signed, not notarized, so both throw an OS warning. We have
+  not paid to notarize yet. What we do instead is publish the hashes and the build attestation, so you
+  can check that the bytes you downloaded are the bytes we built rather than take our word for it.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>The part we have not solved.</h2>
+  <p class="lede">Transcription quality is bounded by the model you run, and Whisper is weak on Indian
+  languages and on code-mixing. So we do not claim Indic support today &mdash; an uncomfortable place
+  for a product built in India to be, and the next thing we are measuring. We publish those results
+  either way.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
+    <a class="btn btn-sun" href="/install/">Download Vlocalhost</a>
+    <a class="btn" href="https://github.com/antigravitysoham-eng/vlocalhost-core/releases">Releases, hashes &amp; attestations</a>
+  </div>
+</div></section>
+
+</main>
+<footer class="ftr"><div class="wrap"><div><div class="fbrand"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CA8A04"/><stop offset="55%" stop-color="#EAB308"/><stop offset="100%" stop-color="#FACC15"/></linearGradient></defs><rect x="23" y="44" width="22" height="36" rx="11" fill="url(#sb)"/><rect x="54" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><rect x="85" y="114" width="22" height="48" rx="11" fill="url(#sb)"/><rect x="116" y="79" width="22" height="42" rx="11" fill="url(#sb)"/><circle cx="158" cy="62" r="27" fill="#FDE047"/><path d="M 143 79 L 131 100 L 163 81 Z" fill="#FDE047"/></svg><span>Vlocalhost</span><small>AI</small></div><p class="fnote">On-device voice intelligence. Your conversations never leave the room.</p><div class="fsocial"><a href="https://www.linkedin.com/company/vlocalhostai/" aria-label="LinkedIn" title="LinkedIn" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="https://x.com/VlocalhostAI" aria-label="X" title="X" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.25 6.93 6.06-6.93zm-1.29 19.49h2.04L6.49 3.24H4.3l13.31 17.4z"/></svg></a><a href="https://www.instagram.com/vlocalhostai/" aria-label="Instagram" title="Instagram" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23a3.7 3.7 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.42.17-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.17 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 0 0-2.13 1.38A5.9 5.9 0 0 0 .63 4.14c-.3.77-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91a5.9 5.9 0 0 0 1.38 2.13 5.9 5.9 0 0 0 2.13 1.38c.77.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.77.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.41a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg></a><a href="https://www.reddit.com/user/VlocalhostAI/" aria-label="Reddit" title="Reddit" rel="me noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M24 11.78a2.6 2.6 0 0 0-4.4-1.86 12.77 12.77 0 0 0-6.96-2.22l1.19-5.58 3.87.82a1.86 1.86 0 1 0 .2-.92l-4.32-.92a.46.46 0 0 0-.55.36l-1.33 6.25a12.79 12.79 0 0 0-7.06 2.21 2.6 2.6 0 1 0-2.87 4.25 5.1 5.1 0 0 0-.06.8c0 4.07 4.74 7.37 10.58 7.37s10.58-3.3 10.58-7.37c0-.27-.02-.53-.06-.79A2.6 2.6 0 0 0 24 11.78zM6.2 13.64a1.86 1.86 0 1 1 3.72 0 1.86 1.86 0 0 1-3.72 0zm10.4 4.92c-1.27 1.27-3.7 1.37-4.41 1.37-.72 0-3.15-.1-4.42-1.37a.48.48 0 0 1 .68-.68c.8.8 2.52 1.09 3.74 1.09 1.21 0 2.93-.29 3.74-1.09a.48.48 0 1 1 .67.68zm-.34-3.06a1.86 1.86 0 1 1 0-3.72 1.86 1.86 0 0 1 0 3.72z"/></svg></a></div></div><div class="fcol"><a href="/install/">Install</a><a href="/support/">Support</a><a href="mailto:voiceit@vlocal.host">voiceit@vlocal.host</a><a href="/pricing/">Plans &amp; pricing</a><a href="https://github.com/antigravitysoham-eng/vlocalhost-core">Source</a></div><div class="fviz" aria-hidden="true"><div class="fviz-bars"><i style="--h:0.30;--d:2.6s;--o:0.00s"></i><i style="--h:0.55;--d:3.1s;--o:0.12s"></i><i style="--h:0.42;--d:2.3s;--o:0.05s"></i><i style="--h:0.78;--d:3.6s;--o:0.30s"></i><i style="--h:0.36;--d:2.8s;--o:0.18s"></i><i style="--h:0.62;--d:3.3s;--o:0.42s"></i><i style="--h:0.95;--d:4.1s;--o:0.08s"></i><i style="--h:0.48;--d:2.5s;--o:0.55s"></i><i style="--h:0.70;--d:3.8s;--o:0.22s"></i><i style="--h:0.34;--d:2.9s;--o:0.66s"></i><i style="--h:0.86;--d:3.4s;--o:0.36s"></i><i style="--h:0.52;--d:2.7s;--o:0.14s"></i><i style="--h:0.66;--d:3.9s;--o:0.48s"></i><i style="--h:0.40;--d:3.0s;--o:0.28s"></i><i style="--h:0.74;--d:3.2s;--o:0.60s"></i><i style="--h:0.32;--d:2.4s;--o:0.40s"></i></div><span class="fviz-cap">on-device &middot; nothing leaving</span></div></div><div class="fmeta"><span>Voice engineering division</span><span>Build 2026.08, offline-first</span><span class="mono">mic &rarr; vad &rarr; whisper &rarr; ollama &rarr; notes</span></div></footer>
+</div>
+
+<div class="cf-ov" id="leadOv" hidden>
+  <div class="cf-card" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
+    <button class="cf-x" id="leadX" type="button" aria-label="Close">&times;</button>
+    <p class="cf-eyebrow">Free &middot; Solo plan</p>
+    <h2 id="leadTitle">Get Vlocalhost free</h2>
+    <p class="cf-sub">Tell us where to reach you and we&rsquo;ll take you straight to
+       the installer. No card, no account.</p>
+    <div class="cf-guard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 3.4v5.3c0 5-3.4 9.6-8 11.3-4.6-1.7-8-6.3-8-11.3V5.4L12 2zm-1 13.4l5.3-5.3-1.4-1.4L11 12.6 9.1 10.7l-1.4 1.4 3.3 3.3z"/></svg><span><b>Your meeting audio never leaves your
+       device.</b> This form is only how we reach you &mdash; it is the one thing on
+       this site that is sent anywhere.</span></div>
+    <form id="leadForm" novalidate>
+      <label>Full name<input type="text" name="name" autocomplete="name" required></label>
+      <label>Email<input type="email" name="email" autocomplete="email" required></label>
+      <label>Phone<input type="tel" name="phone" autocomplete="tel" required></label>
+      <label>Company <span style="color:var(--faint)">(optional)</span><input
+        type="text" name="company" autocomplete="organization"></label>
+      <label class="cf-check" id="leadConsentRow">
+        <input type="checkbox" name="consent" required>
+        <span>I agree to Vlocalhost storing these details and contacting me about
+          the product.</span>
+      </label>
+      <p class="cf-err" id="leadErr" role="alert" hidden></p>
+      <button class="cf-go" type="submit" id="leadGo">Continue to Install &rarr;</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbxIkJv9CS4SLJyZawxOhFVrOvsr5uGE9zcB8pwo6H8D9_YI2UtydgOLSrEt12aq-7w/exec";
+  var INSTALL = "/install/";
+  var KEY = "vlocalhost_lead";
+
+  var ov = document.getElementById("leadOv");
+  var form = document.getElementById("leadForm");
+  if (!ov || !form) return;
+  var err = document.getElementById("leadErr");
+  var go = document.getElementById("leadGo");
+  var consentRow = document.getElementById("leadConsentRow");
+  var lastFocus = null;
+
+  // Somebody who already gave us their details does not get asked again: the
+  // second visit would only write a duplicate row and cost them a form.
+  function known() {
+    try { return !!localStorage.getItem(KEY); } catch (e) { return false; }
+  }
+
+  function open(e) {
+    if (known()) return;               // let the click through to /install/
+    if (e) e.preventDefault();
+    lastFocus = document.activeElement;
+    ov.hidden = false;
+    requestAnimationFrame(function () { ov.classList.add("on"); });
+    var first = form.querySelector("input");
+    if (first) first.focus();
+    document.body.style.overflow = "hidden";
+  }
+
+  function close() {
+    ov.classList.remove("on");
+    document.body.style.overflow = "";
+    setTimeout(function () { ov.hidden = true; }, 200);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.getElementById("leadX").addEventListener("click", close);
+  ov.addEventListener("mousedown", function (e) { if (e.target === ov) close(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !ov.hidden) close();
+  });
+
+  // Every route to the installer goes through the form. Matching on the
+  // resolved pathname rather than the literal attribute catches the header
+  // nav, the hero buttons and the pricing CTA in one rule, however each of
+  // them happens to be written.
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var path;
+    try { path = new URL(a.href, location.href).pathname; } catch (x) { return; }
+    if (path === INSTALL) open(e);
+  });
+
+  function fail(msg, el) {
+    err.textContent = msg;
+    err.hidden = false;
+    if (el) { el.classList.add("bad"); el.focus(); }
+    return false;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    err.hidden = true;
+    form.querySelectorAll(".bad").forEach(function (n) { n.classList.remove("bad"); });
+    consentRow.classList.remove("bad");
+
+    var f = form.elements;
+    var data = {
+      name: f.name.value.trim(),
+      email: f.email.value.trim(),
+      phone: f.phone.value.trim(),
+      company: f.company.value.trim(),
+      consent: f.consent.checked,
+      page: location.href
+    };
+
+    if (!data.name) return fail("Please enter your name.", f.name);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email))
+      return fail("Please enter a valid email address.", f.email);
+    if (data.phone.replace(/[^0-9]/g, "").length < 7)
+      return fail("Please enter a valid phone number.", f.phone);
+    if (!data.consent) {
+      consentRow.classList.add("bad");
+      return fail("Please tick the consent box to continue.");
+    }
+
+    go.disabled = true;
+    go.textContent = "Taking you there\u2026";
+
+    // The installer is never held hostage to the network. Whether the POST
+    // succeeds, fails or times out, the next thing that happens is /install/.
+    var went = false;
+    function done() { if (!went) { went = true; location.href = INSTALL; } }
+    setTimeout(done, 2500);
+
+    try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (x) {}
+
+    if (!ENDPOINT) { done(); return; }
+
+    // text/plain, not application/json: a JSON content type makes this a
+    // preflighted cross-origin request, and a Google Apps Script web app does
+    // not answer the OPTIONS probe -- the lead would vanish with a console
+    // error no visitor ever sees. This stays a "simple request", which needs
+    // no preflight. The body is still JSON; the receiving end parses it.
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(data)
+    }).then(done).catch(done);
+  });
+})();
+
+(function () {
+  "use strict";
+  var dds = [].slice.call(document.querySelectorAll(".nav-dd"));
+  if (!dds.length) return;
+
+  function shut(dd) {
+    dd.classList.remove("open");
+    var b = dd.querySelector(".nav-dd-btn");
+    if (b) b.setAttribute("aria-expanded", "false");
+  }
+
+  dds.forEach(function (dd) {
+    var btn = dd.querySelector(".nav-dd-btn");
+    if (!btn) return;
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      var open = dd.classList.contains("open");
+      dds.forEach(shut);
+      if (!open) {
+        dd.classList.add("open");
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+    dd.addEventListener("mouseenter", function () {
+      btn.setAttribute("aria-expanded", "true");
+    });
+    dd.addEventListener("mouseleave", function () { shut(dd); });
+    // A jump link inside the menu leaves it hanging open over the section it
+    // just scrolled to.
+    dd.querySelectorAll(".nav-dd-menu a").forEach(function (a) {
+      a.addEventListener("click", function () { shut(dd); btn.blur(); });
+    });
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest || !e.target.closest(".nav-dd")) dds.forEach(shut);
+  });
+
+  // A fragment arriving from another page lands at the top of this one. The
+  // landing page's sections start at opacity 0 under a transform and grow into
+  // place as their entrance transitions run, so the document is still settling
+  // when Chrome performs its one-and-only fragment scroll -- /#specs opened on
+  // the hero. Redo the jump once the page has stopped moving.
+  function jump() {
+    if (!location.hash || location.hash.length < 2) return;
+    var el;
+    try { el = document.getElementById(decodeURIComponent(location.hash.slice(1))); }
+    catch (e) { return; }
+    // Snap rather than animate: this is arrival, not navigation, and smoothly
+    // scrolling seven thousand pixels on load is a tour nobody asked for.
+    if (el) el.scrollIntoView({ block: "start", behavior: "auto" });
+  }
+  if (location.hash) {
+    window.addEventListener("load", function () {
+      jump();
+      setTimeout(jump, 300);
+    });
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      dds.forEach(shut);
+      if (document.activeElement && document.activeElement.closest &&
+          document.activeElement.closest(".nav-dd")) document.activeElement.blur();
+    }
+  });
+})();
+
+(function () {
+  'use strict';
+  var wraps = [].slice.call(document.querySelectorAll('main section > .wrap'));
+  var showAll = function () {
+    wraps.forEach(function (w) { w.classList.add('on'); });
+  };
+  var showAllNow = function () {
+    wraps.forEach(function (w) { w.classList.add('now'); });
+  };
+  if (!wraps.length) return;
+  if (!('IntersectionObserver' in window) ||
+      (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    showAllNow();
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      e.target.classList.add('on');
+    });
+  }, { rootMargin: '0px 0px -60px 0px' });
+  wraps.forEach(function (w) { io.observe(w); });
+
+  // Nothing may stay invisible. An un-animated section is a far better
+  // failure than a blank one -- and this is the guarantee that makes it safe
+  // to put the hidden state in CSS at all.
+  setTimeout(showAll, 6000);
+
+  // Anything already on screen is revealed NOW -- synchronously, before the
+  // first paint -- not in a rAF callback.
+  //
+  // This script runs at the end of <body>, so "now" is still before the
+  // document's first frame. A rAF callback is not: it lands one frame later,
+  // and a cross-document view transition captures the incoming page before
+  // then. The result was a cross-fade from the old page to an empty one, with
+  // the content appearing after the transition had finished -- the single
+  // biggest reason navigating between pages felt rough.
+  var vh = window.innerHeight || 800;
+  wraps.forEach(function (w) {
+    var r = w.getBoundingClientRect();
+    if (r.top < vh && r.bottom > 0) {
+      w.classList.add('now');
+      io.unobserve(w);
+    }
+  });
+})();
+</script>
+<script>
+(function(){
+  var SCRIPT = [
+    ["00:03","Priya", "Right \u2014 the migration. Are we still on for Thursday?"],
+    ["00:09","Marcus","Thursday's tight. The backfill hasn't finished a clean run yet."],
+    ["00:16","Priya", "What's blocking it?"],
+    ["00:21","Marcus","Two tables with a bad index. I can have that fixed today."],
+    ["00:29","Priya", "Then let's say Friday, and hold Thursday as the fallback."],
+    ["00:36","Dev",   "I need the staging window either way. Can I book it now?"],
+    ["00:43","Priya", "Book both days. We'll release whichever one we don't use."],
+    ["00:51","Marcus","I'll post the backfill result in the channel tonight."]
+  ];
+
+  var NOTES = "<b># Weekly sync \u2014 8 September 2026</b>\n\n"
+    + "The team moved the database migration from Thursday to Friday, keeping\n"
+    + "Thursday as a fallback. The backfill job has not completed a clean run;\n"
+    + "two badly indexed tables are the blocker, with a fix expected today. The\n"
+    + "staging window will be booked for both days and one released.\n\n"
+    + "- Migration: Friday, Thursday held as fallback\n"
+    + "- Blocker: two badly indexed tables, fix expected today\n"
+    + "- Staging window booked for both days\n"
+    + "- Backfill result to be posted in the channel tonight\n";
+
+  var $ = function(id){ return document.getElementById(id); };
+  var lines = $('dmLines'), notes = $('dmNotes'), wave = $('dmWave'), clock = $('dmClock');
+  var state = $('dmState'), disk = $('dmDisk'), tfile = $('dmTFile'), nfile = $('dmNFile');
+  var play = $('dmPlay'), reset = $('dmReset'), cut = $('dmCut'), verdict = $('dmVerdict');
+  if (!lines || !play) return;
+
+  for (var i = 0; i < 40; i++) wave.appendChild(document.createElement('i'));
+  var bars = wave.querySelectorAll('i');
+  var timers = [], waveTimer = null, tickTimer = null;
+
+  function clearAll(){
+    timers.forEach(clearTimeout); timers = [];
+    if (waveTimer) { clearInterval(waveTimer); waveTimer = null; }
+    if (tickTimer) { clearInterval(tickTimer); tickTimer = null; }
+  }
+  function after(ms, fn){ timers.push(setTimeout(fn, ms)); }
+  function flat(){ Array.prototype.forEach.call(bars, function(b){ b.style.height = '12%'; }); }
+
+  function line(row, anim){
+    var d = document.createElement('div');
+    d.className = 'dm-ln' + (anim ? ' new' : '');
+    d.innerHTML = '<span class="t"></span><span class="w"></span><span class="tx"></span>';
+    d.querySelector('.t').textContent = row[0];
+    d.querySelector('.w').textContent = row[1];
+    d.querySelector('.tx').textContent = row[2];
+    lines.appendChild(d);
+    lines.scrollTop = lines.scrollHeight;
+  }
+
+  function idle(){
+    clearAll();
+    lines.innerHTML = '<p class="dm-empty">Press <b>Start demo</b>. The transcript appears here, '
+      + 'line by line, as the meeting runs.</p>';
+    notes.innerHTML = '<span class="dm-empty" style="padding:0">Written last, by a model on your '
+      + 'own machine \u2014 after the transcript is already saved.</span>';
+    clock.textContent = '00:00';
+    state.textContent = 'Ready'; state.className = 'dm-state';
+    disk.textContent = '0 bytes';
+    tfile.textContent = 'nothing recorded yet';
+    nfile.textContent = 'waiting';
+    wave.classList.remove('live'); flat();
+    play.disabled = false; play.textContent = 'Start demo';
+  }
+
+  function run(){
+    clearAll();
+    lines.innerHTML = ''; notes.innerHTML = '';
+    tfile.textContent = 'not yet written';
+    nfile.textContent = 'waiting';
+    disk.textContent = '0 bytes';
+    state.textContent = 'Recording'; state.className = 'dm-state rec';
+    wave.classList.add('live');
+    play.disabled = true; play.textContent = 'Recording\u2026';
+
+    waveTimer = setInterval(function(){
+      Array.prototype.forEach.call(bars, function(b){
+        b.style.height = (10 + Math.random() * 88).toFixed(0) + '%';
+      });
+    }, 150);
+
+    var t0 = Date.now();
+    tickTimer = setInterval(function(){
+      var s = Math.min(58, Math.floor((Date.now() - t0) / 1000 * 7));
+      clock.textContent = '00:' + (s < 10 ? '0' : '') + s;
+    }, 100);
+
+    SCRIPT.forEach(function(row, i){
+      after(500 + i * 780, function(){
+        line(row, true);
+        disk.textContent = (0.8 * (i + 1)).toFixed(1) + ' KB';
+      });
+    });
+
+    var end = 500 + SCRIPT.length * 780;
+
+    after(end + 300, function(){
+      if (tickTimer) { clearInterval(tickTimer); tickTimer = null; }
+      clock.textContent = '00:58';
+      wave.classList.remove('live'); flat();
+      state.textContent = 'Saving transcript';
+      tfile.innerHTML = 'transcript.txt &middot; saved';
+      disk.textContent = '6.4 KB';
+    });
+    after(end + 1200, function(){
+      state.textContent = 'Writing notes locally';
+      nfile.innerHTML = 'summary.md &middot; writing\u2026';
+    });
+    after(end + 2400, function(){
+      notes.innerHTML = NOTES;
+      nfile.innerHTML = 'summary.md &middot; saved';
+      state.textContent = 'Finished'; state.className = 'dm-state done';
+      play.disabled = false; play.textContent = 'Replay demo';
+    });
+  }
+
+  play.addEventListener('click', run);
+  reset.addEventListener('click', idle);
+  cut.addEventListener('change', function(){
+    if (cut.checked) {
+      verdict.textContent = 'Network cut. Recording, transcription and notes are unaffected \u2014 none of them needed it.';
+      verdict.className = 'dm-verdict cut';
+    } else {
+      verdict.textContent = 'Connected. Nothing is using it.';
+      verdict.className = 'dm-verdict';
+    }
+  });
+
+  idle();
+})();
+</script>
+</body>
+</html>
