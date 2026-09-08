@@ -1,0 +1,93 @@
+{
+  "$schema": "https://fundingjson.org/schema/v1.1.0.json",
+  "version": "v1.0.0",
+
+  "entity": {
+    "type": "individual",
+    "role": "owner",
+    "name": "Soham Mitra",
+    "email": "voiceit@vlocal.host",
+    "description": "Independent developer in Mumbai, India, building Vlocalhost AI: a meeting recorder that records, transcribes and summarises entirely on the user's own machine. No audio, transcript or note is uploaded anywhere, there is no account and no backend, and the core is AGPL-3.0 with the source public so the part that touches your audio can be read and verified. Built for people who cannot send a meeting to a cloud at all.",
+    "webpageUrl": {
+      "url": "https://vlocal.host"
+    }
+  },
+
+  "projects": [
+    {
+      "guid": "vlocalhost-core",
+      "name": "Vlocalhost Core",
+      "description": "An on-device meeting notetaker for Windows and macOS. Audio is captured locally, transcribed with faster-whisper on the endpoint, and summarised by a local model the user chooses; the transcript is written to disk before the summary is attempted, so a missing model never costs you the meeting. Notes are Markdown and plain text in a folder you pick, not rows in a database. There is no telemetry, no crash reporting and no analytics, because there is no endpoint to send them to. The app is also an MCP server, so an assistant such as Claude or Cursor can start a recording, follow the live transcript and search your own notes without any of it leaving the machine. Every release publishes a SHA-256 for each file and a GitHub build attestation, so the bytes you downloaded can be checked against the bytes that were built.",
+      "webpageUrl": {
+        "url": "https://vlocal.host"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/antigravitysoham-eng/vlocalhost-core"
+      },
+      "licenses": [
+        "spdx:AGPL-3.0-only"
+      ],
+      "tags": [
+        "meeting-notes",
+        "transcription",
+        "speech-to-text",
+        "on-device",
+        "local-first",
+        "privacy",
+        "offline",
+        "whisper",
+        "desktop",
+        "python"
+      ]
+    }
+  ],
+
+  "funding": {
+    "channels": [
+      {
+        "guid": "direct",
+        "type": "other",
+        "description": "Grants and sponsorship are arranged directly by email at voiceit@vlocal.host. No public payment endpoint is published yet; one will be added here when it exists rather than listed speculatively."
+      }
+    ],
+
+    "plans": [
+      {
+        "guid": "code-signing",
+        "status": "active",
+        "name": "Code signing and notarization",
+        "description": "The most-reported problem with the project, and the one thing money fixes outright. Windows builds are unsigned and macOS builds are ad-hoc signed and not notarized, so both operating systems warn the user that the app cannot be verified. For a tool whose entire proposition is that it can be trusted with confidential meetings, that first-run warning does real damage. This covers an Apple Developer Program membership, a Windows code-signing certificate with the hardware token its issuance now requires, and the signing pipeline work. Until it is funded the project publishes a SHA-256 per file and a GitHub build attestation instead, and says so up front rather than letting people discover it.",
+        "amount": 1200,
+        "currency": "USD",
+        "frequency": "one-time",
+        "channels": [
+          "direct"
+        ]
+      },
+      {
+        "guid": "indic-asr-benchmark",
+        "status": "active",
+        "name": "Indian-language transcription: measure it, then ship it",
+        "description": "The project is built in India and cannot currently claim Indian-language support, because Whisper is weak on Indic speech and on code-mixing and nobody has measured how weak. Open-weight Indian-language models now exist that could run on the same device, and the app already supports bringing your own voice model, so this is a measurement problem rather than an architecture problem. This funds building a fixture set of real multi-speaker meeting audio across Indian languages, running the existing benchmark harness across candidate models, and publishing the word-error-rate results in full including the ones that do not flatter the project.",
+        "amount": 2500,
+        "currency": "USD",
+        "frequency": "one-time",
+        "channels": [
+          "direct"
+        ]
+      },
+      {
+        "guid": "maintenance",
+        "status": "active",
+        "name": "Ongoing maintenance and support",
+        "description": "Keeping the recorder working across Windows and macOS updates, audio-device changes and model releases, answering issues, and keeping the dependency set pinned, audited and reflected in the published SBOM. Any amount.",
+        "amount": 0,
+        "currency": "USD",
+        "frequency": "monthly",
+        "channels": [
+          "direct"
+        ]
+      }
+    ]
+  }
+}
