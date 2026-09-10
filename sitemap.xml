@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://vlocal.host/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://vlocal.host/install/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://vlocal.host/install/guide/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://vlocal.host/pricing/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://vlocal.host/security/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://vlocal.host/support/</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://vlocal.host/</loc><lastmod>2026-09-10</lastmod><changefreq>weekly</changefreq></url>
+  <url><loc>https://vlocal.host/install/</loc><lastmod>2026-09-10</lastmod><changefreq>weekly</changefreq></url>
+  <url><loc>https://vlocal.host/install/guide/</loc><lastmod>2026-09-10</lastmod><changefreq>weekly</changefreq></url>
+  <url><loc>https://vlocal.host/pricing/</loc><lastmod>2026-09-10</lastmod><changefreq>weekly</changefreq></url>
+  <url><loc>https://vlocal.host/security/</loc><lastmod>2026-09-10</lastmod><changefreq>weekly</changefreq></url>
+  <url><loc>https://vlocal.host/support/</loc><lastmod>2026-09-10</lastmod><changefreq>weekly</changefreq></url>
 </urlset>
