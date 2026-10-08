@@ -1,5 +1,5 @@
-# The YC preview page is shared by link only: keep it out of search and
+# The early-access page is shared by link only: keep it out of search and
 # never send its address on as a referrer.
-/yc/*
+/early-access/*
   X-Robots-Tag: noindex, nofollow, noarchive
   Referrer-Policy: no-referrer
