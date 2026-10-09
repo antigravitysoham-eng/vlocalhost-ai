@@ -177,6 +177,8 @@ html, body { margin:0; padding:0; background:#0E1116; }
    the viewport lands underneath it. Scoped to :target so it costs nothing
    anywhere else on the page. */
 html { scroll-behavior: smooth; }
+/* The hero's glow layers are wider than a phone; clip them so the page never scrolls sideways. clip, not hidden: hidden makes body a scroll container and breaks the sticky header. */
+html, body { overflow-x: clip; }
 :target { scroll-margin-top: 86px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
